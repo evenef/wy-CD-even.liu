@@ -1,0 +1,4 @@
+#filter files
+
+node_modules/
+dist/
