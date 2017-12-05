@@ -8,13 +8,15 @@ var rev = require('gulp-rev-append')
 var imgmin = require('gulp-imagemin')
 var pngquant = require('imagemin-pngquant')
 var cache = require('gulp-cache')
+var browserSync = require('browser-sync')
 
 //要操作的子项目名（数组），若数组为空，则打包所有项目
 var fileArr = [
 // 'christmasActivity',
 // 'exchangeStore',
-'movieGame',
+// 'movieGame',
 // 'registerCards',
+'testGulpObject',
 ]
 
 var projectsName = ''
@@ -29,9 +31,30 @@ fileArr.length && fileArr.forEach((item, index) => {
 })
 
 //默认任务
-gulp.task('default', ['build'])
+gulp.task('default', function(){
+  console.log('\n')
+  console.log('*******操作说明，请按以下命令操作*******\n')
+  console.log('gulp run -> 启动本机测试服务器（仅单个项目有效）')
+  console.log('gulp build -> 输出发布包')
+  // console.log('gulp watch -> 监听文件自动编译输出')
+  console.log('\n')
+})
 
-//生成发布包
+//启动本机测试服务器
+gulp.task('run', ['build'], function(){
+  if(fileArr[0] && fileArr.length === 1){
+    var options = {
+      server: {
+        baseDir: 'dist/' + fileArr[0]
+      }
+    }
+    browserSync(options)
+  }else{
+    console.log('\n已打包全部项目，无法搭建服务器（仅支持单个项目）\n')
+  }
+})
+
+//输出发布包
 gulp.task('build', ['htmlmin', 'uglify', 'cssmin', 'less', 'imgmin'])
 
 //压缩html
