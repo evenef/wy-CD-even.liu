@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
 uglify = require('gulp-uglify'),
-htmlmin = require('gulp-htmlmin')
+htmlmin = require('gulp-htmlmin'),
+cleanCss = require('gulp-clean-css')
 
 //要操作的子项目名（数组），若数组为空，则打包所有项目
 var fileArr = [
@@ -25,7 +26,7 @@ fileArr.length && fileArr.forEach((item, index) => {
 gulp.task('default', ['build'])
 
 //生成发布包
-gulp.task('build', ['htmlmin', 'uglify'])
+gulp.task('build', ['htmlmin', 'uglify', 'cleanCss'])
 
 //压缩html
 gulp.task('htmlmin', function () {
@@ -38,7 +39,7 @@ gulp.task('htmlmin', function () {
     removeStyleLinkTypeAttributes: true,//删除<style>和<link>的type="text/css"
     minifyJS: true,//压缩页面JS
     minifyCSS: true//压缩页面CSS
-  };
+  }
   gulp.src('src/' + projectsName + '/index.html')
   .pipe(htmlmin(options))
   .pipe(gulp.dest('dist'))
@@ -58,7 +59,7 @@ gulp.task('uglify', function(){
 })
 
 //压缩css
-gulp.task('uglify', function(){
+gulp.task('cleanCss', function(){
   var options = {
     mangle: true,//类型：Boolean 默认：true 是否修改变量名
     // mangle: {except: ['require' ,'exports' ,'module' ,'$']},//排除混淆关键字
