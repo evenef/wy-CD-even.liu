@@ -1,0 +1,151 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei";
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+body{
+	width: 1280px;
+	height: 720px;
+	position: relative;
+}
+.menu{
+	width: 1280px;
+	height: 720px;
+	background: url("../img/bg.png") no-repeat;
+	background-size: 100% 100%;
+	position: relative;
+	overflow: hidden;
+}
+.menuBg{
+	width: 100%;
+	height: 511px;
+	background: url(../img/menu.png) no-repeat center;
+	position: absolute;
+	left: 0;
+	top: 65px;
+}
+.titleLogo{
+	width: 100%;
+	height: 114px;
+	background: url(../img/logo.png) no-repeat center;
+	position: absolute;
+	left: 0;
+	top: 59px;
+}
+.tips{
+	width: 613px;
+	height: 40px;
+	line-height: 40px;
+	overflow: hidden;
+	position: absolute;
+	left: 333px;
+	bottom: 146px;
+}
+.tips > p{
+	height: 100%;
+	color: #fff;
+	font-size: 18px;
+	font-weight: 600;
+	text-align: center;
+}
+.tips > p > span{
+	color: #feef00;
+}
+#payBtn{
+	cursor: pointer;
+	display: block;
+	width: 264px;
+	height: 130px;
+	background-image: url("../img/but.png");
+	position: absolute;
+	left: 508px;
+	bottom: 28px;
+}
+#payBtn.payBtn_cl{
+	background-image: url("../img/but-h.png");
+}
+#payBtn.buttonItem{
+	background-size: 264px 113px;
+}
+.gameList{
+	width: 972px;
+	height: 323px;
+	position: absolute;
+	left: 158px;
+	top: 188px;
+}
+.gameList > div{
+	float: left;
+}
+.gameList .buttonItem span{
+	width: 80%;
+	margin: 0 10%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: 20px;
+	line-height: 20px;
+	color: #fff;
+	text-align: center;
+	overflow: hidden;
+	position: absolute;
+	bottom: 10px;
+}
+.gameList .buttonItem{
+	cursor: pointer;
+	display: block;
+	width: 183px;
+	margin: 5px;
+	position: relative;
+	/*overflow: hidden;*/
+	border-radius: 22px;
+	box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, .2);
+	float: left;
+}
+.gameList > .buttonItem{
+	height: 324px;
+}
+.gameList img{
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	border-bottom-left-radius: 22px;
+	border-bottom-right-radius: 22px;
+}
+.gameList > .middleWrap{
+	width: 776px;
+	height: 333px;
+	position: relative;
+}
+.buttonItem{
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	height: 156px;
+}
+/*.menu .button_cl{
+	width: 194px;
+	height: 166px;
+	margin: 0;
+}
+.gameList > .button_cl{
+	height: 334px;
+}*/
+
+#currentBox{
+	display: none;
+	width: 0;
+	height: 0;
+	position: absolute;
+	left: 163px;
+	top: 193px;
+	border-radius: 22px;
+	box-shadow: 0 0 7px 7px rgba(255, 255, 255, .9);
+}
+.middleUp, .middleDown{
+	height: 166px;
+}

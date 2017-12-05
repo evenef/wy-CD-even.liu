@@ -1,0 +1,590 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei";
+	color: #fff;
+	list-style: none;
+}
+body{
+}
+.onloadImg{
+	background-image: url(../img/img06-c.png);
+	/*background-size: 0 0;*/
+}
+.content{
+	width: 1280px;
+	height: 720px;
+	background: url("../img/bg.jpg") center no-repeat;
+	background-size: cover;
+	position: relative;
+	/*position: absolute;
+	top: -1.80rem;
+	left: -3.20rem;*/
+	/*transform: scale(.66666666666666666666666666667);*/
+	overflow: hidden;
+}
+.lowerSide{
+	display: none;
+	width: 10.01rem;
+	height: 1.06rem;
+	border-radius: .28rem;
+	background: url(../img/bg-h.png) center no-repeat;
+	background-size: 100% 100%;
+	position: absolute;
+	right: .52rem;
+	bottom: .52rem;
+	z-index: 1;
+}
+ul{
+	/*box-shadow: 0 0 .03rem #fff;*/
+}
+ul > li{
+	display: inline-block;
+	width: 2.04rem;
+	height: 3.49rem;
+	margin: 0 .15rem;
+	/*float: left;*/
+	position: relative;
+
+	/*box-shadow: 0 0 .10rem #fff;*/
+}
+ul > li:nth-child(1),
+ul > li:nth-child(2),
+ul > li:nth-child(3),
+ul > li:nth-child(4){
+	margin: 0.12rem .15rem 0;
+}
+ul > li > div{
+	width: 2.04rem;
+	height: 2.67rem;
+	background-image: url(../img/img02.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	position: relative;
+	top: 0;
+}
+ul > li > div > img{
+	width: 1.84rem;
+	height: 2.51rem;
+	border-radius: .20rem;
+	position: absolute;
+	left: .11rem;
+	top: .08rem;
+	/*z-index: -1;*/
+}
+ul > li > div > span{
+	display: inline-block;
+	box-sizing: border-box;
+	width: 1.84rem;
+	height: .44rem;
+	line-height: .44rem;
+	font-size: .22rem;
+	padding: 0 .15rem;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	background-color: rgba(0,0,0,.6);
+	border-bottom-left-radius: .20rem;
+	border-bottom-right-radius: .20rem;
+	position: absolute;
+	left: .11rem;
+	top: 2.15rem;
+}
+ul > li > p{
+	width: 100%;
+	height: .28rem;
+	text-align: center;
+	vertical-align: super;
+	/*margin: .06rem 0 0 0;*/
+	position: absolute;
+	bottom: .48rem;
+	left: .25rem;
+}
+.cardStar{
+	margin: 0;
+	padding: 0;
+}
+.cardStar > i{
+	display: inline-block;
+	width: .28rem;
+	height: .28rem;
+	margin: 0 .02rem;
+	background-image: url(../img/icon02.png);
+	background-size: 100%;
+	float: left;
+}
+.cardStar > .star{
+	background-image: url(../img/icon01.png);
+	background-size: 100%;
+}
+ul > li > span{
+	display: block;
+	box-sizing: border-box;
+	min-width: 1.58rem;
+	height: .38rem;
+	line-height: .38rem;
+	font-size: .22rem;
+	text-align: center;
+	white-space: nowrap;
+	background-color: rgba(0,0,0,.5);
+	border-radius: .10rem;
+	position: absolute;
+	left: .23rem;
+	bottom: 0;
+}
+.list{
+	width: 10.00rem;
+	height: 8.68rem;
+	overflow: hidden;
+	position: absolute;
+	/*position: relative;*/
+	right: .51rem;
+	top: 1.54rem;
+}
+.listContent{
+	position: absolute;
+	left: 20px;
+	/*top: .40rem;*/
+}
+.currentChooseCard > div{
+	width: 2.90rem;
+	height: 3.59rem;
+	background-image: url(../img/img-h.png);
+	background-size: 100%;
+	left: -.43rem;
+	top: -.46rem;
+	z-index: 1;
+}
+.currentChooseCard:nth-child(1) > div,
+.currentChooseCard:nth-child(2) > div,
+.currentChooseCard:nth-child(3) > div,
+.currentChooseCard:nth-child(4) > div{
+	top: -.14rem;
+}
+.currentChooseCard > div > img{
+	width: 2.04rem;
+	height: 2.77rem;
+	left: .42rem;
+	top: .39rem;
+	border-radius: .22rem;
+}
+.currentChooseCard > div > span{
+	width: 2.04rem;
+	height: .48rem;
+	line-height: .48rem;
+	font-size: .24rem;
+	border-bottom-left-radius: .22rem;
+	border-bottom-right-radius: .22rem;
+	left: .42rem;
+	top: 2.68rem;
+}
+.leftWrap > div{
+	background-repeat: no-repeat;
+	background-position: center;
+	position: absolute;
+}
+.showCardBox{
+	width: 3.76rem;
+	height: 4.97rem;
+	left: 2.62rem;
+	top: .63rem;
+	background-image: url(../img/img01.png);
+	background-size: 100%;
+}
+.showCardBox > img{
+	width: 2.96rem;
+	height: 4.02rem;
+	border-radius: .22rem;
+	position: absolute;
+	left: .40rem;
+	top: .44rem;
+}
+.registerBtn{
+	width: 4.12rem;
+	height: 1.23rem;
+	background-image: url(../img/but01.png);
+	background-size: 100%;
+	left: 2.44rem;
+	top: 5.45rem;
+}
+.registerBtn-h{
+	width: 5.07rem;
+	height: 1.91rem;
+	background-image: url(../img/but01-h.png);
+	background-size: 100%;
+	left: 1.95rem;
+	top: 5.11rem;
+}
+.btnBox{
+	left: .87rem;
+	top: 6.97rem;
+}
+.btnBox > i{
+	display: inline-block;
+	width: 2.49rem;
+	height: .98rem;
+	background-repeat: no-repeat;
+	background-position: left;
+	position: absolute;
+}
+.moreBtn{
+	background-image: url(../img/but02.png);
+	background-size: 100%;
+	left: 0;
+	top: 0;
+}
+.exchangeBtn{
+	background-image: url(../img/but03.png);
+	background-size: 100%;
+	left: 2.39rem;
+	top: 0;
+}
+.registerLogBtn{
+	background-image: url(../img/but04.png);
+	background-size: 100%;
+	left: 4.78rem;
+	top: 0;
+}
+.btnBox > .moreBtn-h{
+	width: 3.16rem;
+	height: 1.54rem;
+	background-image: url(../img/but02-h.png);
+	background-size: 100%;
+	left: -.33rem;
+	top: -.33rem;
+	z-index: 1;
+}
+.btnBox > .exchangeBtn-h{
+	width: 3.16rem;
+	height: 1.54rem;
+	background-image: url(../img/but03-h.png);
+	background-size: 100%;
+	left: 2.06rem;
+	top: -.33rem;
+	z-index: 1;
+}
+.btnBox > .registerLogBtn-h{
+	width: 3.16rem;
+	height: 1.54rem;
+	background-image: url(../img/but04-h.png);
+	background-size: 100%;
+	left: 4.45rem;
+	top: -.33rem;
+	z-index: 1;
+}
+.tipsText{
+	width: 8.02rem;
+	height: 2.24rem;
+	box-sizing: border-box;
+	padding: 0 .35rem;
+	left: .44rem;
+	bottom: .48rem;
+}
+.tipsText > p{
+	color: #11f8ff;
+	font: bold .22rem/2.6 '黑体';
+}
+.tipsText > ol{
+	padding: 0 .24rem;
+	position: relative;
+	top: -.10rem;
+}
+.tipsText > ol > li{
+	list-style: decimal;
+	vertical-align: sub;
+	color: #dedede;
+	font: bold .20rem/1.6 '黑体';
+}
+
+
+
+/*******************************以下弹出窗口************************************/
+.tipsWin{
+	display: none;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,.7);
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 2;
+}
+.tipsWin *{
+	z-index: 2;
+}
+.tipsWin > div{
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	overflow: hidden;
+}
+/******************************************************************************/
+/*卡牌详情窗口样式*/
+.tipsWin > .showCardMsgWin{
+	background-image: url(../img/tc02.png);
+	background-size: 308px;
+	background-position: center 147px;
+}
+.showCardMsgWin > img{
+	width: 197px;
+	height: 267px;
+	border-radius: .22rem;
+	position: absolute;
+	left: 543px;
+	bottom: 278px;
+}
+.showCardMsgWin > .cardStar{
+	position: absolute;
+	left: 615px;
+	top: 472px;
+}
+.showCardMsgWin > span{
+	display: inline-block;
+	box-sizing: border-box;
+	width: 197px;
+	height: 38px;
+	line-height: 38px;
+	font-size: 16px;
+	padding: 0 .20rem;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	background-color: rgba(0,0,0,.5);
+	border-bottom-left-radius: .22rem;
+	border-bottom-right-radius: .22rem;
+	position: absolute;
+	left: 543px;
+	bottom: 278px;
+}
+
+
+/******************************************************************************/
+/*卡牌获取成功窗口样式*/
+.tipsWin > .successWin{
+	/*display: flex;*/
+	background-image: url(../img/tc01.png);
+	background-size: 359px;
+	background-position: center 92px;
+}
+.successWin-bg{
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-image: url(../img/tc01-h.png);
+	background-size: 359px;
+	background-position: center 92px;
+	background-repeat: no-repeat;
+	filter: opacity(0);
+}
+.successWin-bg-h{
+	filter: opacity(100);
+	transition: all 2s;
+}
+.successWin > img{
+	width: 197px;
+	height: 267px;
+	border-radius: .22rem;
+	position: absolute;
+	left: 546px;
+	bottom: 232px;
+}
+.successWin > span{
+	box-sizing: border-box;
+	width: 197px;
+	height: 38px;
+	line-height: 38px;
+	padding: 0 .20rem 0;
+	font-size: 16px;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	border-bottom-left-radius: .22rem;
+	border-bottom-right-radius: .22rem;
+	background-color: rgba(0,0,0,.5);
+	position: absolute;
+	left: 546px;
+	bottom: 232px;
+}
+.successWin > .cardStar{
+	position: absolute;
+	left: 615px;
+	top: 518px;
+}
+
+
+/******************************************************************************/
+/*次数不足窗口样式*/
+.tipsWin > .registerNullWin{
+	background-image: url(../img/tc03.png);
+	background-size: 11.29rem;
+	background-position: center 2.14rem;
+}
+.registerNullWin > ul{
+	width: 12.16rem;
+	height: 2.04rem;
+	margin: 5.32rem auto 0;
+}
+/******************************************************************************/
+/*时间未到窗口样式*/
+.tipsWin > .timeNotReadyWin{
+	background-image: url(../img/tc04a.png);
+	background-size: 11.29rem;
+	background-position: center 2.14rem;
+}
+.timeNotReadyWin > ul{
+	width: 12.16rem;
+	height: 2.04rem;
+	margin: 5.32rem auto 0;
+}
+#timeOutText{
+	position: absolute;
+	left: 655px;
+	top: 296px;
+	font-size: 20px;
+	text-shadow: -2px 2px 2px rgba(0,0,0,.6);
+}
+#timeOutText > span{
+	text-align: center;
+	display: inline-block;
+	width: 32px;
+	margin-right: 22px;
+}
+/******************************************************************************/
+/*推荐游戏组件样式*/
+.gameBox{
+	display: block;
+	justify-content: space-between;
+	text-align: center;
+}
+.gameBox > li{
+	margin: 0 !important;
+}
+.gameBox > li + li{
+	margin: 0 0 0 10px !important;
+}
+.gameItem{
+	/*margin: 0 !important;*/
+	padding: 0;
+	width: 2.44rem;
+	height: 2.04rem;
+}
+.gameItem > div{
+	width: 2.44rem;
+	height: 2.04rem;
+	background-image: url(../img/img03.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.gameItem > div > img{
+	width: 2.28rem;
+	height: 1.84rem;
+	border-radius: .16rem;
+	position: absolute;
+	left: .08rem;
+	top: .10rem;
+	/*z-index: -1;*/
+}
+.gameItem > div > span{
+	display: inline-block;
+	box-sizing: border-box;
+	width: 2.28rem;
+	height: .46rem;
+	line-height: .46rem;
+	font-size: .22rem;
+	padding: 0 .15rem;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	background-color: rgba(0,0,0,.5);
+	border-bottom-left-radius: .16rem;
+	border-bottom-right-radius: .16rem;
+	position: absolute;
+	left: .08rem;
+	top: 1.48rem;
+}
+.gameItem-h{
+	z-index: 3;
+}
+.gameItem-h > div{
+	width: 3.58rem;
+	height: 3.10rem;
+	background-image: url(../img/img03-h.png);
+	background-size: 100%;
+	background-position: center;
+	position: relative;
+	left: -.57rem;
+	top: -.48rem;
+}
+.gameItem-h:first-child > div{
+	left: -.33rem;
+}
+.gameItem-h:last-child > div{
+	left: -.79rem;
+}
+.gameItem-h > div > img{
+	width: 2.74rem;
+	height: 2.22rem;
+	left: .40rem;
+	top: .42rem;
+}
+.gameItem-h > div > span{
+	width: 2.74rem;
+	height: .50rem;
+	line-height: .50rem;
+	font-size: .26rem;
+	padding: 0 .20rem;
+	left: .40rem;
+	top: 2.14rem;
+}
+
+/******************************************************************************/
+/*签到记录窗口样式*/
+.tipsWin > .registerLogWin{
+	background-image: url(../img/tc05.png);
+	background-size: 753px 439px;
+	background-position: center 1.88rem;
+}
+.logText{
+	width: 8.24rem;
+	height: 285px;
+	margin: 3.26rem auto 0;
+	font-size: .28rem;
+	overflow: hidden;
+}
+.logText > p{
+	margin: .12rem 0 0 0;
+	text-align: center;
+}
+.logText > p > span{
+	display: inline-block;
+	text-align: left;
+}
+.logText > p > span:first-child{
+	width: 1.90rem;
+}
+.logText > p > span:nth-child(2){
+	width: 1.50rem;
+}
+.logText > p > span:nth-child(3){
+	width: 1.40rem;
+}
+
+
+
+
+
+
+
+
+
+
