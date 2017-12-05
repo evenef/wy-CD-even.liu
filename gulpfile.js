@@ -1,14 +1,19 @@
-var gulp = require('gulp'),
-uglify = require('gulp-uglify'),
-htmlmin = require('gulp-htmlmin'),
-cssmin = require('gulp-clean-css'),
-concat = require('gulp-concat')
+var gulp = require('gulp')
+var uglify = require('gulp-uglify')
+var htmlmin = require('gulp-htmlmin')
+var cssmin = require('gulp-clean-css')
+var concat = require('gulp-concat')
+var less = require('gulp-less')
+var rev = require('gulp-rev-append')
+var imgmin = require('gulp-imagemin')
+var pngquant = require('imagemin-pngquant')
+var cache = require('gulp-cache')
 
 //要操作的子项目名（数组），若数组为空，则打包所有项目
 var fileArr = [
-'christmasActivity',
+// 'christmasActivity',
 // 'exchangeStore',
-// 'movieGame',
+'movieGame',
 // 'registerCards',
 ]
 
@@ -27,7 +32,7 @@ fileArr.length && fileArr.forEach((item, index) => {
 gulp.task('default', ['build'])
 
 //生成发布包
-gulp.task('build', ['htmlmin', 'uglify', 'cssmin'])
+gulp.task('build', ['htmlmin', 'uglify', 'cssmin', 'less', 'imgmin'])
 
 //压缩html
 gulp.task('htmlmin', function () {
@@ -43,6 +48,7 @@ gulp.task('htmlmin', function () {
   }
   gulp.src('src/' + projectsName + '/index.html')
   .pipe(htmlmin(options))
+  .pipe(rev())
   .pipe(gulp.dest('dist'))
 })
 
@@ -52,10 +58,10 @@ gulp.task('uglify', function(){
     mangle: true,//类型：Boolean 默认：true 是否修改变量名
     // mangle: {except: ['require' ,'exports' ,'module' ,'$']},//排除混淆关键字
     compress: true,//类型：Boolean 默认：true 是否完全压缩
-    // preserveComments: 'none' //保留所有注释
+    // preserveComments: 'none' //保留所有注释【测试该属性报错】
   }
   gulp.src('src/' + projectsName + '/js/*.js')
-  // .pipe(concat(projectsName))
+  // .pipe(concat('main.js')) //合并多个js文件
   .pipe(uglify(options))
   .pipe(gulp.dest('dist'))
 })
@@ -64,11 +70,35 @@ gulp.task('uglify', function(){
 gulp.task('cssmin', function(){
   var options = {
     advanced: false,//类型：Boolean 默认：true [是否开启高级优化（合并选择器等）]
-    compatibility: 'ie7',//保留ie7及以下兼容写法 类型：String 默认：''or'*' [启用兼容模式；'ie7'：IE7兼容模式，'ie8'：IE8兼容模式，'*'：IE9+兼容模式]
-    keepBreaks: true,//类型：Boolean 默认：false [是否保留换行]
+    // compatibility: 'ie7',//保留ie7及以下兼容写法 类型：String 默认：''or'*' [启用兼容模式；'ie7'：IE7兼容模式，'ie8'：IE8兼容模式，'*'：IE9+兼容模式]
+    keepBreaks: true,//类型：Boolean 默认：false [是否保留换行]【实测无效】
     keepSpecialComments: '*',//保留所有特殊前缀 当你用autoprefixer生成的浏览器前缀，如果不加这个参数，有可能将会删除你的部分前缀
   }
   gulp.src('src/' + projectsName + '/css/*.css')
+  .pipe(cssmin(options))
+  .pipe(gulp.dest('dist'))
+})
+
+//less转化
+gulp.task('less', function(){
+  gulp.src('src/' + projectsName + '/css/*.less')
+  .pipe(less())
   .pipe(cssmin())
+  .pipe(gulp.dest('src'))
+  .pipe(gulp.dest('dist'))
+})
+
+//图片压缩
+gulp.task('imgmin', function(){
+  var options = {
+    optimizationLevel: 3, //类型：Number  默认：3  取值范围：0-7（优化等级）【压缩程度小，体积变化小，保真度高】
+    progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片【没啥用】
+    svgoPlugins: [{removeViewBox: false}],//不要移除svg的viewbox属性
+    interlaced: true, //类型：Boolean 默认：false 隔行扫描gif进行渲染
+    multipass: true, //类型：Boolean 默认：false 多次优化svg直到完全优化
+    use: [pngquant()] //使用pngquant深度压缩png图片的imagemin插件
+  }
+  gulp.src('src/' + projectsName + '/img/*.{png,jpg,ico,gif}')
+  .pipe(cache(imgmin(options)))
   .pipe(gulp.dest('dist'))
 })
