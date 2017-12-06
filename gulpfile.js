@@ -4,11 +4,12 @@ var htmlmin = require('gulp-htmlmin')
 var cssmin = require('gulp-clean-css')
 var concat = require('gulp-concat')
 var less = require('gulp-less')
-var rev = require('gulp-rev-append')
+var revAppend = require('gulp-rev-append')
 var imgmin = require('gulp-imagemin')
 var pngquant = require('imagemin-pngquant')
 var cache = require('gulp-cache')
 var browserSync = require('browser-sync')
+var runSequence = require('run-sequence')
 
 //要操作的子项目名（数组），若数组为空，则打包所有项目
 var fileArr = [
@@ -26,22 +27,23 @@ fileArr.length && fileArr.forEach((item, index) => {
   projectsName += item + ','
   if(index === fileArr.length - 1)
     projectsName += '}'
-  else
-    projectsName += ','
+  // else
+    // projectsName += ','
 })
 
 //默认任务
 gulp.task('default', function(){
   console.log('\n')
-  console.log('*******操作说明，请按以下命令操作*******\n')
+  console.log('*******请按以下命令操作*******\n')
   console.log('gulp run -> 启动本机测试服务器（仅单个项目有效）')
-  console.log('gulp build -> 输出发布包')
   // console.log('gulp watch -> 监听文件自动编译输出')
+  console.log('gulp build -> 输出发布包')
   console.log('\n')
 })
 
 //启动本机测试服务器
-gulp.task('run', ['build'], function(){
+gulp.task('run', function(){
+  runSequence('build')
   if(fileArr[0] && fileArr.length === 1){
     var options = {
       server: {
@@ -58,7 +60,7 @@ gulp.task('run', ['build'], function(){
 gulp.task('build', ['htmlmin', 'uglify', 'cssmin', 'less', 'imgmin'])
 
 //压缩html
-gulp.task('htmlmin', function () {
+gulp.task('htmlmin', function (event) {
   var options = {
     removeComments: true,//清除HTML注释
     collapseWhitespace: true,//压缩HTML
@@ -71,7 +73,7 @@ gulp.task('htmlmin', function () {
   }
   gulp.src('src/' + projectsName + '/index.html')
   .pipe(htmlmin(options))
-  .pipe(rev())
+  .pipe(revAppend())
   .pipe(gulp.dest('dist'))
 })
 
@@ -121,7 +123,7 @@ gulp.task('imgmin', function(){
     multipass: true, //类型：Boolean 默认：false 多次优化svg直到完全优化
     use: [pngquant()] //使用pngquant深度压缩png图片的imagemin插件
   }
-  gulp.src('src/' + projectsName + '/img/*.{png,jpg,ico,gif}')
+  gulp.src('src/' + projectsName + '/img/*.{png,jpg,ico,gif,svg}')
   .pipe(cache(imgmin(options)))
   .pipe(gulp.dest('dist'))
 })
