@@ -8,8 +8,9 @@ var revAppend = require('gulp-rev-append')
 var imgmin = require('gulp-imagemin')
 var pngquant = require('imagemin-pngquant')
 var cache = require('gulp-cache')
-var browserSync = require('browser-sync')
 var runSequence = require('run-sequence')
+var browserSync = require('browser-sync')
+var connect = require('gulp-connect')
 
 //要操作的子项目名（数组），若数组为空，则打包所有项目
 var fileArr = [
@@ -17,8 +18,10 @@ var fileArr = [
 // 'exchangeStore',
 // 'movieGame',
 // 'registerCards',
-'testGulpObject',
+'toKeepStayTips',
 ]
+//服务器IP
+var serverIP = '127.0.0.1:3000'
 
 var projectsName = ''
 fileArr.length || (projectsName = '*')
@@ -35,29 +38,52 @@ fileArr.length && fileArr.forEach((item, index) => {
 gulp.task('default', function(){
   console.log('\n')
   console.log('*******请按以下命令操作*******\n')
-  console.log('gulp run -> 启动本机测试服务器（仅单个项目有效）')
-  // console.log('gulp watch -> 监听文件自动编译输出')
-  console.log('gulp build -> 输出发布包')
+  console.log('gulp run \t-> 启动本机测试服务器（仅单个项目有效）')
+  console.log('gulp watch -> 监听文件自动编译输出')
+  console.log('gulp build \t-> 输出发布包')
   console.log('\n')
 })
 
-//启动本机测试服务器
+//启动watch监听自动更新
+gulp.task('watch', function(){
+  gulp.watch('src/**/*', ['build'])
+})
+
+// //connect服务器
+// gulp.task('run', function(){
+//   if(fileArr[0] && fileArr.length === 1){
+//     // runSequence('build')
+//     var options = {
+//       root: 'src/' + fileArr[0] + '/',
+//       ip: serverIP,
+//       livereload: true
+//     }
+//     connect.server(options)
+//   }else{
+//     console.log('\n启动服务器失败：仅支持单个项目！\n')
+//   }
+// })
+
+//bowserSync服务器
 gulp.task('run', function(){
-  runSequence('build')
   if(fileArr[0] && fileArr.length === 1){
     var options = {
       server: {
-        baseDir: 'dist/' + fileArr[0]
+        baseDir: 'src/' + fileArr[0]
       }
     }
+    // runSequence('build')
     browserSync(options)
   }else{
-    console.log('\n已打包全部项目，无法搭建服务器（仅支持单个项目）\n')
+    console.log('\n错误：无法搭建服务器，仅支持单个项目！\n')
   }
 })
 
 //输出发布包
-gulp.task('build', ['htmlmin', 'uglify', 'cssmin', 'less', 'imgmin'])
+//['htmlmin', 'uglify', 'cssmin', 'less', 'imgmin']
+gulp.task('build', function(){
+  runSequence('less', ['uglify', 'cssmin', 'imgmin'], 'htmlmin')
+})
 
 //压缩html
 gulp.task('htmlmin', function (event) {
@@ -124,6 +150,7 @@ gulp.task('imgmin', function(){
     use: [pngquant()] //使用pngquant深度压缩png图片的imagemin插件
   }
   gulp.src('src/' + projectsName + '/img/*.{png,jpg,ico,gif,svg}')
+  // .pipe(imgmin(options))
   .pipe(cache(imgmin(options)))
   .pipe(gulp.dest('dist'))
 })
