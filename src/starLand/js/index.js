@@ -11,6 +11,7 @@ function initData(obj) {
 		toPayURL: 'http://' + urlStr + '/wbManager/shop/cloudID.do',//鉴权接口
 		spId: '40003',
 		PRODUCTID: obj.PRODUCTID || data.PRODUCTID || '17140309181021000002',
+		// contentCode: obj.contentCode || '1732011215403626475399',
 		contentCode: obj.contentCode || '1732011215403626475399',
 		number: obj.number || data.number || 100,
 		page: obj.page || data.page || 0,
@@ -21,7 +22,7 @@ function initData(obj) {
 		isPay: false
 	}
 }
-var chooseItemClass = "0-0", currentGameID = 0
+var chooseItemClass = "payMonths", currentGameID = 0
 
 //页面初始化
 window.onload = function () {
@@ -52,9 +53,9 @@ function getData() {
 			param = JSON.parse(param)
 			initData(param.object)
 			initGameItem("menu", data.list, data.page, ["0-0", "0-3"])
-			getClass("chooseBox")[0].style.display = "block"
+			// getClass("chooseBox")[0].style.display = "block"
 			document.onkeydown = keyFnc
-			currentGameID = getClass("item" + chooseItemClass)[0].id
+			// currentGameID = getClass("item" + chooseItemClass)[0].id
 		},
 		fail: function (err) {
 			console.log("%c获取信息失败!", "color: #f0f", err)
@@ -140,7 +141,7 @@ function keyFnc(event) {
 					break
 				else
 					// chooseItemClass = m <= 2 ? "payMonths" : "payOneMonth"
-					chooseItemClass ="payMonths"
+					chooseItemClass = "payMonths"
 			}
 		}
 		break
@@ -163,6 +164,7 @@ function keyFnc(event) {
 		location.href = data.ReturnURL
 		break
 	}
+	console.log(chooseItemClass)
 	if(oldChooseClass !== chooseItemClass){
 		getClass("chooseBox")[0].style.display = "block";
 		// getClass("payOneMonth")[0].style.background = ""

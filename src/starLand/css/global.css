@@ -108,11 +108,16 @@ body {
 }
 .chooseBox {
 	display: none;
-	width: 308px;
+	/*width: 308px;
 	height: 356px;
 	position: absolute;
 	top: 138px;
-	left: 24px;
+	left: 24px;*/
+	width: 262px;
+	height: 110px;
+	position: absolute;
+	top: 591px;
+	left: 509px;
 	border-radius: 75px;
 	/*box-shadow: 0 0 10px 10px rgba(255, 255, 255, .9);*/
 	box-shadow: 0 0 0px 8px #f8f008;

@@ -1,5 +1,5 @@
 
-document.onkeydown = (e) => {
+document.onkeydown = function(e) {
 	toKeepStayTipsWin(true)
 	toKeepStayTipsWin(true, e.keyCode)
 }

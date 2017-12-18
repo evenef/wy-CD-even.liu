@@ -43,10 +43,15 @@ body{
 	background-size: 100% 100%;
 }
 .left_vedio .item.itemC{
-	width: 360px;
+	/*width: 360px;
 	height: 78px;
 	left: 82px;
-	top: 328px;
+	top: 328px;*/
+	width: 316px;
+	height: 81px;
+	left: 99px;
+	top: 326px;
+	background-image: url("../img/watch_item-c.png");
 }
 .show_img{
 	width: 100%;
@@ -95,10 +100,15 @@ body{
 	background-size: 100% 100%;
 }
 .right_game .item.itemC{
-	width: 360px;
+	/*width: 360px;
 	height: 78px;
 	left: 82px;
-	top: 342px;
+	top: 342px;*/
+	width: 319px;
+	height: 84px;
+	left: 102px;
+	top: 339px;
+	background-image: url("../img/play_item-c.png");
 }
 .list{
 	width: 1280px;
@@ -118,8 +128,28 @@ body{
 	background-position: center;
 	position: relative;
 }
+.list > .item:nth-child(7){
+	margin-left: 102px !important;
+}
+.list > .item:nth-child(8){
+	margin-left: 118px !important;
+}
+.list .item_focus > div{
+	width: 173px;
+	height: 194px;
+	background-image: url(../img/focus-box.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	position: absolute;
+	left: -20px;
+	top: -6px;
+}
+.list .item_focus:nth-child(7) > div{
+	left: -15px;
+}
 .list .item + .item{
-	margin-left: 112px;
+	margin-left: 110px;
 }
 /*.list .item img{
 	position: absolute;

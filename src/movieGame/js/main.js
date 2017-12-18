@@ -216,7 +216,7 @@ function initGameData(){
 		gameId = 578
 		videoCode = '1d36453fe1eb4f6ba6a22094e62ec22d'
 		FILM_ID = '638027'
-		CAT_ID = ''
+		CAT_ID = '10000100000000090000000000004240'
 		break
 		case 1://果宝特攻
 		gameId = 580

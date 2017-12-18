@@ -1,5 +1,5 @@
 
-var game_cl_index = "0-0"
+var game_cl_index = "payBtn"
 var data = {}
 var isTimeOut = true
 
@@ -12,8 +12,9 @@ function initData(obj) {
 		url: "http://" + urlStr + "/wbManager/shop/shopDetailedList.do",
 		toPayURL: 'http://' + urlStr + '/wbManager/shop/cloudID.do',//鉴权接口
 		spId: '40006',
-		contentCode: obj.contentCode || '1632121216155963739019',
 		PRODUCTID: obj.PRODUCTID || "16021215165842000003",
+		// contentCode: obj.contentCode || '1632121216155963739019',
+		contentCode: obj.contentCode || '1632121216140011138725',
 		number: obj.number || 100,
 		page: obj.page || 1,
 		UserID: obj.UserID || "",
@@ -197,9 +198,9 @@ function initList(arr) {
 					getClass("middleWrap")[0].innerHTML += "<div class='middleDown'></div>"
 					middle = getClass("middleDown")[0]
 				}
-				addButtonItem(item, middle, !(index % 2) ? "./img/product_green_bg.png" : "", 1)
+				addButtonItem(item, middle, !(index % 2) ? "./img/product_green_bg.png" : "")
 				return
-			// addButtonItem(item, list, "", index)
+			// addButtonItem(item, list, "")
 		})
 		var buttonItem = getClass("buttonItem")
 		for (var val = 0; val < buttonItem.length - 1; val++) {
@@ -220,9 +221,9 @@ function initList(arr) {
 				middle = getClass("middleDown")[0]
 			}
 			if (index % 2 && index <= 4 || !(index % 2) && index > 4) {
-				addButtonItem(item, middle, "./img/product_green_bg.png", index)
+				addButtonItem(item, middle, "./img/product_green_bg.png")
 			} else {
-				addButtonItem(item, middle, "", index)
+				addButtonItem(item, middle, "")
 			}
 			return
 		})
@@ -240,14 +241,14 @@ function initList(arr) {
 }
 
 //创建游戏图标
-function addButtonItem(obj, wrap, btnSrc, index) {
+function addButtonItem(obj, wrap, btnSrc) {
 	obj.ADDRESS = obj.ADDRESS || ""
 	btnSrc = btnSrc || "./img/product_bule_bg.png"
 	obj.name = obj.name || "暂无"
-	wrap.innerHTML += '<div class="buttonItem' + (index ? '' : ' button_cl') + '" game_id="' + obj.ID + '" game_name="' + obj.name + '" style="background-image:url(\'' + obj.ADDRESS + '\')"><img src="' + btnSrc + '" alt="gameImg"><span class="gameName">' + obj.name + '</span></div>'
-	getId("currentBox").style.display = "block"
-	getId("currentBox").style.width = getClass(getClass("button_cl").length ? "button_cl" : "payBtn_cl")[0].clientWidth + "px"
-	getId("currentBox").style.height = getClass(getClass("button_cl").length ? "button_cl" : "payBtn_cl")[0].clientHeight + "px"
+	wrap.innerHTML += '<div class="buttonItem' + '" game_id="' + obj.ID + '" game_name="' + obj.name + '" style="background-image:url(\'' + obj.ADDRESS + '\')"><img src="' + btnSrc + '" alt="gameImg"><span class="gameName">' + obj.name + '</span></div>'
+	// getId("currentBox").style.display = "block"
+	// getId("currentBox").style.width = getClass(getClass("button_cl").length ? "button_cl" : "payBtn_cl")[0].clientWidth + "px"
+	// getId("currentBox").style.height = getClass(getClass("button_cl").length ? "button_cl" : "payBtn_cl")[0].clientHeight + "px"
 }
 
 //ajax

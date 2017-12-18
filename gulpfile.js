@@ -16,9 +16,14 @@ var connect = require('gulp-connect')
 var fileArr = [
 // 'christmasActivity',
 // 'exchangeStore',
-// 'movieGame',
 // 'registerCards',
-'toKeepStayTips',
+// 'ChangWanTing',
+// 'chessRoom',
+// 'park',
+// 'starLand',
+'movieGame',
+// 'toKeepStayTips',
+// 'Order_new',
 ]
 //服务器IP
 var serverIP = '127.0.0.1:3000'
@@ -38,15 +43,15 @@ fileArr.length && fileArr.forEach((item, index) => {
 gulp.task('default', function(){
   console.log('\n')
   console.log('*******请按以下命令操作*******\n')
-  console.log('gulp run \t-> 启动本机测试服务器（仅单个项目有效）')
-  console.log('gulp watch -> 监听文件自动编译输出')
+  console.log('gulp run \t-> 启动本机测试服务器，并监听文件自动编译（仅单个项目有效）')
+  console.log('gulp watch \t-> 监听less/css/js文件自动编译输出')
   console.log('gulp build \t-> 输出发布包')
   console.log('\n')
 })
 
 //启动watch监听自动更新
 gulp.task('watch', function(){
-  gulp.watch('src/**/*', ['build'])
+  gulp.watch('src/**/*.{less,js,html}', ['build'])
 })
 
 // //connect服务器
@@ -72,8 +77,9 @@ gulp.task('run', function(){
         baseDir: 'src/' + fileArr[0]
       }
     }
-    // runSequence('build')
+    runSequence('build')
     browserSync(options)
+    runSequence('watch')
   }else{
     console.log('\n错误：无法搭建服务器，仅支持单个项目！\n')
   }
@@ -111,7 +117,7 @@ gulp.task('uglify', function(){
     compress: true,//类型：Boolean 默认：true 是否完全压缩
     // preserveComments: 'none' //保留所有注释【测试该属性报错】
   }
-  gulp.src('src/' + projectsName + '/js/*.js')
+  gulp.src('src/' + projectsName + '/**/*.js')
   // .pipe(concat('main.js')) //合并多个js文件
   .pipe(uglify(options))
   .pipe(gulp.dest('dist'))
@@ -125,14 +131,14 @@ gulp.task('cssmin', function(){
     keepBreaks: true,//类型：Boolean 默认：false [是否保留换行]【实测无效】
     keepSpecialComments: '*',//保留所有特殊前缀 当你用autoprefixer生成的浏览器前缀，如果不加这个参数，有可能将会删除你的部分前缀
   }
-  gulp.src('src/' + projectsName + '/css/*.css')
+  gulp.src('src/' + projectsName + '/**/*.css')
   .pipe(cssmin(options))
   .pipe(gulp.dest('dist'))
 })
 
 //less转化
 gulp.task('less', function(){
-  gulp.src('src/' + projectsName + '/css/*.less')
+  gulp.src('src/' + projectsName + '/**/*.less')
   .pipe(less())
   .pipe(cssmin())
   .pipe(gulp.dest('src'))
@@ -149,7 +155,7 @@ gulp.task('imgmin', function(){
     multipass: true, //类型：Boolean 默认：false 多次优化svg直到完全优化
     use: [pngquant()] //使用pngquant深度压缩png图片的imagemin插件
   }
-  gulp.src('src/' + projectsName + '/img/*.{png,jpg,ico,gif,svg}')
+  gulp.src('src/' + projectsName + '/**/*.{png,jpg,ico,gif,svg}')
   // .pipe(imgmin(options))
   .pipe(cache(imgmin(options)))
   .pipe(gulp.dest('dist'))
