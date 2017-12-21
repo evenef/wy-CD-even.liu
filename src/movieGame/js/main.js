@@ -225,13 +225,13 @@ function initGameData(){
 		CAT_ID = ''
 		break
 		case 2://新铠甲勇士
-		gameId = 501
+		gameId = 581
 		videoCode = 'cd24489404e64867bb5ba34481570f5a'
 		FILM_ID = '637280'
 		CAT_ID = ''
 		break
 		case 3://巴啦啦小魔仙
-		gameId = 402
+		gameId = 579
 		videoCode = '4c6a6717340c43d08e52f8606af8c934'
 		FILM_ID = '637770'
 		CAT_ID = ''

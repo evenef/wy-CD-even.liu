@@ -21,9 +21,10 @@ var fileArr = [
 // 'chessRoom',
 // 'park',
 // 'starLand',
-'movieGame',
+// 'movieGame',
 // 'toKeepStayTips',
-// 'Order_new',
+// 'Order_ChangWanTing',
+'YuanDanActive',
 ]
 //服务器IP
 var serverIP = '127.0.0.1:3000'
@@ -51,7 +52,7 @@ gulp.task('default', function(){
 
 //启动watch监听自动更新
 gulp.task('watch', function(){
-  gulp.watch('src/**/*.{less,js,html}', ['build'])
+  gulp.watch('src/**/*.{less,js,html,jsp}', ['build'])
 })
 
 // //connect服务器
@@ -106,6 +107,8 @@ gulp.task('htmlmin', function (event) {
   gulp.src('src/' + projectsName + '/index.html')
   .pipe(htmlmin(options))
   .pipe(revAppend())
+  .pipe(gulp.dest('dist'))
+  gulp.src('src/' + projectsName + '/*.jsp')
   .pipe(gulp.dest('dist'))
 })
 

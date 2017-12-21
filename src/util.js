@@ -9,6 +9,7 @@ var utilObj = {
 	imgLoadFnc: imgLoadFnc,//预加载图片
 	imgRoll: imgRoll,//图片左右翻转
 	setCookie: setCookie,//设置cookie
+	getCookie: getCookie,//获取cookie
 	listItemChoose: listItemChoose,//方向选择
 	toSendPage: toSendPage,//发送统计数值
 	startActivity: startActivity,//跳转游戏详情
@@ -136,7 +137,16 @@ function setCookie(keyName, value, expiredays){
 	var exdate = new Date()
 	exdate.setDate(exdate.getDate() + (expiredays || 0))
 	document.cookie = keyName + "=" + escape(value)+ ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
-	console.log(exdate.getDate())
+	// console.log(exdate.getDate())
+}
+function getCookie(keyName){
+	var coo = document.cookie.replace(/\s/g, '')
+	var arr = coo.split(';')
+	var obj = {}
+	arr.map(function(item){
+		obj[item.split('=')[0]] = item.split('=')[1]
+	})
+	return obj[keyName]
 }
 //方向选择
 //toward方向left/right/up/down

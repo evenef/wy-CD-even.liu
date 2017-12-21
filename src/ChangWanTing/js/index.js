@@ -458,7 +458,7 @@ function toPayFnc(){
 				},3000)
 			}else{
 				data.isPay = false
-				document.location.href = 'http://' + location.host + '/Wanba/EPG/Order/order.jsp?userID=' + data.UserID + '&productId=' + data.PRODUCTID + '&contentCode=' + data.contentCode + '&backUrl=' + escape(document.location.href)
+				document.location.href = 'http://' + location.host + '/Wanba/EPG/Order_ChangWanTing/index.html?userID=' + data.UserID + '&productId=' + data.PRODUCTID + '&contentCode=' + data.contentCode + '&backUrl=' + escape(document.location.href)
 			}
 		}
 	})
