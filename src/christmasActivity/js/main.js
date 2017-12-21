@@ -37,7 +37,7 @@ function keyFnc(e){
 		break
 		case 32:
 		case 8:
-		document.location.href = searchObj().ReturnURL
+		document.location.href = unescape(searchObj().ReturnURL)
 		break
 	}
 }
