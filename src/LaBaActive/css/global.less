@@ -1,0 +1,156 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei";
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+body{
+	width: 1280px;
+	height: 720px;
+	position: absolute;
+	overflow: hidden;
+}
+
+.baseWrap(
+	@dis: none,
+	@bgURL: url(../img/bg-1.jpg),
+	@norURL: url(../img/ccdmx.png),
+	@focURL: url(../img/ccdmx_selected.png),
+	@left: 52px,
+	@top: 400px,
+	@leftF: @left,
+	@topF: @top
+	){
+	> .bgImg{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		display: @dis;
+		background-image: @bgURL;
+	}
+	> .norIcon{
+		background-image: @norURL;
+	}
+	> .focusIcon{
+		display: none;
+		background-image: @focURL;
+	}
+	> .norIcon,> .focusIcon{
+		background-position: left top;
+		width: 375px;
+		height: 306px;
+		position: absolute;
+		left: @left;
+		top: @top;
+		z-index: 1;
+	}
+	> .focusIcon{
+		left: @leftF;
+		top: @topF;
+	}
+}
+
+.content{
+	width: 100%;
+	height: 100%;
+	/*background-image: url(../img/bg-1.jpg);*/
+	position: absolute;
+	left: 0;
+	top: 0;
+	> div{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+
+		> .norIcon,> .focusIcon{
+			background-size: auto;
+		}
+	}
+	> .ccWrap{
+		.baseWrap(
+			block,
+			url(../img/bg-1.jpg),
+			url(../img/ccdmx.png),
+			url(../img/ccdmx_selected.png),
+			116px,
+			435px,
+			16px,
+			414px
+			)
+	}
+	> .atmWrap{
+		.baseWrap(
+			none,
+			url(../img/bg-2.jpg),
+			url(../img/atm.png),
+			url(../img/atm_selected.png),
+			295px,
+			332px,
+			225px,
+			320px
+			)
+	}
+	> .fjWrap{
+		.baseWrap(
+			none,
+			url(../img/bg-3.jpg),
+			url(../img/cjfjx.png),
+			url(../img/cjfjx_selected.png),
+			403px,
+			560px,
+			308px,
+			495px
+			)
+	}
+	> .sdWrap{
+		.baseWrap(
+			none,
+			url(../img/bg-4.jpg),
+			url(../img/sdjq.png),
+			url(../img/sdjq_selected.png),
+			654px,
+			584px,
+			556px,
+			494px
+			)
+	}
+	> .wdWrap{
+		.baseWrap(
+			none,
+			url(../img/bg-5.jpg),
+			url(../img/wdtg.png),
+			url(../img/wdtg_selected.png),
+			837px,
+			333px,
+			744px,
+			313px
+			)
+	}
+	> .jsWrap{
+		.baseWrap(
+			none,
+			url(../img/bg-6.jpg),
+			url(../img/dbjs.png),
+			url(../img/dbjs_selected.png),
+			1022px,
+			441px,
+			927px,
+			425px
+			)
+	}
+	> .focusFlag{
+		> .bgImg{
+			display: block;
+		}
+		> .norIcon{
+			display: none;
+		}
+		> .focusIcon{
+			display: block;
+			z-index: 2;
+		}
+	}
+}

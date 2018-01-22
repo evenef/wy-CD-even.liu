@@ -24,7 +24,11 @@ var fileArr = [
 // 'movieGame',
 // 'toKeepStayTips',
 // 'Order_ChangWanTing',
-'YuanDanActive',
+// 'YuanDanActive',
+// 'snowBallFight',
+// 'LaBaActive',
+'gameDetail',
+// 'hallUpdateTipsWin',
 ]
 //服务器IP
 var serverIP = '127.0.0.1:3000'
@@ -120,7 +124,7 @@ gulp.task('uglify', function(){
     compress: true,//类型：Boolean 默认：true 是否完全压缩
     // preserveComments: 'none' //保留所有注释【测试该属性报错】
   }
-  gulp.src('src/' + projectsName + '/**/*.js')
+  gulp.src('src/' + projectsName + '/js/*.js')
   // .pipe(concat('main.js')) //合并多个js文件
   .pipe(uglify(options))
   .pipe(gulp.dest('dist'))
@@ -134,14 +138,14 @@ gulp.task('cssmin', function(){
     keepBreaks: true,//类型：Boolean 默认：false [是否保留换行]【实测无效】
     keepSpecialComments: '*',//保留所有特殊前缀 当你用autoprefixer生成的浏览器前缀，如果不加这个参数，有可能将会删除你的部分前缀
   }
-  gulp.src('src/' + projectsName + '/**/*.css')
+  gulp.src('src/' + projectsName + '/css/*.css')
   .pipe(cssmin(options))
   .pipe(gulp.dest('dist'))
 })
 
 //less转化
 gulp.task('less', function(){
-  gulp.src('src/' + projectsName + '/**/*.less')
+  gulp.src('src/' + projectsName + '/css/*.less')
   .pipe(less())
   .pipe(cssmin())
   .pipe(gulp.dest('src'))
@@ -151,14 +155,14 @@ gulp.task('less', function(){
 //图片压缩
 gulp.task('imgmin', function(){
   var options = {
-    optimizationLevel: 3, //类型：Number  默认：3  取值范围：0-7（优化等级）【压缩程度小，体积变化小，保真度高】
+    optimizationLevel: 3, //类型：Number  默认：3  取值范围：0-7（优化等级）【压缩程度小，体积变化小，保真度高】【没啥用】
     progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片【没啥用】
     svgoPlugins: [{removeViewBox: false}],//不要移除svg的viewbox属性
     interlaced: true, //类型：Boolean 默认：false 隔行扫描gif进行渲染
     multipass: true, //类型：Boolean 默认：false 多次优化svg直到完全优化
     use: [pngquant()] //使用pngquant深度压缩png图片的imagemin插件
   }
-  gulp.src('src/' + projectsName + '/**/*.{png,jpg,ico,gif,svg}')
+  gulp.src('src/' + projectsName + '/img/*.{png,jpg,ico,gif,svg}')
   // .pipe(imgmin(options))
   .pipe(cache(imgmin(options)))
   .pipe(gulp.dest('dist'))

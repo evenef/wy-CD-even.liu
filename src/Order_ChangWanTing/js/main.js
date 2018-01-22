@@ -1,4 +1,14 @@
+var userid_set = ''
+// userid_set = 'stbtest01'
+// userid_set = 'gdtest1'
 var data = {
+	// orderURL: 'http://172.18.104.83:8080/wbManager/shop/reChange.do',//订购接口
+	orderURL: 'http://' + window.location.host + '/wbManager/shop/reChange.do',//订购接口
+	orderListURL: 'http://' + window.location.host + '/wbManager/shop/orderList.do',//支付回调接口
+	// orderResultURL: 'http://172.18.104.83:8080/wbManager/orderResult.do',//订购上报接口
+	orderResultURL: 'http://' + window.location.host + '/wbManager/orderResult.do',//订购上报接口
+	productId20: '16021215165731000002',//连续抱怨
+	productId26: '17360111110144000009',//单包月
 	listArr: []
 }
 var isBtn = true
@@ -67,9 +77,8 @@ function getFocusArr(){
 }
 //列表初始化
 function initList(num){
-	// getEl('.btn20').productId = '17140309181021000002'
-	getEl('.btn20').productId = '16021215165731000002'
-	getEl('.btn26').productId = '17360111110144000009'
+	getEl('.btn20').productId = data.productId20
+	getEl('.btn26').productId = data.productId26
 	num = num === undefined ? 1 : parseInt(num)
 	data.listArr.map(function(item, index){
 		item.className = item.className.replace(/ currentFocus/g, '')
@@ -79,14 +88,14 @@ function initList(num){
 
 //订购
 function toOrder(_productId){
-	var url = 'http://' + window.location.host + '/wbManager/shop/reChange.do',
+	var url = data.orderURL,
 	_path = window.location.href.replace(/index\.html/, 'order.jsp'),
 	_bsReturnURL = escape(_path + "&orderCallback=true")
 
-	var data = {
+	var dataTemp = {
 		type: 0,
 		// userid: 'gdtest1',
-		userid: searchObj().userID,
+		userid: userid_set || searchObj().userID,
 		productId: _productId,
 		continueType: 0,
 		gameId: searchObj().contentCode,
@@ -98,11 +107,12 @@ function toOrder(_productId){
 	ajax({
 		url: url,
 		type: 'POST',
-		data: data,
+		data: dataTemp,
 		success: function(param){
 			param = JSON.parse(param)
-			if(param.rltcode == '0' && param.object.list)
+			if(param.rltcode == '0' && param.object.list){
 				window.location.href = param.object.list
+			}
 			// else
 			// 	pageConsole('订购页响应错误：object.list为空或不存在', JSON.stringify(param))
 		}
@@ -122,7 +132,7 @@ function orderCallbackFnc(){
 	// }
 
 	ajax({
-		url: 'http://' + window.location.host + '/wbManager/shop/orderList.do',
+		url: data.orderListURL,
 		type: 'POST',
 		data: {
 			Result: 1,
@@ -133,18 +143,68 @@ function orderCallbackFnc(){
 		},
 		success: function(param){
 			// pageConsole('接口返回成功 : ', param.replace(/script/, ''))
-			getEl('.orderTipsWin').style.display = 'block'
 			getEl('.orderTipsWin').children[2].innerHTML = '购买失败！请稍后再试'
-			isBtn = false
+
+			try{
+				var price = unescape(searchObj().data)
+				price = JSON.parse(price).order_amount
+				price = parseInt(price) / 100
+				price += ''
+			}catch(e){
+				var price = ''
+			}
+
 			if(/onSuccess/.test(param)){
 				getEl('.orderTipsWin').children[2].innerHTML = '购买成功！快去体验吧'
+				orderResult(true, price, function(param){
+					param = JSON.parse(param)
+					if(!param.rltcode){}
+				})
+			}else{
+				orderResult(false, price)
 			}
+			
+			getEl('.orderTipsWin').style.display = 'block'
+			isBtn = false
 		},
 		fail: function(err, responseText, responseXML){
-			// pageConsole('接口请求失败 : ', err + '///' + responseText + '///' + responseXML)
+			pageConsole('接口请求失败 : ', err + ' / ' + responseText)
 		}
 	})
 }
+
+//订购状态上报
+function orderResult(isOrder, price, cb){
+	ajax({
+		url: data.orderResultURL,
+		type: 'post',
+		data: {
+			epgUserName: userid_set || searchObj().userID,//用户名
+			// epgUserGroup: 'default',//用户分组
+			// wayEUserName: '',//玩吧平台用户名
+			// wayEUserGroup: '',//玩吧平台用户分组
+			// stbType: '',//盒子型号
+			// versionName: '',//版本号
+			data: getNowTime(),//当前时间
+			tradeNo: '',//订单号
+			pageID: 'Order_ChangWanTing',//页面ID
+			pageName: '畅玩厅订购页',//页面名
+			// referPageID: '',//上级页面ID
+			// referPageName: '',//上级页面名
+			productID: getCookie('isBtnCurNum') == 1 ? data.productId20 : data.productId26,//产品包ID
+			productName: '畅玩厅',//产品包名称
+			productType: getCookie('isBtnCurNum') == 1 ? '1' : '0',//订购类型: 0:单包月; 1:连续包月; 2:PPV订购
+			price: price,//价格
+			resultCode: isOrder ? 0 : 1,//0:订购成功; 1:订购失败; 2:订购取消; 3:订购超时
+			action: 1,//操作类型: 1:表示订购; 0:表示退订
+			// message: '',//返回结果说明
+		},
+		success: function(param){
+			cb && cb(param)
+		}
+	})
+}
+
 
 
 // 圣剑畅玩厅

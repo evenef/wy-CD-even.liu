@@ -1,4 +1,4 @@
-var focusNum = 0,
+﻿var focusNum = 0,
 isList = true,
 toPayURL = 'http://' + window.location.host + '/wbManager/shop/cloudID.do',//鉴权接口
 spId = '40005',
@@ -6,6 +6,7 @@ PRODUCTID = "16021215165731000002",
 contentCode = '1720071715353737300049'
 
 window.onload = function(){
+	toSendPage('page', '元旦活动')
 	initList(focusNum)
 	orderTestFnc()
 	window.onkeydown = keyFnc
@@ -70,8 +71,10 @@ function keyFnc(e){
 		break
 		case 13:
 		if(isList){
+			toSendPage('YuanDanActive_game' + getEl('.focusFlag').gameMsg.gameId, '元旦活动', '跳转游戏详情：' + getEl('.focusFlag').gameMsg.name)
 			startActivity(getEl('.focusFlag').gameMsg.gameId, searchObj().UserID)
 		}else if(!isList && /focusFlag/.test(getEl('.enterBtn').className)){
+			toSendPage('YuanDanActive_order', '元旦活动', '跳转订购页：畅玩厅')
 			document.location.href = 'http://' + location.host + '/Wanba/EPG/Order/order.jsp?userID=' + searchObj().UserID + '&productId=' + PRODUCTID + '&contentCode=' + contentCode + '&backUrl=' + escape(document.location.href)
 		}else if(!isList && /focusFlag/.test(getEl('.backBtn').className)){
 			isList = true
@@ -81,7 +84,7 @@ function keyFnc(e){
 		case 32:
 		case 8:
 		if(isList){
-			window.location.href = searchObj().ReturnURL
+			window.location.href = unescape(searchObj().ReturnURL)
 		}else{
 			isList = true
 			getEl('.tipsWin').style.display = ''

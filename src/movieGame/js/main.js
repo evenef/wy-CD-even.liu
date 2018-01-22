@@ -31,7 +31,7 @@ function initPage(num){
 		if(/item/.test(getEl('.list').children[i].className)){
 			butItems.push(getEl('.list').children[i])
 			getEl('.list').children[i].className = (i - 5) === num ? 'item item_focus' : 'item'
-			getEl('.list').children[i].style.backgroundImage = getEl('.list').children[i].style.backgroundImage.replace(/focused/g, 'normal')
+			getEl('.list').children[i].children[0].style.backgroundImage = getEl('.list').children[i].children[0].style.backgroundImage.replace(/focused/g, 'normal')
 		}
 	}
 	if(typeof(num) === 'undefined')
@@ -123,8 +123,8 @@ function focusImgs(name, obj){
 		getEl('.show_img_xiao_mo_xian').style.display = ''
 		break
 	}
-	getEl('.item_focus').style.backgroundImage = 'url(' + obj.butImg + ')'
-	getEl('.item_focus').style.backgroundPosition = 'center'
+	getEl('.item_focus').children[0].style.backgroundImage = 'url(' + obj.butImg + ')'
+	getEl('.item_focus').children[0].style.backgroundPosition = 'center'
 
 	if(obj.playImg){
 		getEl('.play_icon').style.display = ''
@@ -164,7 +164,7 @@ function keyFnc(e){
 			watchOrPlay('watch')
 		break
 		case 38:
-		getEl('.item_focus').style.backgroundImage = getEl('.item_focus').style.backgroundImage.replace(/focused/g, 'normal')
+		getEl('.item_focus').children[0].style.backgroundImage = getEl('.item_focus').children[0].style.backgroundImage.replace(/focused/g, 'normal')
 		getEl('.item_focus').className = 'item'
 		if(butNum <= 1){
 			watchOrPlay('watch')
@@ -184,7 +184,7 @@ function keyFnc(e){
 		watchOrPlay()
 
 		butItems[butNum].className = 'item item_focus'
-		butItems[butNum].style.backgroundImage = butItems[butNum].style.backgroundImage.replace(/normal/g, 'focused')
+		butItems[butNum].children[0].style.backgroundImage = butItems[butNum].children[0].style.backgroundImage.replace(/normal/g, 'focused')
 		break
 		case 13:
 		if(upBtnC && upBtnC === 'watch'){
@@ -216,25 +216,30 @@ function initGameData(){
 		gameId = 578
 		videoCode = '1d36453fe1eb4f6ba6a22094e62ec22d'
 		FILM_ID = '638027'
-		CAT_ID = '10000100000000090000000000004240'
+		// CAT_ID = '10000100000000090000000000004240'
+		CAT_ID = ''
+		CAT_ID = '10000100000000090000000000006895'
 		break
 		case 1://果宝特攻
 		gameId = 580
 		videoCode = '39855232d5c5402c9d4ff9845d6fb65f'
 		FILM_ID = '637823'
 		CAT_ID = ''
+		CAT_ID = '10000100000000090000000000006897'
 		break
 		case 2://新铠甲勇士
 		gameId = 581
 		videoCode = 'cd24489404e64867bb5ba34481570f5a'
 		FILM_ID = '637280'
 		CAT_ID = ''
+		CAT_ID = '10000100000000090000000000006898'
 		break
 		case 3://巴啦啦小魔仙
 		gameId = 579
 		videoCode = '4c6a6717340c43d08e52f8606af8c934'
 		FILM_ID = '637770'
 		CAT_ID = ''
+		CAT_ID = '10000100000000090000000000006896'
 		break
 	}
 }

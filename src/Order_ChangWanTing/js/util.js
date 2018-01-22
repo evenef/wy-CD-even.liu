@@ -77,7 +77,7 @@ function searchObj() {
 //获取当前时间
 function getNowTime(){
 	var time = '',
-	year = (new Date()).getYear() + 1900,
+	year = (new Date()).getYear() + ((new Date()).getYear() < 1900 ? 1900 : 0),
 	month = (new Date()).getMonth() + 1,
 	date = (new Date()).getDate(),
 	hour = (new Date()).getHours(),

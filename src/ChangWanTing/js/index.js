@@ -151,7 +151,7 @@ function keyFnc(event) {
 				return
 			console.log(getClass("payBtn_cl").length ? getClass("payBtn_cl")[0].className : getClass("button_cl")[0].attributes.game_id.value)
 			if(getClass("payBtn_cl").length){
-				toSendPage('toOrder', '畅玩厅', '跳转订购页')
+				toSendPage('page', 'ChangWanTing_PayBtn_畅玩厅', '跳转订购页')
 				toPayFnc()
 			}else{
 				var attr = getClass("button_cl")[0].attributes
@@ -194,7 +194,7 @@ function initList(arr) {
 					getClass("middleWrap")[0].innerHTML += "<div class='middleDown'></div>"
 					middle = getClass("middleDown")[0]
 				}
-					addButtonItem(item, middle, (index === 1 || index === 3 || index === 4 || index === 6) ? "./img/product_green_bg.png" : "")
+				addButtonItem(item, middle, (index === 1 || index === 3 || index === 4 || index === 6) ? "./img/product_green_bg.png" : "")
 				return
 			}
 			addButtonItem(item, list, "")
@@ -422,11 +422,11 @@ function boxMove(box, eleAfter) {
 
 function toPayFnc(){
 	var dataSend = {
-			spId: data.spId,
-			epgId: data.UserID,
-			contentId: data.contentCode,
-			productId: data.PRODUCTID,
-		}
+		spId: data.spId,
+		epgId: data.UserID,
+		contentId: data.contentCode,
+		productId: data.PRODUCTID,
+	}
 	if(!isTimeOut){
 		return
 	}
@@ -506,6 +506,9 @@ function toSendPage(type, pageName, contentName, callback){
 	pageName = pageName || document.title,
 	contentID = type === 'page' ? '' : type,
 	contentName = contentName || ''
+
+	if(/ChangWanTing_PayBtn_畅玩厅/.test(pageName))
+		url = 'http://' + location.host + '/wbManager/onClickEvent.do'
 
 	var obj = {
 		epgUserName: data.UserID,

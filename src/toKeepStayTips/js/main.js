@@ -1,36 +1,48 @@
-
-document.onkeydown = function(e) {
-	toKeepStayTipsWin(true)
-	toKeepStayTipsWin(true, e.keyCode)
+var onkeydownFncTemp = document.onkeydown
+var toKeepStayTipsWinInitFnc = function(callback){
+	callback && (window.toKeepStayTipsWinCallback = callback);
+	ajax({
+		// url: 'http://172.18.104.91:8080/wbManager/detention/getDetentionRec.do',
+		url: 'http://' + window.location.host + ':8080/wbManager/detention/getDetentionRec.do',
+		success: function(param){
+			param = JSON.parse(param)
+			if(!param.rltcode){
+				dataArr[0] = param.object.large[0]
+				// dataArr[0].address = dataArr[0].address.replace(/172\.18\.104\.11/, '172.18.104.14')
+				param.object.small.map(function(item, index){
+					dataArr[index + 1] = item
+					// dataArr[index + 1].address = dataArr[index + 1].address.replace(/172\.18\.104\.11/, '172.18.104.14')
+				})
+			}
+			toKeepStayTipsWin(true)
+			document.onkeydown = function(e) {
+				toKeepStayTipsWin(true, e.keyCode)
+			}
+			toSendPage('toKeepStayTipsWin', '大厅挽留弹窗', '弹出大厅挽留弹窗');
+		}
+	})
 }
 var dataArr = [{
-	name: '仙侠大战',
-	gameId: 111,
-	bgImg: './img/Catch1E66.jpg'
+	hava_name: '仙侠大战',
+	productid: 111,
+	address: './img/Catch1E66.jpg'
 },{
-	name: '仙侠大战仙侠大战',
-	gameId: 222,
-	bgImg: './img/Catch1E66.jpg'
+	hava_name: '仙侠大战仙侠大战',
+	productid: 222,
+	address: './img/Catch1E66.jpg'
 },{
-	name: '侠大战大战',
-	gameId: 333,
-	bgImg: './img/Catch1E66.jpg'
+	hava_name: '侠大战大战',
+	productid: 333,
+	address: './img/Catch1E66.jpg'
 },{
-	name: '仙侠大战',
-	gameId: 444,
-	bgImg: './img/Catch1E66.jpg'
+	hava_name: '仙侠大战',
+	productid: 444,
+	address: './img/Catch1E66.jpg'
 },{
-	name: '大战仙侠大战',
-	gameId: 555,
-	bgImg: './img/Catch1E66.jpg'
+	hava_name: '大战仙侠大战',
+	productid: 555,
+	address: './img/Catch1E66.jpg'
 }]
-// ajax({
-// 	url: '',
-// 	data: '',
-// 	success: function(param){
-// 		param = JSON.parse(param)
-// 	}
-// })
 
 function toKeepStayTipsWin(isVisible, keyCode){
 	if(!isVisible)
@@ -68,23 +80,32 @@ function toKeepStayTipsWin(isVisible, keyCode){
 		break
 		//确定
 		case 13:
-		/item_/.test(keepStayTipsFlag) && (contentID = 'game' + document.querySelector('.keepStayTipsFocus').gameMsg.gameId);
+		/item_/.test(keepStayTipsFlag) && (contentID = 'game_' + document.querySelector('.keepStayTipsFocus').gameMsg.productid);
 		/stay/.test(keepStayTipsFlag) && (contentID = 'stay');
 		/quit/.test(keepStayTipsFlag) && (contentID = 'quit');
-		toSendPage(contentID, '退出平台挽留弹窗', /game/.test(contentID) ? document.querySelector('.keepStayTipsFocus').gameMsg.name : (contentID === 'stay' ? '我再看看按钮' : '退出按钮'))//PV、UV上报
-		startActivity(gameId)//方法已改进，自动获取UserID
+		toSendPage(contentID, '大厅挽留弹窗', /game/.test(contentID) ? '跳转推荐游戏_' + document.querySelector('.keepStayTipsFocus').gameMsg.hava_name : (contentID === 'stay' ? '大厅挽留弹窗_我再看看按钮' : '大厅挽留弹窗_休息一下按钮'));//PV、UV上报
+		/game/.test(contentID) && startActivity(document.querySelector('.keepStayTipsFocus').gameMsg.productid);//方法已改进，自动获取UserID
+		/quit/.test(contentID) && window.toKeepStayTipsWinCallback && window.toKeepStayTipsWinCallback();
+		if(/stay/.test(keepStayTipsFlag)){
+			document.body.removeChild(document.querySelector('.keepStayTipsWin'))
+			keepStayTipsFlag = 'item_0'
+			document.onkeydown = onkeydownFncTemp
+			return '关闭弹窗'
+		}
 		break
 		//返回、backspace[PC]
 		case 32:
 		case 8:
 		document.body.removeChild(document.querySelector('.keepStayTipsWin'))
 		keepStayTipsFlag = 'item_0'
-		return console.log('关闭弹窗')
+		document.onkeydown = onkeydownFncTemp
+		toSendPage('stay', '大厅挽留弹窗', '大厅挽留弹窗_关闭弹窗回到大厅')
+		return '关闭弹窗'
 		break
 	}
 
 	initKeepStayTipsWin(keepStayTipsFlag)
-	return console.log('键盘事件完成')
+	return '键盘事件完成'
 }
 
 //窗口初始化
@@ -161,7 +182,7 @@ function createItemBox(fontColor, left, top, isBig, radius, isFocus, obj){
 
 	objNode.style.cssText += 'width: ' + (isFocus ? 202 : 184) + 'px;'
 	objNode.style.cssText += 'height: ' + (isBig ? (isFocus ? 356 : 324) : (isFocus ? 173 : 157)) + 'px;'
-	objNode.style.cssText += 'background: url(' + obj.bgImg + ') no-repeat center;'
+	objNode.style.cssText += 'background: url(' + obj.address + ') no-repeat center;'
 	objNode.style.cssText += 'background-size: cover;'
 	objNode.style.cssText += 'position: absolute;'
 	objNode.style.cssText += 'left: ' + (left - (isFocus ? 9 : 0) || 0) + 'px;top: ' + (top - (isFocus ? (isBig ? 16 : 8) : 0) || 0) + 'px;'
@@ -191,24 +212,12 @@ function createItemBox(fontColor, left, top, isBig, radius, isFocus, obj){
 	span.style.cssText += 'border-bottom-left-radius: ' + (radius || 0) + 'px;'
 	span.style.cssText += 'border-bottom-right-radius: ' + (radius || 0) + 'px;'
 	span.style.cssText += 'color: #fff;'
-	span.innerHTML = obj.name
+	span.innerHTML = obj.hava_name
 
 	objNode.appendChild(span)
 
 	return objNode
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 //ajax 参数{url, type, dataType, data, success, fail}
 function ajax(options) {
@@ -255,7 +264,7 @@ function toSendPage(type, pageName, contentName, callback){
 	epgUserName = searchStr.UserID,
 	url = type === 'page' ? ('http://' + location.host + '/wbManager/pageBrowsing.do') : ('http://' + location.host + '/wbManager/onClickEvent.do'),
 	date = getNowTime(),
-	pageID = location.href.split('/index.html')[0].split('/').pop(),
+	pageID = 'ShouYe',
 	pageName = pageName || document.title,
 	contentID = type === 'page' ? '' : type,
 	contentName = contentName || ''

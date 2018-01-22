@@ -1,0 +1,199 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei";
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+body{
+	width: 1280px;
+	height: 720px;
+	position: absolute;
+	/*overflow: hidden;*/
+}
+.content{
+	width: 100%;
+	height: 100%;
+	background-image: url(../img/bg-n.jpg);
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.btnList{
+	width: 100%;
+	height: 73px;
+	position: absolute;
+	left: 0;
+	top: 550px;
+
+	> div{
+		display: inline-block;
+		width: 196px;
+		height: 73px;
+		position: relative;
+
+		> i{
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+		}
+	}
+
+	> div.focusFlag{
+		> .nor{
+			visibility: hidden;
+		}
+		> .fuc{
+			visibility: visible;
+		}
+	}
+
+	> .wdtgWrap{
+		margin-left: 142px;
+		> .nor{
+			visibility: visible;
+			background-image: url(../img/wdtg-c.png);
+		}
+		> .fuc{
+			visibility: hidden;
+			background-image: url(../img/wdtg-f.png);
+		}
+	}
+
+	> .wptgWrap{
+		margin-left: 72px;
+		> .nor{
+			visibility: visible;
+			background-image: url(../img/wptg-c.png);
+		}
+		> .fuc{
+			visibility: hidden;
+			background-image: url(../img/wptg-f.png);
+		}
+	}
+
+	> .jjfcWrap{
+		margin-left: 62px;
+		> .nor{
+			visibility: visible;
+			background-image: url(../img/jjfc-c.png);
+		}
+		> .fuc{
+			visibility: hidden;
+			background-image: url(../img/jjfc-f.png);
+		}
+	}
+
+	> .xlyxWrap{
+		margin-left: 74px;
+		> .nor{
+			visibility: visible;
+			background-image: url(../img/xlyx-c.png);
+		}
+		> .fuc{
+			visibility: hidden;
+			background-image: url(../img/xlyx-f.png);
+		}
+	}
+}
+
+.focusBox{
+	display: none;
+	width: 259px;
+	height: 91px;
+	position: absolute;
+	bottom: 0;
+	> i{
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
+	> i:nth-of-type(1){
+		visibility: visible;
+		background-image: url(../img/hand1.png);
+	}
+	> i:nth-of-type(2){
+		visibility: hidden;
+		background-image: url(../img/hand2.png);
+	}
+}
+.snowBox{
+	width: 206px;
+	height: 229px;
+	position: absolute;
+	left: 274px;
+	top: 18px;
+	> i{
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
+	> i:nth-of-type(1){
+		visibility: hidden;
+		background-image: url(../img/snow1.png);
+	}
+	> i:nth-of-type(2){
+		visibility: hidden;
+		background-image: url(../img/snow2.png);
+	}
+	> i:nth-of-type(3){
+		visibility: hidden;
+		background-image: url(../img/snow3.png);
+	}
+	> i:nth-of-type(4){
+		visibility: hidden;
+		background-image: url(../img/snow2.png);
+	}
+}
+.tipsWin{
+	display: none;
+	width: 100%;
+	height: 100%;
+	background-image: url(../img/bg-c.jpg);
+	background-color: rgba(0,0,0,.7);
+	position: absolute;
+	z-index: 3;
+
+	> div{
+		width: 196px;
+		height: 73px;
+		position: absolute;
+		top: 586px;
+		left: 368px;
+		> i{
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+		}
+		> i:nth-of-type(2){
+			visibility: hidden;
+		}
+	}
+	> .focusFlag > i:nth-of-type(1){
+		visibility: hidden;
+	}
+	> .focusFlag > i:nth-of-type(2){
+		visibility: visible;
+	}
+	> .enterBtn{
+		> i:nth-of-type(1){
+			background-image: url(../img/enter-c.png);
+		}
+		> i:nth-of-type(2){
+			background-image: url(../img/enter-f.png);
+		}
+	}
+	> .backBtn{
+		left: 716px;
+		> i:nth-of-type(1){
+			background-image: url(../img/return-c.png);
+		}
+		> i:nth-of-type(2){
+			background-image: url(../img/return-f.png);
+		}
+	}
+}
