@@ -1,4 +1,4 @@
-﻿var strURL = window.location.host,
+var strURL = window.location.host,
 focNum = 0,
 imgsWrapBaseTop = 0,
 imgsFoc = 1
@@ -23,7 +23,7 @@ function initData(){
     url: data.getGameDetail,
     type: 'post',
     data: {
-      productId: 457,
+      productId: searchObj().gameId || 337,
       userName: searchObj().UserID || '000030',
       vspCode: 'HBDX_HWYH_HBIPTV'
     },
@@ -34,7 +34,7 @@ function initData(){
         data.detail = param.object.detailinfo
         initPage(data.detail)
         focusCtrol('init')
-        console.log(param)
+        // console.log(param)
       }
     },
     fail: function(err){
@@ -91,20 +91,39 @@ function keyFnc(e){
     case 13:
     if(/skipGame/.test(getEl('.focusFlag').className)){
       toSendPage('openGame_' + data.detail.productid, '游戏详情页', '打开游戏_' + data.detail.productname, function(){
-        console.log('%c打开游戏_' + data.detail.productname, 'color:#f0f')
+        // console.log('%c打开游戏_' + data.detail.productname, 'color:#f0f')
+
+        window.location.href = data.detail.apkuri
+
       })
-      console.log('%c打开游戏_' + data.detail.productname, 'color:#f0f')
+      // window.location.href = data.detail.apkuri
+      // console.log('%c打开游戏_' + data.detail.productname, 'color:#f0f')
+      // console.log('%c打开游戏_' + data.detail.apkuri, 'color:#f0f')
     }else if(getEl('.focusFlag').gameId){
+
       toSendPage('toRecomGame_' + getEl('.focusFlag').gameId, '游戏详情页', '跳转推荐游戏_' + getEl('.focusFlag').gameName, function(){
-        startActivity(getEl('.focusFlag').gameId, searchObj().UserID)
+
+        var newUrl = window.location.href
+        var newArr = newUrl.split('gameId=' + data.detail.productid)
+        newUrl = newArr[0] + 'gameId=' + getEl('.focusFlag').gameId + (newArr[1] || '')
+        window.location.href = newUrl
+
+        // startActivity(getEl('.focusFlag').gameId, searchObj().UserID)
       })
+
+      // var newUrl = window.location.href
+      // var newArr = newUrl.split('gameId=' + data.detail.productid)
+      // newUrl = newArr[0] + 'gameId=' + getEl('.focusFlag').gameId + (newArr[1] || '')
+      // window.location.href = newUrl
+
+      // window.location.href = 'sd'
       // startActivity(getEl('.focusFlag').gameId, searchObj().UserID)
-      console.log('%c跳转推荐游戏_' + getEl('.focusFlag').gameName, 'color:#f0f')
+      // console.log('%c跳转推荐游戏_' + getEl('.focusFlag').gameName, 'color:#f0f')
     }
     break
     case 32:
     case 8:
-    window.location.href = searchObj().ReturnURL
+    window.location.href = unescape(searchObj().ReturnURL)
     break
   }
 }

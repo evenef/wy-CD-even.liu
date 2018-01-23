@@ -120,10 +120,12 @@ function keyFnc(event) {
 		} else{
 			if (j < 4) {
 				data.page != Math.ceil((data.list.length - 8) / 10) && (chooseItemClass = i + "-" + (j + 1));
+				(data.list.length - 8) / 10 === Math.ceil((data.list.length - 8) / 10) && (chooseItemClass = i + "-" + (j + 1));
 				((data.list.length - 8) % 10 > 4 && data.page === Math.ceil((data.list.length - 8) / 10)) && (chooseItemClass = i + "-" + (j + 1));
 				(j < ((data.list.length - 8) % 10 - 1) && (data.list.length - 8) % 10 <= 4 && data.page === Math.ceil((data.list.length - 8) / 10)) && (chooseItemClass = "0-" + (j + 1))
 			}
 			data.page && (chooseItemClass = getClass("item" + chooseItemClass)[0] ? chooseItemClass : ("0-" + (j + 1)))
+			data.page && (chooseItemClass = getClass("item" + chooseItemClass)[0] ? chooseItemClass : ("0-" + (j - 1 >= 0 ? j - 1 : 0)))
 		}
 		break
 		case 40:
