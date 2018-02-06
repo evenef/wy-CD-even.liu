@@ -1,8 +1,8 @@
 
 document.documentElement.style.fontSize = '66.6666666666666667px'
 
-var urlStr = /127.0.0.1/.test(location.href) ? '172.18.104.70:8080' : location.host
-urlStr = /file:\/\/\//.test(location.href) ? '172.18.104.70:8080' : urlStr
+var urlStr = /localhost/.test(location.href) ? '172.18.104.17:9088' : location.host
+urlStr = /file:\/\/\//.test(location.href) ? '172.18.104.17:9088' : urlStr
 
 var data = {
 	getAwardListUrl: "http://" + urlStr + "/wbManager/userCentre/getAwards.do",//获取奖品列表【接口】
@@ -10,6 +10,8 @@ var data = {
 	getUserCardsUrl: "http://" + urlStr + "/wbManager/userCentre/findUserCardInfo.do",//获取用户拥有的卡牌信息【接口】
 	exchangeUrl: "http://" + urlStr + "/wbManager/userCentre/exchangeAward.do",//兑奖【接口】
 	recordUrl: "http://" + urlStr + "/wbManager/userCentre/userExRec.do",//兑奖记录【接口】
+	getCountUrl: "http://" + urlStr + "/wbManager/userCentre/getUserCardSignNum.do",//获取用户剩余签到次数【接口】
+	getDrawNum: "http://" + urlStr + "/wbManager/userCentre/getUserCardDrawNum.do",//获取剩余抽奖次数【接口】
 	extractCardsUrl: 'extractCardsUrl',//卡牌抽奖跳转【链接】
 	regCardsUrl: 'regCardsUrl',//卡牌签到跳转【链接】
 	epgUserName: "epg010010101",
@@ -39,6 +41,46 @@ window.onload = function(){
 	document.onkeydown = keyFnc
 }
 
+//初始化签到次数
+function initRegCount(){
+	ajax({
+		url: data.getCountUrl,
+		type: 'post',
+		data: {
+			userId: data.epgUserName
+		},
+		success: function(param){
+			param = JSON.parse(param)
+			console.log("%cparam", "color:#f0f", param)
+			if(!param.rltcode && param.object){
+				getEl('.regCards').children[1].style.display = 'block'
+			}else{
+				getEl('.regCards').children[1].style.display = ''
+			}
+		}
+	})
+}
+
+//初始化抽奖次数
+function initDrawCount(){
+	ajax({
+		url: data.getDrawNum,
+		type: 'post',
+		data: {
+			userId: data.epgUserName
+		},
+		success: function(param){
+			param = JSON.parse(param)
+			console.log("%cparam", "color:#f0f", param)
+			if(!param.rltcode && param.object){
+				getEl('.extractCards').children[1].style.display = 'block'
+			}else{
+				getEl('.extractCards').children[1].style.display = ''
+			}
+		}
+	})
+}
+
 //初始化数据
 function initData(){
 	if(!isInitData){
@@ -61,6 +103,11 @@ function initData(){
 			imgLoadFnc(imgUrlArr)
 		}
 	})
+
+	//签到次数
+	initRegCount()
+	//抽奖次数
+	initDrawCount()
 
 	isInitData = false
 	setTimeout(function(){
@@ -157,6 +204,19 @@ function keyFnc(event){
 		if(useKey){
 			chooseClassName = chooseNum = chooseBtn = listItemChoose('left', 'award', chooseClassName, 'currentChooseAward')
 			listMove(chooseClassName)
+		}else if(chooseClassName === 'exchange'){
+			if(!getEl('.exchangeBtn-e')){
+				getEl('.toDrawBtn').className = 'toDrawBtn toDrawBtn-h'
+				getEl('.toRegBtn').className = 'toRegBtn'
+				getEl('.exchangeBtn').className = 'exchangeBtn exchangeBtn-e'
+			}else if(getEl('.toRegBtn-h') && !getEl('.exchangeBtn-qs')){
+				getEl('.toDrawBtn').className = 'toDrawBtn'
+				getEl('.toRegBtn').className = 'toRegBtn'
+				getEl('.exchangeBtn').className = 'exchangeBtn'
+			}
+		}else if(chooseClassName === 'closeWin'){
+			getEl('.toDrawBtn').className = 'toDrawBtn toDrawBtn-h'
+			getEl('.toRegBtn').className = 'toRegBtn'
 		}else if(isdown){
 			moveBottomBtn('left')
 			break
@@ -186,6 +246,19 @@ function keyFnc(event){
 		if(useKey){
 			chooseClassName = chooseNum = chooseBtn = listItemChoose('right', 'award', chooseClassName, 'currentChooseAward')
 			listMove(chooseClassName)
+		}else if(chooseClassName === 'exchange'){
+			if(!getEl('.exchangeBtn-e')){
+				getEl('.toDrawBtn').className = 'toDrawBtn'
+				getEl('.toRegBtn').className = 'toRegBtn toRegBtn-h'
+				getEl('.exchangeBtn').className = 'exchangeBtn exchangeBtn-e'
+			}else if(getEl('.toDrawBtn-h') && !getEl('.exchangeBtn-qs')){
+				getEl('.toDrawBtn').className = 'toDrawBtn'
+				getEl('.toRegBtn').className = 'toRegBtn'
+				getEl('.exchangeBtn').className = 'exchangeBtn'
+			}
+		}else if(chooseClassName === 'closeWin'){
+			getEl('.toDrawBtn').className = 'toDrawBtn'
+			getEl('.toRegBtn').className = 'toRegBtn toRegBtn-h'
 		}else if(isdown){
 			moveBottomBtn('right')
 			break
@@ -226,26 +299,44 @@ function keyFnc(event){
 			var el = getEl('.currentChooseAward').awardMsg
 			toSendPage('exchangeStore_' + el.FK_AWARD_ID, '兑换中心（卡牌活动）', '奖品：' + el.AWARD_NAME)
 
-			if(getEl('.award' + chooseClassName).awardMsg.SURPLUS_NUM)
+			if(getEl('.award' + chooseClassName).awardMsg.SURPLUS_NUM){
 				tipsWinOpen('exchange', getEl('.award' + chooseClassName))
-			else{
+			}else{
 				tipsWinOpen('empty')
 				chooseClassName = 'exchange'
 			}
 		}else if(chooseClassName === 'exchange'){
-			getEl('.exchangeBtn').className === 'exchangeBtn' && tipsWinOpen('success', getEl('.exchangeWin').awardMsg)
-			chooseClassName = 'closeWin'
+			if(!getEl('.exchangeBtn-e') && !getEl('.exchangeBtn-qs')){
+				tipsWinOpen('success', getEl('.exchangeWin').awardMsg)
+				chooseClassName = 'closeWin'
+			}else if(getEl('.toDrawBtn-h')){
+				toSendPage('exchangeStore_' + chooseClassName, '兑换中心（卡牌活动）', '前往抽奖', function(){
+					document.location.href = data.extractCardsUrl
+				})
+			}else if(getEl('.toRegBtn-h')){
+				toSendPage('exchangeStore_' + chooseClassName, '兑换中心（卡牌活动）', '前往签到', function(){
+					document.location.href = data.regCardsUrl
+				})
+			}
 		}else if(chooseClassName === 'closeWin' && !getEl('.awardsEmpty').style.display && !getEl('.exchangeWin').style.display){
 			getEl('.tipsWin').style.display = ''
 			chooseClassName = chooseBtn
 			initAwards()
+		}else if(chooseClassName === 'closeWin' && (getEl('.toDrawBtn-h') || getEl('.toRegBtn-h'))){
+			if(getEl('.toDrawBtn-h')){
+				toSendPage('exchangeStore_' + chooseClassName, '兑换中心（卡牌活动）', '前往抽奖', function(){
+					document.location.href = data.extractCardsUrl
+				})
+			}else if(getEl('.toRegBtn-h')){
+				toSendPage('exchangeStore_' + chooseClassName, '兑换中心（卡牌活动）', '前往签到', function(){
+					document.location.href = data.regCardsUrl
+				})
+			}
 		}else if(chooseClassName === 'awardsExplain'){
 			toSendPage('exchangeStore_' + chooseClassName, '兑换中心（卡牌活动）', '兑换说明')
-
 			tipsWinOpen('explain')
 		}else if(chooseClassName === 'awardsLog'){
 			toSendPage('exchangeStore_' + chooseClassName, '兑换中心（卡牌活动）', '兑换记录')
-
 			tipsWinOpen('log')
 		}else if(chooseClassName === 'regCards'){
 			toSendPage('exchangeStore_' + chooseClassName, '兑换中心（卡牌活动）', '卡牌签到', function(){
@@ -257,6 +348,7 @@ function keyFnc(event){
 			})
 		}
 		break
+		case 32:
 		case 8:
 		if(useKey || isdown){
 			history.back(-1)
@@ -264,6 +356,8 @@ function keyFnc(event){
 			break
 		}
 		getEl('.tipsWin').style.display = ''
+		getEl('.toDrawBtn').className = 'toDrawBtn'
+		getEl('.toRegBtn').className = 'toRegBtn'
 		chooseClassName = chooseBtn
 		initAwards()
 		break
@@ -348,6 +442,7 @@ function tipsWinOpen(name, obj){
 				getEl('.exchangeBtn').className = 'exchangeBtn exchangeBtn-qs'
 				// tipsWinOpen('success', obj.awardMsg)
 			}
+			getEl('.exchangeBtn-qs') && (getEl('.toDrawBtn').className = 'toDrawBtn toDrawBtn-h')
 		})
 
 		break
@@ -388,7 +483,7 @@ function tipsWinOpen(name, obj){
 		break
 		case 'empty':
 		getEl('.awardsEmpty').style.display = 'block'
-		console.log('所需道具不足')
+		console.log('所需道具不足 empty block')
 		break
 		case 'explain':
 		getEl('.explainWin').style.display = 'block'

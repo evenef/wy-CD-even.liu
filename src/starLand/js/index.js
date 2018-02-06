@@ -51,6 +51,7 @@ function getData() {
 		},
 		success: function (param) {
 			param = JSON.parse(param)
+			// console.log('package message ', param)
 			initData(param.object)
 			initGameItem("menu", data.list, data.page, ["0-0", "0-3"])
 			// getClass("chooseBox")[0].style.display = "block"
@@ -124,8 +125,8 @@ function keyFnc(event) {
 				((data.list.length - 8) % 10 > 4 && data.page === Math.ceil((data.list.length - 8) / 10)) && (chooseItemClass = i + "-" + (j + 1));
 				(j < ((data.list.length - 8) % 10 - 1) && (data.list.length - 8) % 10 <= 4 && data.page === Math.ceil((data.list.length - 8) / 10)) && (chooseItemClass = "0-" + (j + 1))
 			}
-			data.page && (chooseItemClass = getClass("item" + chooseItemClass)[0] ? chooseItemClass : ("0-" + (j + 1)))
-			data.page && (chooseItemClass = getClass("item" + chooseItemClass)[0] ? chooseItemClass : ("0-" + (j - 1 >= 0 ? j - 1 : 0)))
+			data.page && chooseItemClass !== 'payMonths' && (chooseItemClass = getClass("item" + chooseItemClass)[0] ? chooseItemClass : ("0-" + (j + 1)))
+			data.page && chooseItemClass !== 'payMonths' && (chooseItemClass = getClass("item" + chooseItemClass)[0] ? chooseItemClass : ("0-" + (j - 1 >= 0 ? j - 1 : 0)))
 		}
 		break
 		case 40:
@@ -152,7 +153,15 @@ function keyFnc(event) {
 			return
 		if(chooseItemClass != "payMonths"){
 			toSendPage('toGame' + getClass('item' + chooseItemClass)[0].id, '星乐园', '游戏：' + getClass('item' + chooseItemClass)[0].children[1].innerHTML)
-			startActivity(currentGameID, data.UserID)
+			data.list.map(function(item){
+				if(item.ID == currentGameID){
+					item.TYPEID == 1 && startActivity(currentGameID, data.UserID)
+					if(item.TYPEID == 2){
+						// document.location.href = 'http://' + window.location.host + '/Wanba/EPG/gameDetail/index.html?UserID=' + data.UserID + '&gameId=' + currentGameID + '&ReturnURL=' + escape(document.location.href)
+						document.location.href = item.APKADDRESS
+					}
+				}
+			})
 		}else{
 			toSendPage('toOrder', '星乐园', '跳转订购页')
 			toPayFnc()
@@ -163,7 +172,7 @@ function keyFnc(event) {
 		// history.back(-1)
 		// console.log("back")
 		// console.log(data.ReturnURL)
-		location.href = data.ReturnURL
+		location.href = unescape(data.ReturnURL)
 		break
 	}
 	console.log(chooseItemClass)
@@ -460,7 +469,8 @@ function toPayFnc(){
 				},3000)
 			}else{
 				data.isPay = false
-				document.location.href = 'http://' + location.host + '/Wanba/EPG/Order/order.jsp?userID=' + data.UserID + '&productId=' + data.PRODUCTID + '&contentCode=' + data.contentCode + '&backUrl=' + escape(document.location.href)
+				// document.location.href = 'http://' + location.host + '/Wanba/EPG/Order/order.jsp?userID=' + data.UserID + '&productId=' + data.PRODUCTID + '&contentCode=' + data.contentCode + '&backUrl=' + escape(document.location.href)
+				document.location.href = 'http://' + location.host + '/Wanba/EPG/Order_ChangWanTing/index.html?userID=' + data.UserID + '&productId=' + data.PRODUCTID + '&contentCode=' + data.contentCode + '&backUrl=' + escape(document.location.href)
 			}
 		}
 	})

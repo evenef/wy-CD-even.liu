@@ -157,11 +157,15 @@ function keyFnc(event) {
 				toPayFnc()
 			}else{
 				toSendPage('toGame' + getClass("button_cl")[0].attributes.game_id.value, '游乐园', '游戏：' + getClass("button_cl")[0].attributes.game_name.value)
-				startActivity(getClass("button_cl")[0].attributes.game_id.value, data.UserID)
+				if(getClass("button_cl")[0].attributes.game_typeid.value == '1')
+					startActivity(getClass("button_cl")[0].attributes.game_id.value, data.UserID)
+				else
+					document.location.href = 'http://' + window.location.host + '/Wanba/EPG/gameDetail/index.html?UserID=' + data.UserID + '&gameId=' + getClass("button_cl")[0].attributes.game_id.value + '&ReturnURL=' + escape(document.location.href)
 			}
 			break
+			case 32:
 			case 8:
-			location.href = data.ReturnURL
+			location.href = unescape(data.ReturnURL)
 			break
 			default:
 			console.log(getClass("payBtn_cl").length ? getClass("payBtn_cl")[0].className : getClass("button_cl")[0].attributes.game_id.value)
@@ -249,7 +253,7 @@ function addButtonItem(obj, wrap, btnSrc) {
 	obj.ADDRESS = obj.ADDRESS || ""
 	btnSrc = btnSrc || "./img/product_bule_bg.png"
 	obj.name = obj.name || "暂无"
-	wrap.innerHTML += '<div class="buttonItem' + '" game_id="' + obj.ID + '" game_name="' + obj.name + '" style="background-image:url(\'' + obj.ADDRESS + '\')"><img src="' + btnSrc + '" alt="gameImg"><span class="gameName">' + obj.name + '</span></div>'
+	wrap.innerHTML += '<div class="buttonItem' + '" game_id="' + obj.ID + '" game_typeid="' + obj.TYPEID + '" game_name="' + obj.name + '" style="background-image:url(\'' + obj.ADDRESS + '\')"><img src="' + btnSrc + '" alt="gameImg"><span class="gameName">' + obj.name + '</span></div>'
 	// getId("currentBox").style.display = "block"
 	// getId("currentBox").style.width = getClass(getClass("button_cl").length ? "button_cl" : "payBtn_cl")[0].clientWidth + "px"
 	// getId("currentBox").style.height = getClass(getClass("button_cl").length ? "button_cl" : "payBtn_cl")[0].clientHeight + "px"
@@ -460,7 +464,8 @@ function toPayFnc(){
 				},3000)
 			}else{
 				data.isPay = false
-				document.location.href = 'http://' + location.host + '/Wanba/EPG/Order/order.jsp?userID=' + data.UserID + '&productId=' + data.PRODUCTID + '&contentCode=' + data.contentCode + '&backUrl=' + escape(document.location.href)
+				// document.location.href = 'http://' + location.host + '/Wanba/EPG/Order/order.jsp?userID=' + data.UserID + '&productId=' + data.PRODUCTID + '&contentCode=' + data.contentCode + '&backUrl=' + escape(document.location.href)
+				document.location.href = 'http://' + location.host + '/Wanba/EPG/Order_ChangWanTing/index.html?userID=' + data.UserID + '&productId=' + data.PRODUCTID + '&contentCode=' + data.contentCode + '&backUrl=' + escape(document.location.href)
 			}
 		}
 	})

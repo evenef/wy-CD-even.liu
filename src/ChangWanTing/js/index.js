@@ -156,11 +156,14 @@ function keyFnc(event) {
 			}else{
 				var attr = getClass("button_cl")[0].attributes
 				toSendPage('toGame' + attr.game_id.value, '畅玩厅', '游戏：' + attr.game_name.value)
-				startActivity(attr.game_id.value, data.UserID)
+				if(attr.game_typeid.value == '1')
+					startActivity(attr.game_id.value, data.UserID)
+				else
+					document.location.href = 'http://' + window.location.host + '/Wanba/EPG/gameDetail/index.html?UserID=' + data.UserID + '&gameId=' + attr.game_id.value + '&ReturnURL=' + escape(document.location.href)
 			}
 			break
 			case 8:
-			location.href = data.ReturnURL
+			location.href = unescape(data.ReturnURL)
 			break
 			default:
 			console.log(getClass("payBtn_cl").length ? getClass("payBtn_cl")[0].className : getClass("button_cl")[0].attributes.ID)
@@ -246,7 +249,7 @@ function addButtonItem(obj, wrap, btnSrc) {
 	btnSrc = btnSrc || "./img/product_bule_bg.png"
 	obj.name = obj.name || "暂无"
 
-	wrap.innerHTML += '<div class="buttonItem' + '" game_id="' + obj.ID + '" game_name="' + obj.name + '" style="background-image:url(\'' + obj.ADDRESS + '\')"><img src="' + btnSrc + '" alt="gameImg"><span class="gameName">' + obj.name + '</span></div>'
+	wrap.innerHTML += '<div class="buttonItem' + '" game_id="' + obj.ID + '" game_typeid="' + obj.TYPEID + '" game_name="' + obj.name + '" style="background-image:url(\'' + obj.ADDRESS + '\')"><img src="' + btnSrc + '" alt="gameImg"><span class="gameName">' + obj.name + '</span></div>'
 
 	// getId("currentBox").style.display = "block"
 	// getId("currentBox").style.width = getClass(getClass("button_cl").length ? "button_cl" : "payBtn_cl")[0].clientWidth + "px"

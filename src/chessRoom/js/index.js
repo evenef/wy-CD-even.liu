@@ -158,11 +158,15 @@ function keyFnc(event) {
 				window.location.href = "http://192.168.5.220/act/index/login_activity?UserID=" + data.UserID + "&ReturnURL=" + escape(document.location.href) + "&isOrder=" + data.isPay;
 			}else{
 				toSendPage('toGame' + getClass("button_cl")[0].attributes.game_id.value, '家娱棋牌屋', '游戏：' + getClass("button_cl")[0].attributes.game_name.value)
-				startActivity(getClass("button_cl")[0].attributes.game_id.value, data.UserID)
+
+				if(getClass("button_cl")[0].attributes.game_typeid.value == '1')
+					startActivity(getClass("button_cl")[0].attributes.game_id.value, data.UserID)
+				else
+					document.location.href = 'http://' + window.location.host + '/Wanba/EPG/gameDetail/index.html?UserID=' + data.UserID + '&gameId=' + getClass("button_cl")[0].attributes.game_id.value + '&ReturnURL=' + escape(document.location.href)
 			}
 			break
 			case 8:
-			location.href = data.ReturnURL
+			location.href = unescape(data.ReturnURL)
 			// history.back(-1)
 			break
 			default:
@@ -245,7 +249,7 @@ function addButtonItem(obj, wrap, btnSrc) {
 	obj.ADDRESS = obj.ADDRESS || ""
 	btnSrc = btnSrc || "./img/product_bule_bg.png"
 	obj.name = obj.name || "暂无"
-	wrap.innerHTML += '<div class="buttonItem' + '" game_id="' + obj.ID + '" game_name="' + obj.name + '" style="background-image:url(\'' + obj.ADDRESS + '\')"><img src="' + btnSrc + '" alt="gameImg"><span class="gameName">' + obj.name + '</span></div>'
+	wrap.innerHTML += '<div class="buttonItem' + '" game_id="' + obj.ID + '" game_typeid="' + obj.TYPEID + '" game_name="' + obj.name + '" style="background-image:url(\'' + obj.ADDRESS + '\')"><img src="' + btnSrc + '" alt="gameImg"><span class="gameName">' + obj.name + '</span></div>'
 	// getId("currentBox").style.display = "block"
 	// getId("currentBox").style.width = getClass(getClass("button_cl").length ? "button_cl" : "payBtn_cl")[0].clientWidth + "px"
 	// getId("currentBox").style.height = getClass(getClass("button_cl").length ? "button_cl" : "payBtn_cl")[0].clientHeight + "px"
@@ -474,7 +478,8 @@ function toPayFnc(){
 				},3000)
 			}else{
 				data.isPay = false
-				document.location.href = 'http://' + location.host + '/Wanba/EPG/Order/order.jsp?userID=' + data.UserID + '&productId=' + data.PRODUCTID + '&contentCode=' + data.contentCode + '&backUrl=' + escape(document.location.href)
+				// document.location.href = 'http://' + location.host + '/Wanba/EPG/Order/order.jsp?userID=' + data.UserID + '&productId=' + data.PRODUCTID + '&contentCode=' + data.contentCode + '&backUrl=' + escape(document.location.href)
+				document.location.href = 'http://' + location.host + '/Wanba/EPG/Order_ChangWanTing/index.html?userID=' + data.UserID + '&productId=' + data.PRODUCTID + '&contentCode=' + data.contentCode + '&backUrl=' + escape(document.location.href)
 			}
 		}
 	})

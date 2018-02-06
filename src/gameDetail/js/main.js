@@ -6,9 +6,17 @@ if(/127\.0\.0\.1/.test(strURL) || /localhost/.test(strURL))
   strURL = '172.18.104.17:9088'
 // strURL = '172.18.104.55:8080'
 var data = {
+  toAuthURL: 'http://' + strURL + '/wbManager/shop/cloudID.do',//鉴权接口
   getGameDetail: 'http://' + strURL + '/wbManager/common/getProductDetailInfo.do',//游戏详情获取接口
   loginURL: 'http://' + strURL + '/wbManager/mine/login.do?account=HBDX_HWYH_HBIPTV1a72eec3-dca5-4658-a5b1-c933792ade4a',//登录接口
   detail: {},//游戏详情
+  packageMsg: {//套餐包详情
+    spId: '',
+    epgId: '',
+    contentId: '',
+    packageId: '',
+  },
+  isPay: false,//是否订购
 }
 
 window.onload = function(){
@@ -23,18 +31,20 @@ function initData(){
     url: data.getGameDetail,
     type: 'post',
     data: {
-      productId: searchObj().gameId || 337,
-      userName: searchObj().UserID || '000030',
+      productId: searchObj().gameId || '',
+      userName: searchObj().UserID || '',
       vspCode: 'HBDX_HWYH_HBIPTV'
     },
     success: function(param){
-      param = param.replace(/172\.18\.104\.11/g, '172.18.104.14')//成都测试用
+
+      // param = param.replace(/172\.18\.104\.11/g, '172.18.104.14')//成都测试用
+
       param = JSON.parse(param)
       if(!param.rltcode){
         data.detail = param.object.detailinfo
+        toAuthFnc(data.detail.packageId)
         initPage(data.detail)
         focusCtrol('init')
-        // console.log(param)
       }
     },
     fail: function(err){
@@ -72,6 +82,47 @@ function initPage(obj){
   }
 }
 
+//鉴权是否订购
+function toAuthFnc(packageId){
+  data.packageMsg.packageId = packageId
+  data.packageMsg.epgId = searchObj().UserID || ''
+  switch(packageId){
+    // 家娱棋牌屋
+    case '16021215165842000003':
+    data.packageMsg.spId = '40006'
+    data.packageMsg.contentId = '1632121216140011138725'
+    break
+    // 星乐园
+    case '17140309181021000002':
+    data.packageMsg.spId = '40003'
+    data.packageMsg.contentId = '1732011215403626475399'
+    break
+    // 畅玩厅
+    case '16021215165731000002':
+    data.packageMsg.spId = '40005'
+    data.packageMsg.contentId = '1720071715353737300049'
+    break
+    // 游乐园
+    case '16021215165349000001':
+    data.packageMsg.spId = '40002'
+    data.packageMsg.contentId = '1728030722284142700018'
+    break
+  }
+  ajax({
+    url: data.toAuthURL,
+    data: data.packageMsg,
+    success: function(param){
+      param = JSON.parse(param)
+      if(!param.rltcode && param.object.list.error_code == 0){
+        data.isPay = true
+      }else{
+        data.isPay = false
+        getEl('.skipGame').innerHTML = '购 买'
+      }
+    }
+  })
+}
+
 //键盘事件
 function keyFnc(e){
   // console.log(e.keyCode)
@@ -90,15 +141,12 @@ function keyFnc(e){
     break
     case 13:
     if(/skipGame/.test(getEl('.focusFlag').className)){
-      toSendPage('openGame_' + data.detail.productid, '游戏详情页', '打开游戏_' + data.detail.productname, function(){
-        // console.log('%c打开游戏_' + data.detail.productname, 'color:#f0f')
-
+      data.isPay && toSendPage('openGame_' + data.detail.productid, '游戏详情页_打开游戏_openGame_' + data.detail.productid, '打开游戏_' + data.detail.productname, function(){
         window.location.href = data.detail.apkuri
-
       })
-      // window.location.href = data.detail.apkuri
-      // console.log('%c打开游戏_' + data.detail.productname, 'color:#f0f')
-      // console.log('%c打开游戏_' + data.detail.apkuri, 'color:#f0f')
+      !data.isPay && toSendPage('orderGame(orderPackage)_' + data.detail.productid, '游戏详情页_订购游戏_orderGame_' + data.detail.productid + '_packageId_' + data.packageMsg.packageId, '订购游戏(套餐包)_' + data.detail.productname, function(){
+        window.location.href = 'http://' + location.host + '/Wanba/EPG/Order/order.jsp?userID=' + data.packageMsg.epgId + '&productId=' + data.packageMsg.packageId + '&contentCode=' + data.packageMsg.contentId + '&backUrl=' + escape(document.location.href)
+      })
     }else if(getEl('.focusFlag').gameId){
 
       toSendPage('toRecomGame_' + getEl('.focusFlag').gameId, '游戏详情页', '跳转推荐游戏_' + getEl('.focusFlag').gameName, function(){
@@ -107,18 +155,7 @@ function keyFnc(e){
         var newArr = newUrl.split('gameId=' + data.detail.productid)
         newUrl = newArr[0] + 'gameId=' + getEl('.focusFlag').gameId + (newArr[1] || '')
         window.location.href = newUrl
-
-        // startActivity(getEl('.focusFlag').gameId, searchObj().UserID)
       })
-
-      // var newUrl = window.location.href
-      // var newArr = newUrl.split('gameId=' + data.detail.productid)
-      // newUrl = newArr[0] + 'gameId=' + getEl('.focusFlag').gameId + (newArr[1] || '')
-      // window.location.href = newUrl
-
-      // window.location.href = 'sd'
-      // startActivity(getEl('.focusFlag').gameId, searchObj().UserID)
-      // console.log('%c跳转推荐游戏_' + getEl('.focusFlag').gameName, 'color:#f0f')
     }
     break
     case 32:
@@ -197,3 +234,49 @@ function boxMove(focNum){
 //     console.log(param)
 //   }
 // })
+
+
+
+// //鉴权是否订购
+// function toAuthFnc(packageId){
+//   packageMsg: {//套餐包详情
+//     spId: '',
+//     epgId: UserID,
+//     contentId: '',
+//     packageId: '',
+//   }
+//   switch(packageId){
+//     // 家娱棋牌屋
+//     case '16021215165842000003':
+//     packageMsg.spId = '40006'
+//     packageMsg.contentId = '1632121216140011138725'
+//     break
+//     // 星乐园
+//     case '17140309181021000002':
+//     packageMsg.spId = '40003'
+//     packageMsg.contentId = '1732011215403626475399'
+//     break
+//     // 畅玩厅
+//     case '16021215165731000002':
+//     packageMsg.spId = '40005'
+//     packageMsg.contentId = '1720071715353737300049'
+//     break
+//     // 游乐园
+//     case '16021215165349000001':
+//     packageMsg.spId = '40002'
+//     packageMsg.contentId = '1728030722284142700018'
+//     break
+//   }
+//   ajax({
+//     url: 'http://' + window.location.host + '/wbManager/shop/cloudID.do',
+//     data: packageMsg,
+//     success: function(param){
+//       param = JSON.parse(param)
+//       if(!param.rltcode && param.object.list.error_code == 0){
+//         isPay = true//已订购
+//       }else{
+//         isPay = false//未订购
+//       }
+//     }
+//   })
+// }

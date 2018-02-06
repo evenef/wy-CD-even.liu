@@ -7,14 +7,20 @@ var data = {
 	orderListURL: 'http://' + window.location.host + '/wbManager/shop/orderList.do',//支付回调接口
 	// orderResultURL: 'http://172.18.104.83:8080/wbManager/orderResult.do',//订购上报接口
 	orderResultURL: 'http://' + window.location.host + '/wbManager/orderResult.do',//订购上报接口
-	productId20: '16021215165731000002',//连续抱怨
+	productId20: '16021215165731000002',//连续包月
 	productId26: '17360111110144000009',//单包月
+	productName: '',//套餐包中文名称
+	productTitleName: '',//套餐包英文名称
+	productBgImg: '',//背景图
 	listArr: []
 }
 var isBtn = true
 var isBtnCurNum = 0
 
+initProductBg(searchObj().productId)
+
 window.onload = function(){
+	toSendPage('page', '新版订购页_' + data.productName)
 	// pageConsole('href', window.location.href)
 	data.listArr = getFocusArr()
 	initList(getCookie('isBtnCurNum'))
@@ -39,7 +45,14 @@ function keyFnc(e){
 		break
 		case 13://enter
 		if(isBtn && index){
-			toOrder(getEl('.currentFocus').productId)
+
+			toSendPage(data.productTitleName + '_' + getEl('.currentFocus').orderType,
+				'新版订购页_' + data.productName + '_点击' + getEl('.currentFocus').orderName,
+				'点击' + getEl('.currentFocus').orderName,
+				function(){
+					toOrder(getEl('.currentFocus').productId)
+				})
+
 		}else if(isBtn || getEl('.orderTipsWin').children[2].innerHTML === '购买成功！快去体验吧'){
 			setCookie('isBtnCurNum', '1')
 			window.location.href = unescape(searchObj().backUrl)
@@ -78,7 +91,11 @@ function getFocusArr(){
 //列表初始化
 function initList(num){
 	getEl('.btn20').productId = data.productId20
+	getEl('.btn20').orderType = 'orderMuchMonths'
+	getEl('.btn20').orderName = '连续包月'
 	getEl('.btn26').productId = data.productId26
+	getEl('.btn26').orderType = 'orderOneMonth'
+	getEl('.btn26').orderName = '单包月'
 	num = num === undefined ? 1 : parseInt(num)
 	data.listArr.map(function(item, index){
 		item.className = item.className.replace(/ currentFocus/g, '')
@@ -205,6 +222,41 @@ function orderResult(isOrder, price, cb){
 	})
 }
 
+function initProductBg(id){
+	data.productId20 = id
+	switch(id){
+		// 圣剑畅玩厅
+		case '16021215165731000002':
+		data.productId26 = '17360111110144000009'
+		data.productName = '畅玩厅'
+		data.productTitleName = 'ChangWanTing'
+		data.productBgImg = 'url(img/bg.jpg)'
+		break
+		// 星乐园
+		case '17140309181021000002':
+		data.productId26 = '17140309180825000001'
+		data.productName = '星乐园'
+		data.productTitleName = 'starLand'
+		data.productBgImg = 'url(img/starLand.jpg)'
+		break
+		// 游乐园
+		case '16021215165349000001':
+		data.productId26 = '17360111105802000008'
+		data.productName = '游乐园'
+		data.productTitleName = 'park'
+		data.productBgImg = 'url(img/park.jpg)'
+		break
+		// 棋牌屋
+		case '16021215165842000003':
+		data.productId26 = '17360111110430000010'
+		data.productName = '棋牌屋'
+		data.productTitleName = 'chessRoom'
+		data.productBgImg = 'url(img/chessRoom.jpg)'
+		break
+	}
+	getEl('.content').style.backgroundImage = data.productBgImg
+}
+
 
 
 // 圣剑畅玩厅
@@ -217,3 +269,6 @@ function orderResult(isOrder, price, cb){
 // gdtest1
 // parms   Nzk2MDQsMTcxNDAzMDkxODEwMjEwMDAwMDIsd2JkZzAwMDAxNjY3OA==
 // data   {"result_code":"SUCCESS","result_desc":"æ¯ä»æå","order_amount":"774.0","attach":"","finish_time":"20171220222906","random_str":"c951e080850c465080096658e00ca804","out_trade_no":"1701122022290271930953","payment_type":""}
+
+
+	// "live_mode": "false",

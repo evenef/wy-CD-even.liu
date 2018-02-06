@@ -14,8 +14,10 @@ var connect = require('gulp-connect')
 
 //要操作的子项目名（数组），若数组为空，则打包所有项目
 var fileArr = [
-// 'christmasActivity',
+// 'cardDraw',
 // 'exchangeStore',
+// 'registerCards',
+// 'christmasActivity',
 // 'registerCards',
 // 'ChangWanTing',
 // 'chessRoom',
@@ -27,8 +29,10 @@ var fileArr = [
 // 'YuanDanActive',
 // 'snowBallFight',
 // 'LaBaActive',
-'gameDetail',
+// 'gameDetail',
 // 'hallUpdateTipsWin',
+// 'loadingPage',
+'newSpringDaLianHuan',
 ]
 //服务器IP
 var serverIP = '127.0.0.1:3000'
@@ -163,7 +167,7 @@ gulp.task('imgmin', function(){
     use: [pngquant()] //使用pngquant深度压缩png图片的imagemin插件
   }
   gulp.src('src/' + projectsName + '/img/*.{png,jpg,ico,gif,svg}')
-  // .pipe(imgmin(options))
-  .pipe(cache(imgmin(options)))
+  // .pipe(imgmin(options)) //所有图片完整重新压缩
+  .pipe(cache(imgmin(options))) //同名图片不压缩，从缓存中获取已压缩图片
   .pipe(gulp.dest('dist'))
 })

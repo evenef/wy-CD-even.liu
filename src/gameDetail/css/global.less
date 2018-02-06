@@ -110,12 +110,32 @@ body{
 	}
 
 	> .skipGame{
+		font-size: 24px;
+		color: #fff;
 		margin: 16px auto 0;
 		width: 276px;
 		height: 54px;
-		background-image: url(../img/but03.png);
+		line-height: 52px;
+		font-weight: bold;
+		text-shadow: -4px 2px 4px rgba(203,118,13,.8);
+		text-align: center;
+		background-image: url(../img/app_detail_action_btn.png);
+		position: relative;
 		&.focusFlag{
-			background-image: url(../img/but03-h.png);
+			font-size: 26px;
+			// background-image: url(../img/but03-h.png);
+			&::before{
+				display: block;
+				box-sizing: border-box;
+				content: '';
+				width: 275px;
+				height: 53px;
+				border: 6px solid #fff;
+				border-radius: 8px;
+				position: absolute;
+				left: 2px;
+				top: 1px;
+			}
 		}
 	}
 

@@ -1,8 +1,8 @@
 
-document.documentElement.style.fontSize = '66.6666666666666667px'
+// document.documentElement.style.fontSize = '66.6666666666666667px'
 
-var urlStr = /127.0.0.1/.test(location.href) ? '172.18.104.70:8080' : location.host
-urlStr = /file:\/\/\//.test(location.href) ? '172.18.104.70:8080' : urlStr
+var urlStr = /localhost/.test(location.href) ? '172.18.104.240:8080' : location.host
+urlStr = /file:\/\/\//.test(location.href) ? '172.18.104.240:8080' : urlStr
 
 
 var data = {
@@ -48,7 +48,7 @@ isInitData = true
 window.onload = function(){
 	var obj = getSearchAndCookie()//获取返回链接
 	obj.UserID && (data.epgUserName = obj.UserID)
-	data.myCardUrl = location.href.replace(/cardDraw/, 'registerCards')
+	data.myCardUrl = location.pathname.replace(/cardDraw/, 'registerCards')
 
 	toSendPage('page', '卡牌抽奖')//页面访问统计
 	document.onkeydown = keyFnc
@@ -127,6 +127,8 @@ function initAwards(){
 			if(!param.rltcode){
 				data.drawNum = param.object
 				getEl('.countBox').innerHTML = '<span>' + data.drawNum + '</span>'
+				data.drawNum > 0 && (getEl('.drawBtn').children[1].style.display = 'block')
+				data.drawNum <= 0 && (getEl('.drawBtn').children[1].style.display = '')
 			}
 		}
 	})
@@ -313,11 +315,18 @@ function keyFnc(event){
 				if(getEl('.gameItem-h')){
 					var el = getEl('.gameItem-h')
 					var name = el.children[0].children[1].innerHTML
-						startActivity(getEl('.gameItem-h').gameId, data.epgUserName)
-					toSendPage('cardDraw_game' + el.gameId, '卡牌抽奖', '推荐游戏：' + name, function(){
+						// startActivity(getEl('.gameItem-h').gameId, data.epgUserName)
+					toSendPage('cardDraw_package_' + el.gameId, '卡牌抽奖', '推荐套餐包：' + name, function(){
+						console.log(getEl('.gameItem-h').pkgid)
 
-						console.log('gameId',getEl('.gameItem-h').gameId)
-						startActivity(getEl('.gameItem-h').gameId, data.epgUserName)
+						console.log('pkgid',getEl('.gameItem-h').pkgid)
+						// startActivity(getEl('.gameItem-h').pkgid, data.epgUserName)
+						var urlStr = ''
+						getEl('.gameItem-h').pkgid === '16021215165349000001' && (urlStr = 'park')
+						getEl('.gameItem-h').pkgid === '16021215165731000002' && (urlStr = 'ChangWanTing')
+						getEl('.gameItem-h').pkgid === '16021215165842000003' && (urlStr = 'chessRoom')
+						getEl('.gameItem-h').pkgid === '17140309181021000002' && (urlStr = 'starLand')
+						window.location.href = 'http://' + window.location.host + '/Wanba/active/' + urlStr + '/index.html?UserID=' + searchObj().UserID + '&ReturnURL=' + escape(window.location.href)
 					})
 				}
 				break
@@ -349,7 +358,7 @@ function keyFnc(event){
 			tipsWinOpen('exhcangeExplain')
 		}else if(chooseClassName === 'myCard'){
 			toSendPage('cardDraw_myCard', '卡牌抽奖', '我的卡牌', function(){
-				document.location.href = data.myCardUrl
+				document.location.href = data.myCardUrl + '?UserID=' + searchObj().UserID + '&ReturnURL=' + escape(document.location.href)
 			})
 		}else if(chooseClassName === 'drawBtn'){
 			tipsWinOpen('drawBtn')
@@ -364,8 +373,9 @@ function keyFnc(event){
 			getEl('.tipsWin').children[i].style.display = ''
 		}
 		if(isList || isBtn){
-			history.back(-1)
+			// history.back(-1)
 			// document.location.href = document.cookie.split('ReturnURL=')[1].split(';')[0]
+			window.location.href = unescape(searchObj().ReturnURL || searchObj().ReturnULR)
 			break
 		}
 		getEl('.tipsWin').style.display = ''
@@ -540,7 +550,7 @@ function tipsWinOpen(name, obj){
 				}else if(Number(param.object.gameId) < 0){
 					switch(param.object.gameId){
 						case '-1'://次数不足
-						getEl('.noDrawTips').style.backgroundImage = 'url(./img/time2.png)'
+						getEl('.noDrawTips').style.backgroundImage = 'url(./img/time1_v2.png)'
 						break
 						case '-2'://时间未到
 						getEl('.noDrawTips').style.backgroundImage = ''
@@ -558,8 +568,8 @@ function tipsWinOpen(name, obj){
 								param.object.map(function(item, index){
 									var li = document.createElement('li')
 									li.className = 'gameItem ' + (index ? '' : 'gameItem-h')
-									li.gameId = item.productid
-									li.innerHTML += '<div><img src="' + item.address + '"/><span>' + item.hava_name + '</span></div>'
+									li.pkgid = item.pkgid
+									li.innerHTML += '<div><img src="' + item.pkgimg + '"/><span>' + item.pkgname + '</span></div>'
 									getEl('.gameList').appendChild(li)
 								})
 							}
@@ -848,9 +858,9 @@ function startActivity(gameId, userId) {
 	}
 
 	switch(true){
-		case /cardDraw/.test(location.href): referPageName = '卡牌抽奖';referPageID = 'kapaichoujiang';break;
-		case /exchangeStore/.test(location.href): referPageName = '兑换中心';referPageID = 'duihuanzhongxin';break;
-		case /registerCards/.test(location.href): referPageName = '卡牌签到';referPageID = 'kapaiqiandao';break;
+		case /cardDraw/.test(location.pathname): referPageName = '卡牌抽奖';referPageID = 'kapaichoujiang';break;
+		case /exchangeStore/.test(location.pathname): referPageName = '兑换中心';referPageID = 'duihuanzhongxin';break;
+		case /registerCards/.test(location.pathname): referPageName = '卡牌签到';referPageID = 'kapaiqiandao';break;
 	}
 
 	var params = {

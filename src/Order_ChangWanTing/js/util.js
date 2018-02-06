@@ -212,10 +212,11 @@ function listItemChoose(toward, classNameFont, chooseNum, choosedClassStr){
 function toSendPage(type, pageName, contentName, callback){
 	var searchStr = searchObj(),
 	wayEUserName = searchStr.wayEUserName,
-	epgUserName = searchStr.UserID,
+	epgUserName = searchStr.UserID || searchStr.userID,
 	url = type === 'page' ? ('http://' + location.host + '/wbManager/pageBrowsing.do') : ('http://' + location.host + '/wbManager/onClickEvent.do'),
 	date = getNowTime(),
-	pageID = location.href.split('/index.html')[0].split('/').pop(),
+	// pageID = location.href.split('/index.html')[0].split('/').pop(),
+	pageID = 'OrderNew_' + type,
 	pageName = pageName || document.title,
 	contentID = type === 'page' ? '' : type,
 	contentName = contentName || ''
@@ -226,7 +227,7 @@ function toSendPage(type, pageName, contentName, callback){
 		data: date,
 		pageID: pageID,
 		pageName: pageName,
-		contentID: contentID ? pageID + '_' + contentID : '',
+		contentID: contentID ? pageID : '',
 		contentName: contentName
 	}
 

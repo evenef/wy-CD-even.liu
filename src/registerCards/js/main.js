@@ -1,13 +1,14 @@
 
 document.documentElement.style.fontSize = '66.6666666666666667px'
 
-var urlStr = /127.0.0.1/.test(location.href) ? '172.18.104.70:8080' : location.host
-urlStr = /file:\/\/\//.test(location.href) ? '172.18.104.70:8080' : urlStr
+var urlStr = /localhost/.test(location.href) ? '172.18.104.17:9088' : location.host
+urlStr = /file:\/\/\//.test(location.href) ? '172.18.104.17:9088' : urlStr
 
 var data = {
 	getAllCardsUrl: "http://" + urlStr + "/wbManager/userCentre/findAllCard.do",//获取所有卡牌信息【接口】
 	getUserCardsUrl: "http://" + urlStr + "/wbManager/userCentre/findUserCardInfo.do",//获取用户拥有的卡牌信息【接口】
 	getCountUrl: "http://" + urlStr + "/wbManager/userCentre/getUserCardSignNum.do",//获取用户剩余签到次数【接口】
+	getDrawNum: "http://" + urlStr + "/wbManager/userCentre/getUserCardDrawNum.do",//获取剩余抽奖次数【接口】
 	getTimeUrl: "http://" + urlStr + "/wbManager/userCentre/getCardSignTime.do",//获取签到重置时间【接口】
 	registerUrl: "http://" + urlStr + "/wbManager/userCentre/userCardSignIn.do",//点击签到【接口】
 	recordUrl: "http://" + urlStr + "/wbManager/userCentre/userSignRec.do",//兑奖记录【接口】
@@ -33,8 +34,8 @@ isInitData = true
 window.onload = function(){
 	var obj = getSearchAndCookie()//获取返回链接
 	obj.UserID && (data.epgUserName = obj.UserID)
-	data.exchangeStoreUrl = location.href.replace(/registerCards/, 'exchangeStore')
-	data.moreGamesUrl = location.href.replace(/registerCards/, 'cardDraw')
+	data.exchangeStoreUrl = location.pathname.replace(/registerCards/, 'exchangeStore')
+	data.moreGamesUrl = location.pathname.replace(/registerCards/, 'cardDraw')
 	toSendPage('page', '卡牌签到')//页面访问统计
 	initData()//初始化页面
 	document.onkeydown = keyFnc
@@ -88,10 +89,54 @@ function initData(){
 		}
 	})
 
+	initRegCount()
+	initDrawCount()
+
 	isInitData = false
 	setTimeout(function(){
 		isInitData = true
 	},3000)
+}
+
+//初始化签到次数
+function initRegCount(){
+	ajax({
+		url: data.getCountUrl,
+		type: 'post',
+		data: {
+			userId: data.epgUserName
+		},
+		success: function(param){
+			param = JSON.parse(param)
+			// console.log("%cparam", "color:#f0f", param)
+			if(!param.rltcode && param.object){
+				getEl('.registerBtn').children[0].innerHTML = param.object
+				getEl('.registerBtn').children[0].style.display = 'block'
+			}else{
+				getEl('.registerBtn').children[0].style.display = ''
+			}
+		}
+	})
+}
+//初始化抽奖次数
+function initDrawCount(){
+	ajax({
+		url: data.getDrawNum,
+		type: 'post',
+		data: {
+			userId: data.epgUserName
+		},
+		success: function(param){
+			param = JSON.parse(param)
+			// console.log("%cparam", "color:#f0f", param)
+			if(!param.rltcode && param.object){
+				// getEl('.registerBtn').children[0].innerHTML = param.object
+				getEl('.moreBtn').children[0].style.display = 'inline-block'
+			}else{
+				getEl('.moreBtn').children[0].style.display = ''
+			}
+		}
+	})
 }
 
 //初始化卡牌列表
@@ -115,7 +160,7 @@ function initList(arr){
 	getEl('.listContent').innerHTML = ''
 	var i = -1
 	arr.map(function(item, index) {
-	var wrap = getEl('.listContent')
+		var wrap = getEl('.listContent')
 
 		var li = document.createElement('li')
 		wrap.appendChild(li)
@@ -194,6 +239,8 @@ function keyFnc(event){
 		}
 		break
 		case 38:
+		// pageConsole('up keyCode：' + event.keyCode)
+
 		if(getEl('.registerLogWin').style.display){
 			var arr = getEl('.logText').children
 			var index = 0
@@ -207,6 +254,7 @@ function keyFnc(event){
 		if(isList){
 			chooseClassName = chooseNum = chooseBtn = listItemChoose('up', 'cardItem', chooseClassName, 'currentChooseCard')
 			listMove(chooseClassName)
+			// pageConsole('chooseClassName：' + chooseClassName)
 		}else if(isBtn){
 			moveLeftBtn('up')
 			break
@@ -225,6 +273,8 @@ function keyFnc(event){
 		}
 		break
 		case 40:
+		// pageConsole('down keyCode：' + event.keyCode)
+
 		if(getEl('.registerLogWin').style.display){
 			var arr = getEl('.logText').children
 			var index = 0
@@ -250,56 +300,95 @@ function keyFnc(event){
 		// 		debugger
 		// 	}
 		// },100)
-			if(/-/.test(chooseClassName)){
+		if(/-/.test(chooseClassName)){
 
-				var el = getEl('.currentChooseCard').cardMsg
-				toSendPage('registerCards_' + el.FK_CARD_ID, '卡牌签到', '卡牌：' + el.CARD_NAME + '-' + el.GAME_NAME)//按钮访问统计
+			var el = getEl('.currentChooseCard').cardMsg
+			toSendPage('registerCards_' + el.FK_CARD_ID, '卡牌签到', '卡牌：' + el.CARD_NAME + '-' + el.GAME_NAME)//按钮访问统计
 
-				tipsWinOpen('cardMsgWin', getEl('.cardItem' + chooseClassName))
-			}
-			else if(chooseClassName === 'gameLink'){
-				if(data.gameLink){
-					toSendPage('registerCards_toSeeGame_' + data.gameLink.FK_CARD_ID, '卡牌签到', '去看看游戏：' + data.gameLink.GAME_NAME)//跳转游戏详情访问统计
-					console.log('跳转游戏详情gameLink', data.gameLink)
-					startActivity(data.gameLink.FK_GAME_ID, data.epgUserName)
-				}else{
-					var obj = getEl('.gameItem-h') ? getEl('.gameItem-h').gameMsg : getEl('.currentChooseCard').cardMsg
-					console.log(obj)
-					toSendPage('registerCards_toSeeGame_' + obj.productid, '卡牌签到', '去看看游戏：' + obj.hava_name)//跳转游戏详情访问统计
-					console.log('跳转游戏详情page', obj.FK_GAME_ID || obj.productid)
-					startActivity(obj.FK_GAME_ID || obj.productid, data.epgUserName)
-				}
-				// 获取该地址的类名：gameItem-h、currentChooseCard
-				// document.location.href = data.gameLink
-			}
-			else if(chooseClassName === 'moreBtn'){
-				toSendPage('registerCards_' + chooseClassName, '卡牌签到', '更多活动', function(){
-					document.location.href = data.moreGamesUrl
-				})
-			}
-			else if(chooseClassName === 'exchangeBtn'){
-				toSendPage('registerCards_' + chooseClassName, '卡牌签到', '兑换奖品', function(){
-					document.location.href = data.exchangeStoreUrl
-				})
-			}
-			else if(chooseClassName === 'closeWin'){
-				getEl('.tipsWin').style.display = ''
-				chooseClassName = chooseBtn
-				if(/\d-\d/.test(chooseClassName)){
-					isList = true
-				}
+			tipsWinOpen('cardMsgWin', getEl('.cardItem' + chooseClassName))
+		}
 
-				initData()
+
+
+
+
+
+
+
+		else if(chooseClassName === 'gameLink' && getEl('.tipsWin').style.display === 'block' && (getEl('.timeNotReadyWin').style.display === 'block' || getEl('.registerNullWin').style.display === 'block')){
+			if(data.gameLink){
+				toSendPage('registerCards_toPackage_' + data.gameLink.pkgid, '卡牌签到', '跳转推荐套餐包：' + data.gameLink.pkgname)//跳转推荐套餐包访问统计
+				console.log('跳转推荐套餐包gameLink', data.gameLink)
+
+				window.location.href = 'http://' + window.location.host + '/Wanba/active/starLand/index.html?UserID=' + searchObj().UserID + '&ReturnURL=' + escape(window.location.href)
+			}else{
+				var obj = getEl('.gameItem-h') ? getEl('.gameItem-h').gameMsg : getEl('.currentChooseCard').cardMsg
+				console.log(obj)
+				toSendPage('registerCards_toPackage_' + obj.pkgid, '卡牌签到', '跳转推荐套餐包：' + obj.pkgname)//跳转推荐套餐包访问统计
+				console.log('转推荐套餐包page', obj.pkgid)
+
+				var urlStr = ''
+				obj.pkgid === '16021215165349000001' && (urlStr = 'park')
+				obj.pkgid === '16021215165731000002' && (urlStr = 'ChangWanTing')
+				obj.pkgid === '16021215165842000003' && (urlStr = 'chessRoom')
+				obj.pkgid === '17140309181021000002' && (urlStr = 'starLand')
+				window.location.href = 'http://' + window.location.host + '/Wanba/active/' + urlStr + '/index.html?UserID=' + searchObj().UserID + '&ReturnURL=' + escape(window.location.href)
 			}
-			else if(chooseClassName === 'registerBtn'){
-				toSendPage('registerCards_' + chooseClassName, '卡牌签到', '签到抽卡')
-				tipsWinOpen('registerBtn')
+		}
+
+
+
+
+
+
+
+
+
+
+		else if(chooseClassName === 'gameLink'){
+			if(data.gameLink){
+				toSendPage('registerCards_toSeeGame_' + data.gameLink.FK_CARD_ID, '卡牌签到', '去看看游戏：' + data.gameLink.GAME_NAME)//跳转游戏详情访问统计
+				console.log('跳转游戏详情gameLink', data.gameLink)
+				startActivity(data.gameLink.FK_GAME_ID, data.epgUserName)
+			}else{
+				var obj = getEl('.gameItem-h') ? getEl('.gameItem-h').gameMsg : getEl('.currentChooseCard').cardMsg
+				console.log(obj)
+				toSendPage('registerCards_toSeeGame_' + obj.productid, '卡牌签到', '去看看游戏：' + obj.hava_name)//跳转游戏详情访问统计
+				console.log('跳转游戏详情page', obj.FK_GAME_ID || obj.productid)
+				startActivity(obj.FK_GAME_ID || obj.productid, data.epgUserName)
 			}
-			else if(chooseClassName === 'registerLogBtn'){
-				toSendPage('registerCards_' + chooseClassName, '卡牌签到', '签到记录')
-				tipsWinOpen('registerLogBtn')
+			// 获取该地址的类名：gameItem-h、currentChooseCard
+			// document.location.href = data.gameLink
+		}
+		else if(chooseClassName === 'moreBtn'){
+			toSendPage('registerCards_' + chooseClassName, '卡牌签到', '更多活动', function(){
+				document.location.href = data.moreGamesUrl + '?UserID=' + searchObj().UserID + '&ReturnURL=' + escape(document.location.href)
+			})
+		}
+		else if(chooseClassName === 'exchangeBtn'){
+			toSendPage('registerCards_' + chooseClassName, '卡牌签到', '兑换奖品', function(){
+				document.location.href = data.exchangeStoreUrl + '?UserID=' + searchObj().UserID + '&ReturnURL=' + escape(document.location.href)
+			})
+		}
+		else if(chooseClassName === 'closeWin'){
+			getEl('.tipsWin').style.display = ''
+			chooseClassName = chooseBtn
+			if(/\d-\d/.test(chooseClassName)){
+				isList = true
 			}
-			break
+
+			initData()
+		}
+		else if(chooseClassName === 'registerBtn'){
+			toSendPage('registerCards_' + chooseClassName, '卡牌签到', '签到抽卡')
+			tipsWinOpen('registerBtn')
+		}
+		else if(chooseClassName === 'registerLogBtn'){
+			toSendPage('registerCards_' + chooseClassName, '卡牌签到', '签到记录')
+			tipsWinOpen('registerLogBtn')
+		}
+		break
+		case 32:
 		case 8:
 		// if((isList || isBtn) && document.cookie){
 		// 	document.location.href = document.cookie.split('ReturnURL=')[1].split(';')[0]
@@ -307,7 +396,9 @@ function keyFnc(event){
 
 		if(isList || isBtn){
 			// console.log('back page')
-			history.back(-1)
+
+			// history.back(-1)
+			window.location.href = unescape(searchObj().ReturnURL || searchObj().ReturnULR)
 			break
 		}else if(getEl('.gameItem-h')){
 			getEl('.registerNullWin').innerHTML = ''
@@ -371,6 +462,7 @@ function tipsWinOpen(name, obj){
 		break
 
 		case 'registerBtn':
+		initRegCount()
 		ajax({
 			url: data.getCountUrl,
 			type: 'post',
@@ -527,7 +619,7 @@ function initRecommendList(data, className){
 	data.map(function(item, index){
 		var li = document.createElement('li')
 		li.className = index ? 'gameItem' : 'gameItem gameItem-h'
-		li.innerHTML = '<div><img src="' + item.address + '"/><span>' + item.hava_name + '</span></div>'
+		li.innerHTML = '<div><img src="' + item.pkgimg + '"/><span>' + item.pkgname + '</span></div>'
 		li.gameMsg = item
 		ul.appendChild(li)
 	})
@@ -600,7 +692,7 @@ function successRegisterFnc(){
 		},1800)
 	}
 
-console.log('registerUrl',data.registerUrl)
+	console.log('registerUrl',data.registerUrl)
 	ajax({
 		url: data.registerUrl,
 		type: 'post',
@@ -767,9 +859,9 @@ function startActivity(gameId, userId) {
 	}
 
 	switch(true){
-		case /cardDraw/.test(location.href): referPageName = '卡牌抽奖';referPageID = 'kapaichoujiang';break;
-		case /exchangeStore/.test(location.href): referPageName = '兑换中心';referPageID = 'duihuanzhongxin';break;
-		case /registerCards/.test(location.href): referPageName = '卡牌签到';referPageID = 'kapaiqiandao';break;
+		case /cardDraw/.test(location.pathname): referPageName = '卡牌抽奖';referPageID = 'kapaichoujiang';break;
+		case /exchangeStore/.test(location.pathname): referPageName = '兑换中心';referPageID = 'duihuanzhongxin';break;
+		case /registerCards/.test(location.pathname): referPageName = '卡牌签到';referPageID = 'kapaiqiandao';break;
 	}
 
 	var params = {
@@ -988,36 +1080,36 @@ function getNowTime(){
 //callback：回调
 function toSendPage(type, pageName, contentName, callback){
 			// callback && callback()
-	var searchStr = searchObj(),
-	wayEUserName = searchStr.wayEUserName,
-	url = type === 'page' ? ('http://' + location.host + '/wbManager/pageBrowsing.do') : ('http://' + location.host + '/wbManager/onClickEvent.do'),
-	date = getNowTime(),
-	pageID = location.href.split('/index.html')[0].split('/').pop(),
-	pageName = pageName || document.title,
-	contentID = type === 'page' ? '' : type,
-	contentName = contentName || ''
+			var searchStr = searchObj(),
+			wayEUserName = searchStr.wayEUserName,
+			url = type === 'page' ? ('http://' + location.host + '/wbManager/pageBrowsing.do') : ('http://' + location.host + '/wbManager/onClickEvent.do'),
+			date = getNowTime(),
+			pageID = location.href.split('/index.html')[0].split('/').pop(),
+			pageName = pageName || document.title,
+			contentID = type === 'page' ? '' : type,
+			contentName = contentName || ''
 
-	var obj = {
-		epgUserName: data.epgUserName,
-		wayEUserName: wayEUserName,
-		data: date,
-		pageID: pageID,
-		pageName: pageName,
-		contentID: contentID,
-		contentName: contentName
-	}
-	console.log('页面统计信息', obj)
-	ajax({
-		url: url,
-		type: 'post',
-		data: obj,
-		success: function(param){
-			param = JSON.parse(param)
-			console.log('统计返回信息', param)
-			callback && callback(param)
+			var obj = {
+				epgUserName: data.epgUserName,
+				wayEUserName: wayEUserName,
+				data: date,
+				pageID: pageID,
+				pageName: pageName,
+				contentID: contentID,
+				contentName: contentName
+			}
+			console.log('页面统计信息', obj)
+			ajax({
+				url: url,
+				type: 'post',
+				data: obj,
+				success: function(param){
+					param = JSON.parse(param)
+					console.log('统计返回信息', param)
+					callback && callback(param)
+				}
+			})
 		}
-	})
-}
 
 //倒计时
 function timeOutMachine(wrap, callback){
