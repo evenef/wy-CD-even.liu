@@ -25,11 +25,11 @@ var data = {
 	cardsList: [],
 	recordText: [],
 	awardIdArr: ["award-pg0001", "award-pg0002", "award-pg0003", "award-pg0004", "award-pg0005"]//右侧展示奖品ID，排列顺序从上到下
-	// awardIdArr: ["award0001", "award0002", "award0003", "award0004", "award0005"]//右侧展示奖品ID，排列顺序从上到下
+	// awardIdArr: ["award0001", "award0002", "award0003", "award0004", "award0005"]//右侧展示奖品ID，排列顺序从上到下[成都测试]
 }
 
 if(/127.0.0.1/.test(location.href) || /file:\/\/\//.test(location.href)){
-	data.awardIdArr = ["award0001", "award0002", "award0003", "award0004", "award0005"]
+	data.awardIdArr = ["award0001", "award0002", "award0003", "award0004", "award0005"]//[成都测试]
 }
 
 

@@ -24,7 +24,7 @@ var fileArr = [
 // 'park',
 // 'starLand',
 // 'movieGame',
-// 'toKeepStayTips',
+// 'toKeepStayTips',影游联动增加PV、UV统计
 // 'Order_ChangWanTing',
 // 'YuanDanActive',
 // 'snowBallFight',
@@ -32,7 +32,8 @@ var fileArr = [
 // 'gameDetail',
 // 'hallUpdateTipsWin',
 // 'loadingPage',
-'newSpringDaLianHuan',
+// 'newSpringDaLianHuan',
+'HanJiaDaFangSong',
 ]
 //服务器IP
 var serverIP = '127.0.0.1:3000'
@@ -128,7 +129,7 @@ gulp.task('uglify', function(){
     compress: true,//类型：Boolean 默认：true 是否完全压缩
     // preserveComments: 'none' //保留所有注释【测试该属性报错】
   }
-  gulp.src('src/' + projectsName + '/js/*.js')
+  gulp.src('src/' + projectsName + '/**/*.js')
   // .pipe(concat('main.js')) //合并多个js文件
   .pipe(uglify(options))
   .pipe(gulp.dest('dist'))

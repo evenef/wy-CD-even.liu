@@ -6,6 +6,9 @@ FILM_ID = '',
 CAT_ID = ''
 
 window.onload = function(){
+	toSendPage('page', '影游联动')
+
+	// pageConsole('window.location.href : ', window.location.href)
 
 	initPage(butNum)
 	controlVideo('onWatch')
@@ -86,8 +89,8 @@ function focusImgs(name, obj){
 			playImg: './img/ao_te_man_img.png',
 			videoImg: './img/ao_te_man_video.png'
 		}
-		getEl('.bg_ao_te_man').style.display = ''
-		getEl('.show_img_ao_te_man').style.display = ''
+		getEl('.bg_ao_te_man').style.display = 'block'
+		getEl('.show_img_ao_te_man').style.display = 'block'
 		break
 		case 'GuoBao':
 		obj = {
@@ -97,8 +100,8 @@ function focusImgs(name, obj){
 			playImg: './img/guo_bao_te_gong_img.png',
 			videoImg: './img/guo_bao_te_gong_video.png'
 		}
-		getEl('.bg_guo_bao_te_gong').style.display = ''
-		getEl('.show_img_guo_bao_te_gong').style.display = ''
+		getEl('.bg_guo_bao_te_gong').style.display = 'block'
+		getEl('.show_img_guo_bao_te_gong').style.display = 'block'
 		break
 		case 'KaiJia':
 		obj = {
@@ -108,8 +111,8 @@ function focusImgs(name, obj){
 			playImg: './img/kai_jia_yong_shi_img.png',
 			videoImg: './img/kai_jia_yong_shi_video.png'
 		}
-		getEl('.bg_kai_jia_yong_shi').style.display = ''
-		getEl('.show_img_kai_jia_yong_shi').style.display = ''
+		getEl('.bg_kai_jia_yong_shi').style.display = 'block'
+		getEl('.show_img_kai_jia_yong_shi').style.display = 'block'
 		break
 		case 'XiaoMoXian':
 		obj = {
@@ -119,22 +122,22 @@ function focusImgs(name, obj){
 			playImg: './img/xiao_mo_xian_img.png',
 			videoImg: './img/xiao_mo_xian_video.png'
 		}
-		getEl('.bg_xiao_mo_xian').style.display = ''
-		getEl('.show_img_xiao_mo_xian').style.display = ''
+		getEl('.bg_xiao_mo_xian').style.display = 'block'
+		getEl('.show_img_xiao_mo_xian').style.display = 'block'
 		break
 	}
 	getEl('.item_focus').children[0].style.backgroundImage = 'url(' + obj.butImg + ')'
 	getEl('.item_focus').children[0].style.backgroundPosition = 'center'
 
 	if(obj.playImg){
-		getEl('.play_icon').style.display = ''
-		getEl('#right_game_img').style.display = ''
+		getEl('.play_icon').style.display = 'block'
+		getEl('#right_game_img').style.display = 'block'
 		getEl('#right_game_img').src = obj.playImg
 	}else{
 		getEl('#right_game_img').style.display = 'none'
 	}
 	if(obj.videoImg){
-		getEl('#left_video_img').style.display = ''
+		getEl('#left_video_img').style.display = 'block'
 		getEl('#left_video_img').src = obj.videoImg
 	}else{
 		getEl('#left_video_img').style.display = 'none'
@@ -188,15 +191,26 @@ function keyFnc(e){
 		break
 		case 13:
 		if(upBtnC && upBtnC === 'watch'){
-			controlVideo('goToWatch')
+			toSendPage('goToWatchBtn_' + gameId, '影游联动', '影游联动_点击观看影片_' + gameId, function(){
+
+				controlVideo('goToWatch')
+			})
 		}else if(upBtnC && upBtnC === 'play'){
-			console.log(upBtnC, butNum)
+			// console.log(upBtnC, butNum)
 
 			initGameData()
-			startActivity(gameId, searchObj().UserID)
+
+			toSendPage('playBtn_' + gameId, '影游联动', '影游联动_点击立即畅玩_' + gameId, function(){
+
+				startActivity(gameId, searchObj().UserID)
+			})
 		}else{
 			initGameData()
-			startActivity(gameId, searchObj().UserID)
+
+			toSendPage('playBtn_' + gameId, '影游联动', '影游联动_跳转游戏详情_' + gameId, function(){
+
+				startActivity(gameId, searchObj().UserID)
+			})
 		}
 		break
 		case 32:
@@ -249,8 +263,15 @@ function controlVideo(name){
 	try{
 		var epgDoman = Authentication.CTCGetConfig("EPGDomain");
 		if(name === 'goToWatch'){
-			var _url = epgDoman.substring(0,epgDoman.indexOf("Category.jsp")) + "Category.jsp?spVodPlayUrl="+escape("vod_TVDetail.html?TYPE_ID=" + CAT_ID + "&FILM_ID=" + FILM_ID + "&ReturnURL=" + escape(window.location.href))
-			document.location.href = _url
+			// var _url = epgDoman.substring(0,epgDoman.indexOf("Category.jsp")) + "Category.jsp?spVodPlayUrl="+escape("vod_detail.html?TYPE_ID=" + CAT_ID + "&FILM_ID=" + FILM_ID + "&ReturnURL=" + escape(window.location.href))
+
+			var _url = epgDoman.substring(0,epgDoman.indexOf("Category.jsp")) + "Category.jsp?spVodPlayUrl="+escape("valueadded/tongqu_progDetail.html?SITCOM=1&refer_page=movieGame&TYPE_ID=" + CAT_ID + "&FILM_ID=" + FILM_ID + "&ReturnURL=" + escape(window.location.href))
+
+			// pageConsole('to href : ', _url)
+
+			// setTimeout(function(){
+				document.location.href = _url
+			// }, 10000)
 		}else if(name === 'onWatch'){
 
 			var _url = epgDoman.split("/EPG")[0]+"/EPG/jsp/gdgaoqing/en/vaitf/getVodPlayUrl.jsp"+"?code=" + videoCode;

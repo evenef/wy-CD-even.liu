@@ -158,6 +158,10 @@ function keyFnc(event) {
 					item.TYPEID == 1 && startActivity(currentGameID, data.UserID)
 					if(item.TYPEID == 2){
 						// document.location.href = 'http://' + window.location.host + '/Wanba/EPG/gameDetail/index.html?UserID=' + data.UserID + '&gameId=' + currentGameID + '&ReturnURL=' + escape(document.location.href)
+
+						item.APKADDRESS += /\?/.test(item.APKADDRESS) ? '&' : '?'
+						item.APKADDRESS += 'UserID=' + searchObj().UserID + '&ReturnURL=' + searchObj().ReturnURL
+
 						document.location.href = item.APKADDRESS
 					}
 				}

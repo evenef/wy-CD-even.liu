@@ -1,4 +1,4 @@
-var utilObj = {
+﻿var utilObj = {
 	getId: getId,//id获取元素
 	getClass: getClass,//class获取元素集合
 	getEl: getEl,//获取匹配的第一个元素
@@ -9,12 +9,14 @@ var utilObj = {
 	imgLoadFnc: imgLoadFnc,//预加载图片
 	imgRoll: imgRoll,//图片左右翻转
 	setCookie: setCookie,//设置cookie
+	getCookie: getCookie,//获取cookie
 	listItemChoose: listItemChoose,//方向选择
 	toSendPage: toSendPage,//发送统计数值
 	startActivity: startActivity,//跳转游戏详情
 	pageConsole: pageConsole,//页面打印消息（测试用）
 	playMediaEPG: playMediaEPG,//调用EPG媒体播放
 	destoryMP: destoryMP,//清除上一个EPG媒体播放
+	toPayFnc: toPayFnc,//订购鉴权接口
 }
 
 //id获取元素
@@ -51,7 +53,9 @@ function ajax(options) {
 		xhr.send()
 	} else if (options.type == "POST") {
 		xhr.open("POST", options.url, true)
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
+		xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+		//xhr.setRequestHeader("Cookie", document.cookie);	//针对某些老盒子ajax请求返回302的问题(导致获取不到数据)可以将此行注释打开,最好使用Authentication.CTCGetConfig("STBType")方法判断一下盒子型号再打开注释
 		xhr.send(params)
 	}
 }
@@ -97,9 +101,11 @@ function imgLoadFnc(imgUrlArr, callback) {
 		var img = new Image()
 		img.src = imgUrlArr[i]
 		img.onload = function(){
+			// console.log('图片' + index)
 			index++
 			if(index >= imgUrlArr.length){
-				callback && callback()
+				if(callback)
+					callback()
 			}
 		}
 	}
@@ -132,10 +138,22 @@ function setCookie(keyName, value, expiredays){
 	var exdate = new Date()
 	exdate.setDate(exdate.getDate() + (expiredays || 0))
 	document.cookie = keyName + "=" + escape(value)+ ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
-	console.log(exdate.getDate())
+	// console.log(exdate.getDate())
+}
+function getCookie(keyName){
+	var coo = document.cookie.replace(/\s/g, '')
+	var arr = coo.split(';')
+	var obj = {}
+	arr.map(function(item){
+		obj[item.split('=')[0]] = item.split('=')[1]
+	})
+	return obj[keyName]
 }
 //方向选择
-//toward方向left/right/up/down，classNameFont子项类名前缀，chooseNum子项类名编号，choosedClassStr选中的元素类名
+//toward方向left/right/up/down
+//classNameFont子项类名前缀
+//chooseNum子项类名编号
+//choosedClassStr选中的元素类名
 function listItemChoose(toward, classNameFont, chooseNum, choosedClassStr){
 	if(!/-/.test(chooseNum)){
 		return
@@ -195,12 +213,12 @@ function listItemChoose(toward, classNameFont, chooseNum, choosedClassStr){
 function toSendPage(type, pageName, contentName, callback){
 	var searchStr = searchObj(),
 	wayEUserName = searchStr.wayEUserName,
-	epgUserName = searchStr.UserID,
+	epgUserName = searchStr.UserID || UserID,
 	url = type === 'page' ? ('http://' + location.host + '/wbManager/pageBrowsing.do') : ('http://' + location.host + '/wbManager/onClickEvent.do'),
 	date = getNowTime(),
 	pageID = location.href.split('/index.html')[0].split('/').pop(),
 	pageName = pageName || document.title,
-	contentID = type === 'page' ? '' : (pageID + '_' + type),
+	contentID = type === 'page' ? '' : type,
 	contentName = contentName || ''
 
 	var obj = {
@@ -209,7 +227,7 @@ function toSendPage(type, pageName, contentName, callback){
 		data: date,
 		pageID: pageID,
 		pageName: pageName,
-		contentID: contentID ? (pageID + '_' + contentID) : '',
+		contentID: contentID ? pageID + '_' + contentID : '',
 		contentName: contentName
 	}
 
@@ -227,7 +245,7 @@ function toSendPage(type, pageName, contentName, callback){
 	})
 }
 //跳转游戏详情
-function startActivity(gameId, userId) {
+function startActivity(gameId, UserID) {
 	var appName = "com.utstar.appstoreapplication.activity",
 	className = "com.utstar.appstoreapplication.activity.StartAppActivity",
 	mac = "",
@@ -247,18 +265,18 @@ function startActivity(gameId, userId) {
 		case /cardDraw/.test(location.href): referPageName = '卡牌抽奖';referPageID = 'kapaichoujiang';break;
 		case /exchangeStore/.test(location.href): referPageName = '兑换中心';referPageID = 'duihuanzhongxin';break;
 		case /registerCards/.test(location.href): referPageName = '卡牌签到';referPageID = 'kapaiqiandao';break;
-		case /movieGame/.test(location.href): referPageName = '影游联动';referPageID = 'YingYouLianDong';break;
+		case /christmasActivity/.test(location.href): referPageName = '圣诞活动';referPageID = 'ShengDanHuoDong';break;
+		case /YuanDanActive/.test(location.href): referPageName = '元旦活动';referPageID = 'YuanDanHuoDong';break;
 	}
 	var params = {
 		"turnType": "1",
-		"referPageID": referPageID,
 		"referPageName": referPageName,
+		"referPageID": referPageID,
 
 		"normalItemData": {
 			"id": "" + gameId
 		}
-	}
-
+	};
 	var intentMessage = JSON.stringify({
 		intentType: 0,
 		appName: appName,
@@ -266,7 +284,7 @@ function startActivity(gameId, userId) {
 		extra: [
 		{name: "epgDoman",value: epgDoman},
 		{name: "areaId",value: _stb_areaid},
-		{name: "epgUserId",value: userId},
+		{name: "epgUserId",value: UserID || searchObj().UserID},
 		{name: "epgToken",value: epgToken},
 		{name: "isDispath",value: true},
 		{name: "action",value: "0"},
@@ -280,6 +298,7 @@ function startActivity(gameId, userId) {
 		STBAppManager.startAppByIntent(intentMessage);
 	} catch (e) {
 		console.log(intentMessage)
+		// console.log(JSON.parse(intentMessage))
 	}
 }
 
@@ -350,12 +369,12 @@ try{
 	function destoryMP(){
 		var instanceId = mp.getNativePlayerInstanceID();
 		mp.stop();
+		// mp.pause();
 		mp.releaseMediaPlayer(instanceId);
 	}
 }catch(e){
-	// pageConsole('错误报告：', e)
+	pageConsole('错误报告：', e)
 }
-
 
 //页面打印消息（测试用）
 //title打印标题
@@ -368,17 +387,45 @@ function pageConsole(title, param){
 	}
 	var wrap = getEl('#tempWrap')
 
-	wrap.innerHTML += '<p style="color: rgba(255,255,255,1);line-height: 24px;margin: 0 40px;word-break: break-all;">' + (title || '') + (param || '') + '</p>'
+	wrap.innerHTML += '<p style="color: rgba(255,255,255,1);line-height: 24px;word-break: break-all;">' + (title || '') + (param || '') + '</p>'
 	document.body.style.position = 'absolute'
-	wrap.style.width = '600px'
+	wrap.style.width = '1080px'
+	wrap.style.paddingLeft = '200px'
 	wrap.style.position = 'absolute'
-	wrap.style.left = '600px'
-	wrap.style.bottom = '-500px'
+	wrap.style.bottom = '200px'
 	wrap.style.fontSize = '16px'
 	wrap.style.zIndex = '999'
-	wrap.style.backgroundColor = 'rgba(0,0,0,.7)'
+	wrap.style.backgroundColor = 'rgba(0,0,0,.5)'
+}
+
+//订购鉴权接口
+//回调callback传参true（已订购）false（未订购）
+//需要参数obj：spId、UserID、PRODUCTID、contentCode、callback
+function toPayFnc(obj){
+	ajax({
+		url: obj.toPayURL,
+		data: {
+			spId: obj.spId || '',
+			epgId: obj.UserID || '',
+			productId: obj.PRODUCTID || '',
+			contentId: obj.contentCode || '',
+		},
+		success: function(param){
+			param = JSON.parse(param)
+			if(!param.rltcode && param.object.list.error_code == 0){
+				obj.callback(true)
+			}else{
+				obj.callback(false)
+				document.location.href = 'http://' + location.host + '/Wanba/EPG/Order/order.jsp?userID=' + obj.UserID + '&productId=' + obj.PRODUCTID + '&contentCode=' + obj.contentCode + '&backUrl=' + escape(document.location.href)
+			}
+		}
+	})
 }
 
 
+
+// 'http://192.168.5.3:8080/Wanba/EPG/Order/index.html?userID=epg010010101&productId=16021215165349000001&contentCode=1605120914333798479570&backUrl=http%3A//192.168.5.3%3A8080/Wanba/active/ChangWanTing/index.html%3FPRODUCTID%3D16021215165349000001%26ReturnURL%3D123%26UserID%3Depg010010101%26wayEUserName%3DwayEUserName'
+
 //跳转点击观看
 // var _url = epgDoman.substring(0,epgDoman.indexOf("Category.jsp")) + "Category.jsp?spVodPlayUrl="+escape("vod_TVDetail.html?TYPE_ID=" + CAT_ID[selectIndex] + "&FILM_ID=" + FILM_IDS[selectIndex] + "&ReturnURL=" + escape(window.location.href));
+
