@@ -98,12 +98,12 @@
 		left:520px;
 	}
 	.nav #area0_3.item{
-		width:209px;
+		width:175px;
 		left:720px;
 	}
 	.nav #area0_4.item{
 		width:175px;
-		left:890px;
+		left:870px;
 	}
 	.nav #area0_5.item{
 		width:175px;
@@ -118,24 +118,24 @@
 		background:url("images/nav_default00.png") no-repeat;
 	}
 	.nav #area0_1.item .nav_txt{
-		left:20px;
+		left:19px;
 		background:url("images/nav_default01.png") no-repeat;
 	}
 	.nav #area0_2.item .nav_txt{
-		left:20px;
+		left:18px;
 		background:url("images/nav_default02.png") no-repeat;
 	}
 	.nav #area0_3.item .nav_txt{
-		left:20px;
-		background:url("images/nav_default03.png") no-repeat;
+		left:38px;
+		background:url("images/nav_default04.png") no-repeat;
 	}
 	.nav #area0_4.item .nav_txt{
-		left:40px;
-		background:url("images/nav_default04.png") no-repeat;
+		left:36px;
+		background:url("images/nav_default05.png") no-repeat;
 	}
 	.nav #area0_5.item .nav_txt{
 		left:40px;
-		background:url("images/nav_default05.png") no-repeat;
+		background:url("images/nav_default04.png") no-repeat;
 	}
 
 	.nav .item_focus{
@@ -152,13 +152,13 @@
 		background:url("images/navimg03-h.png") no-repeat;
 	}
 	.nav #area0_3.item_focus{
-		background:url("images/navimg04-h.png") no-repeat;
-	}
-	.nav #area0_4.item_focus{
 		background:url("images/navimg06-h.png") no-repeat;
 	}
-	.nav #area0_5.item_focus{
+	.nav #area0_4.item_focus{
 		background:url("images/navimg07-h.png") no-repeat;
+	}
+	.nav #area0_5.item_focus{
+		background:url("images/navimg06-h.png") no-repeat;
 	}
 
 	.nav .item_selected{
@@ -172,13 +172,13 @@
 		background:url("images/navimg03-v.png") no-repeat;
 	}
 	.nav #area0_3.item_selected{
-		background:url("images/navimg04-v.png") no-repeat;
-	}
-	.nav #area0_4.item_selected{
 		background:url("images/navimg06-v.png") no-repeat;
 	}
-	.nav #area0_5.item_selected{
+	.nav #area0_4.item_selected{
 		background:url("images/navimg07-v.png") no-repeat;
+	}
+	.nav #area0_5.item_selected{
+		background:url("images/navimg06-v.png") no-repeat;
 	}
 	.content{
 		position:absolute;
@@ -1333,13 +1333,13 @@
 			<div id="area0_2" class="item">
 				<div class="nav_txt"></div>
 			</div>
+			<!--><div id="area0_3" class="item">
+				<div class="nav_txt"></div>
+			</div><-->
 			<div id="area0_3" class="item">
 				<div class="nav_txt"></div>
 			</div>
 			<div id="area0_4" class="item">
-				<div class="nav_txt"></div>
-			</div>
-			<div id="area0_5" class="item">
 				<div class="nav_txt"></div>
 			</div>
 		</div>
@@ -1562,25 +1562,25 @@
 					<div id="area35_0" class="item">
 						<div class="type_0" id="area35_div0" style="display:none">
 							<img id="area35_img0" src="images/bg.png" />
-							<div id="area35_type0_txt" class="type_0_txt">大话西游</div>
+							<div id="area35_type0_txt" class="type_0_txt"></div>
 						</div>
 						<div class="type_1" id="area35_div1" style="display:none">
 							<img id="area35_img1" src="images/bg.png" />
-							<div id="area35_type1_txt" class="type_1_txt">大话西游</div>
+							<div id="area35_type1_txt" class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area35_div2" style="display:none">
 							<img id="area35_img2" src="images/bg.png" />
-							<div id="area35_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area35_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area36_0" class="item" style="position:absolute;top:229px">
 						<div class="type_1" id="area36_div1" style="display:none">
 							<img id="area36_img1" src="images/bg.png" />
-							<div id="area36_type1_txt" class="type_1_txt">大话西游</div>
+							<div id="area36_type1_txt" class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area36_div2" style="display:none">
 							<img id="area36_img2" src="images/bg.png" />
-							<div id="area36_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area36_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 				</div>
@@ -1588,89 +1588,89 @@
 					<div id="area37_0" class="item0">
 						<div class="type_0" id="area37_div0" style="display:none">
 							<img id="area37_img0" src="images/bg.png" />
-							<div id="area37_type0_txt" class="type_0_txt">大话西游</div>
+							<div id="area37_type0_txt" class="type_0_txt"></div>
 						</div>
 						<div class="type_1" id="area37_div1" style="display:none">
 							<img id="area37_img1" src="images/bg.png" />
-							<div id="area37_type1_txt" class="type_1_txt">大话西游</div>
+							<div id="area37_type1_txt" class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area37_div2" style="display:none">
 							<img id="area37_img2" src="images/bg.png" />
-							<div id="area37_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area37_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area38_0" class="item1">
 						<div class="type_1" id="area38_div1" style="display:none">
 							<img id="area38_img1" src="images/bg.png" />
-							<div id="area38_type1_txt" class="type_1_txt">大话西游</div>
+							<div id="area38_type1_txt" class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area38_div2" style="display:none">
 							<img id="area38_img2" src="images/bg.png" />
-							<div id="area38_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area38_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area39_0" class="item2">
 						<div class="type_0" id="area39_div0" style="display:none">
 							<img id="area39_img0" src="images/bg.png" />
-							<div id="area39_type0_txt" class="type_0_txt">大话西游</div>
+							<div id="area39_type0_txt" class="type_0_txt"></div>
 						</div>
 						<div class="type_1" id="area39_div1" style="display:none">
 							<img id="area39_img1" src="images/bg.png" />
-							<div id="area39_type1_txt" class="type_1_txt">大话西游</div>
+							<div id="area39_type1_txt" class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area39_div2" style="display:none">
 							<img id="area39_img2" src="images/bg.png" />
-							<div id="area39_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area39_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area40_0" class="item3">
 						<div class="type_1" id="area40_div1" style="display:none">
 							<img id="area40_img1" src="images/bg.png" />
-							<div id="area40_type1_txt" class="type_1_txt">大话西游</div>
+							<div id="area40_type1_txt" class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area40_div2" style="display:none">
 							<img id="area40_img2" src="images/bg.png" />
-							<div id="area40_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area40_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area41_0" class="item4">
 						<div class="type_0" id="area41_div0" style="display:none">
 							<img id="area41_img0" src="images/bg.png" />
-							<div id="area41_type0_txt" class="type_0_txt">大话西游</div>
+							<div id="area41_type0_txt" class="type_0_txt"></div>
 						</div>
 						<div class="type_1" id="area41_div1" style="display:none">
 							<img id="area41_img1" src="images/bg.png" />
-							<div id="area41_type1_txt" class="type_1_txt">大话西游</div>
+							<div id="area41_type1_txt" class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area41_div2" style="display:none">
 							<img id="area41_img2" src="images/bg.png" />
-							<div id="area41_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area41_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area42_0" class="item5">
 						<div class="type_1" id="area42_div1" style="display:none">
 							<img id="area42_img1" src="images/bg.png" />
-							<div id="area42_type1_txt" class="type_1_txt">大话西游</div>
+							<div id="area42_type1_txt" class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area42_div2" style="display:none">
 							<img id="area42_img2" src="images/bg.png" />
-							<div id="area42_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area42_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area43_0" class="item6">
 					<div class="type_0" id="area43_div0" style="display:none">
 							<img id="area43_img0" src="images/bg.png" />
-							<div id="area43_type0_txt" class="type_0_txt">大话西游</div>
+							<div id="area43_type0_txt" class="type_0_txt"></div>
 						</div>
 						<div class="type_2" id="area43_div2" style="display:none">
 							<img id="area43_img2" src="images/bg.png" />
-							<div id="area43_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area43_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area44_0" class="item7">
 						<div class="type_2" id="area44_div2" style="display:none">
 							<img id="area44_img2" src="images/bg.png" />
-							<div id="area44_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area44_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 				</div>
@@ -1688,89 +1688,89 @@
 					<div id="area47_0" class="item0">
 						<div class="type_0" id="area47_div0" style="display:none">
 							<img id="area47_img0" src="images/bg.png" />
-							<div id="area47_type0_txt" class="type_0_txt">大话西游</div>
+							<div id="area47_type0_txt" class="type_0_txt"></div>
 						</div>
 						<div class="type_1" id="area47_div1" style="display:none">
 							<img id="area47_img1" src="images/bg.png" />
-							<div id="area47_type1_txt" class="type_1_txt">大话西游</div>
+							<div id="area47_type1_txt" class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area47_div2" style="display:none">
 							<img id="area47_img2" src="images/bg.png" />
-							<div id="area47_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area47_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area48_0" class="item1">
 						<div class="type_1" id="area48_div1" style="display:none">
 							<img id="area48_img1" src="images/bg.png" />
-							<div id="area48_type1_txt"class="type_1_txt">大话西游</div>
+							<div id="area48_type1_txt"class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area48_div2" style="display:none">
 							<img id="area48_img2" src="images/bg.png" />
-							<div id="area48_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area48_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area49_0" class="item2">
 						<div class="type_0" id="area49_div0" style="display:none">
 							<img id="area49_img0" src="images/bg.png" />
-							<div id="area49_type0_txt" class="type_0_txt">大话西游</div>
+							<div id="area49_type0_txt" class="type_0_txt"></div>
 						</div>
 						<div class="type_1" id="area49_div1" style="display:none">
 							<img id="area49_img1" src="images/bg.png" />
-							<div id="area49_type1_txt"class="type_1_txt">大话西游</div>
+							<div id="area49_type1_txt"class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area49_div2" style="display:none">
 							<img id="area49_img2" src="images/bg.png" />
-							<div id="area49_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area49_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area50_0" class="item3">
 						<div class="type_1" id="area50_div1" style="display:none">
 							<img id="area50_img1" src="images/bg.png" />
-							<div id="area50_type1_txt"class="type_1_txt">大话西游</div>
+							<div id="area50_type1_txt"class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area50_div2" style="display:none">
 							<img id="area50_img2" src="images/bg.png" />
-							<div id="area50_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area50_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area51_0" class="item4">
 						<div class="type_0" id="area51_div0" style="display:none">
 							<img id="area51_img0" src="images/bg.png" />
-							<div id="area51_type0_txt" class="type_0_txt">大话西游</div>
+							<div id="area51_type0_txt" class="type_0_txt"></div>
 						</div>
 						<div class="type_1" id="area51_div1" style="display:none">
 							<img id="area51_img1" src="images/bg.png" />
-							<div id="area51_type1_txt" class="type_1_txt">大话西游</div>
+							<div id="area51_type1_txt" class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area51_div2" style="display:none">
 							<img id="area51_img2" src="images/bg.png" />
-							<div id="area51_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area51_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area52_0" class="item5">
 						<div class="type_1" id="area52_div1" style="display:none">
 							<img id="area52_img1" src="images/bg.png" />
-							<div id="area52_type1_txt" class="type_1_txt">大话西游</div>
+							<div id="area52_type1_txt" class="type_1_txt"></div>
 						</div>
 						<div class="type_2" id="area52_div2" style="display:none">
 							<img id="area52_img2" src="images/bg.png" />
-							<div id="area52_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area52_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area53_0" class="item6">
 						<div class="type_0" id="area53_div0" style="display:none">
 							<img id="area53_img0" src="images/bg.png" />
-							<div id="area53_type0_txt" class="type_0_txt">大话西游</div>
+							<div id="area53_type0_txt" class="type_0_txt"></div>
 						</div>
 						<div class="type_2" id="area53_div2" style="display:none">
 							<img id="area53_img2" src="images/bg.png" />
-							<div id="area53_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area53_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 					<div id="area54_0" class="item7">
 						<div class="type_2" id="area54_div2" style="display:none">
 							<img id="area54_img2" src="images/bg.png" />
-							<div id="area54_type2_txt" class="type_2_txt">大话西游</div>
+							<div id="area54_type2_txt" class="type_2_txt"></div>
 						</div>
 					</div>
 				</div>
@@ -1779,31 +1779,31 @@
 				<div class="videoCenter">
                     <div class="item" style="top:0;left:0;" id="area55_0">
                         <img id="area55_img_0" class="videoCenterImg" src="images/bg.png"/>
-                        <div id="area55_txt_0" class="videoCenterTxt">sdfas</div>
+                        <div id="area55_txt_0" class="videoCenterTxt"></div>
                     </div>
                     <div class="item" style="top:0;left:287px;" id="area55_1">
                         <img id="area55_img_1" class="videoCenterImg" src="images/bg.png"/>
-                        <div id="area55_txt_1" class="videoCenterTxt">adfas</div>
+                        <div id="area55_txt_1" class="videoCenterTxt"></div>
                     </div>
                     <div class="item" style="top:0;left:574px;" id="area55_2">
                         <img id="area55_img_2" class="videoCenterImg" src="images/bg.png"/>
-                        <div id="area55_txt_2" class="videoCenterTxt">adf</div>
+                        <div id="area55_txt_2" class="videoCenterTxt"></div>
                     </div>
                     <div class="item" style="top:0;left:861px;" id="area55_3">
                         <img id="area55_img_3" class="videoCenterImg" src="images/bg.png"/>
-                        <div id="area55_txt_3" class="videoCenterTxt">dd</div>
+                        <div id="area55_txt_3" class="videoCenterTxt"></div>
                     </div>
                     <div class="item" style="top:254px; left:0;" id="area55_4">
                         <img id="area55_img_4" class="videoCenterImg" src="images/bg.png"/>
-                        <div id="area55_txt_4" class="videoCenterTxt">ss</div>
+                        <div id="area55_txt_4" class="videoCenterTxt"></div>
                     </div>
                     <div class="item"  style="top:254px; left:287px;" id="area55_5">
                         <img id="area55_img_5" class="videoCenterImg" src="images/bg.png"/>
-                        <div id="area55_txt_5" class="videoCenterTxt">adf</div>
+                        <div id="area55_txt_5" class="videoCenterTxt"></div>
                     </div>
                     <div class="item" style="top:254px;left:574px;" id="area55_6">
                         <img id="area55_img_6" class="videoCenterImg" src="images/bg.png"/>
-                        <div id="area55_txt_6" class="videoCenterTxt">dsfd</div>
+                        <div id="area55_txt_6" class="videoCenterTxt"></div>
                     </div>
                     <div class="item" style="top:254px;left:861px;" id="area55_7">
                         <img id="area55_img_7" class="videoCenterImg" src="images/bg.png"/>
@@ -1880,51 +1880,51 @@
                         <div id="searchResultNull" style="position:absolute;left:22px;top:90px;font-size:20px;display:none;color:#a19dc1;">暂无结果，请重新搜索</div>
                         <div class="item" style="top:95px;left:40px;" id="area58_0">
                             <img id="area58_img_0" class="searchResultImg" src="images/search_0.png"/>
-                            <div id="area58_txt_0" class="searchResultTxt">幻神天下</div>
+                            <div id="area58_txt_0" class="searchResultTxt"></div>
                         </div>
                         <div class="item" style="top:95px;left:160px;" id="area58_1">
                             <img id="area58_img_1" class="searchResultImg" src="images/search_0.png"/>
-                            <div id="area58_txt_1" class="searchResultTxt">幻神天下</div>
+                            <div id="area58_txt_1" class="searchResultTxt"></div>
                         </div>
                         <div class="item" style="top:95px;left:280px;" id="area58_2">
                             <img id="area58_img_2" class="searchResultImg" src="images/search_0.png"/>
-                            <div id="area58_txt_2" class="searchResultTxt">幻神天下</div>
+                            <div id="area58_txt_2" class="searchResultTxt"></div>
                         </div>
                         <div class="item" style="top:95px;left:400px;" id="area58_3">
                             <img id="area58_img_3" class="searchResultImg" src="images/search_0.png"/>
-                            <div id="area58_txt_3" class="searchResultTxt">幻神天下</div>
+                            <div id="area58_txt_3" class="searchResultTxt"></div>
                         </div>
                         <div class="item" style="top:95px; left:520px;" id="area58_4">
                             <img id="area58_img_4" class="searchResultImg" src="images/search_0.png"/>
-                            <div id="area58_txt_4" class="searchResultTxt">幻神天下</div>
+                            <div id="area58_txt_4" class="searchResultTxt"></div>
                         </div>
                         <div class="item"  style="top:95px; left:640px;" id="area58_5">
                             <img id="area58_img_5" class="searchResultImg" src="images/search_0.png"/>
-                            <div id="area58_txt_5" class="searchResultTxt">幻神天下</div>
+                            <div id="area58_txt_5" class="searchResultTxt"></div>
                         </div>
                         <div class="item" style="top:266px;left:40px;" id="area58_6">
                             <img id="area58_img_6" class="searchResultImg" src="images/search_0.png"/>
-                            <div id="area58_txt_6" class="searchResultTxt">幻神天下</div>
+                            <div id="area58_txt_6" class="searchResultTxt"></div>
                         </div>
                         <div class="item" style="top:266px;left:160px;" id="area58_7">
                             <img id="area58_img_7" class="searchResultImg" src="images/search_0.png"/>
-                            <div id="area58_txt_7" class="searchResultTxt">幻神天下</div>
+                            <div id="area58_txt_7" class="searchResultTxt"></div>
                         </div>
                         <div class="item" style="top:266px;left:280px;" id="area58_8">
                             <img id="area58_img_8" class="searchResultImg" src="images/search_0.png"/>
-                            <div id="area58_txt_8" class="searchResultTxt">幻神天下</div>
+                            <div id="area58_txt_8" class="searchResultTxt"></div>
                         </div>
                         <div class="item" style="top:266px;left:400px;" id="area58_9">
                             <img id="area58_img_9" class="searchResultImg" src="images/search_0.png"/>
-                            <div id="area58_txt_9" class="searchResultTxt">幻神天下</div>
+                            <div id="area58_txt_9" class="searchResultTxt"></div>
                         </div>
                         <div class="item" style="top:266px;left:520px;" id="area58_10">
                             <img id="area58_img_10" class="searchResultImg" src="images/search_0.png"/>
-                            <div id="area58_txt_10" class="searchResultTxt">幻神天下</div>
+                            <div id="area58_txt_10" class="searchResultTxt"></div>
                         </div>
                         <div class="item" style="top:266px;left:640px;" id="area58_11">
                             <img id="area58_img_11" class="searchResultImg" src="images/search_0.png"/>
-                            <div id="area58_txt_11" class="searchResultTxt">幻神天下</div>
+                            <div id="area58_txt_11" class="searchResultTxt"></div>
                         </div>
                     </div>
                 </div>
@@ -2091,7 +2091,7 @@
 	}
 
 	function loadElement(){
-		area0 = focus_logic.loadElements(1,6,"area0_","item item_focus","item",[62,-1,1,-1]);
+		area0 = focus_logic.loadElements(1,5,"area0_","item item_focus","item",[62,-1,1,-1]);
 		area1 = focus_logic.loadElements(3,1,"area1_","item item_focus","item",[0,-1,-1,2]);
 
 		area2 = focus_logic.loadElements(1,1,"area2_","item0 item0_focus","item0",[0,1,3,5]);
@@ -2157,15 +2157,15 @@
 		area50 = focus_logic.loadElements(1,1,"area50_","item3 item3_focus","item3",[49,48,-1,52]);
 		area51 = focus_logic.loadElements(1,1,"area51_","item4 item4_focus","item4",[[0,2],49,52,53]);
 		area52 = focus_logic.loadElements(1,1,"area52_","item5 item5_focus","item5",[51,50,-1,54]);
-		area53 = focus_logic.loadElements(1,1,"area53_","item6 item6_focus","item6",[[0,2],51,54,55]);
-		area54 = focus_logic.loadElements(1,1,"area54_","item7 item7_focus","item7",[53,52,-1,55]);
+		area53 = focus_logic.loadElements(1,1,"area53_","item6 item6_focus","item6",[[0,2],51,54,56]);
+		area54 = focus_logic.loadElements(1,1,"area54_","item7 item7_focus","item7",[53,52,-1,56]);
 
-		area55 = focus_logic.loadElements(2,4,"area55_","item item_focus","item",[[0,3],53,-1,56]);
+		area55 = focus_logic.loadElements(2,4,"area55_","item item_focus","item",[-1,-1,-1,-1]);
 
-		area56 = focus_logic.loadElements(4,3,"area56_","item item_focus","item",[[0,4],[55,3],-1,58]);
+		area56 = focus_logic.loadElements(4,3,"area56_","item item_focus","item",[[0,3],53,-1,58]);
 		area57 = focus_logic.loadElements(1,5,"area57_","item item_focus","item",[-1,-1,-1,-1]);
-		area58 = focus_logic.loadElements(2,6,"area58_","item item_focus","item",[[0,4],[56,2],-1,59]);
-		area59 = focus_logic.loadElements(1,2,"area59_","item item_focus","item",[[0,5],[58,5],-1,-1]);
+		area58 = focus_logic.loadElements(2,6,"area58_","item item_focus","item",[[0,3],[56,2],-1,59]);
+		area59 = focus_logic.loadElements(1,2,"area59_","item item_focus","item",[[0,4],[58,5],-1,-1]);
 
 		area60 = focus_logic.loadElements(1,1,"area60_","item","item",[-1,-1,-1,-1]);
 		area61 = focus_logic.loadElements(1,1,"area61_"," "," ",[-1,-1,-1,-1]);
@@ -2257,8 +2257,14 @@
 					area0.doms[pre].element.className = "item";
 					//area0.doms[area0.curDomIndex].blurClassName = "item item_selected";
 					pre=area0.curDomIndex;
-
-					change_screen(area0.curDomIndex);
+					if(area0.curDomIndex==3){
+					 change_screen(4);					
+					}else if(area0.curDomIndex==4){
+					 change_screen(5);					
+					}else{
+					 change_screen(area0.curDomIndex);			
+					}
+					
 				}
 				if(type=="inside" && area0.curDomIndex == 0){
 					$("part_0_content").style.left = "0px";
@@ -2267,6 +2273,7 @@
 		};
 		area1.okEvent = function(){
 			focus_logic.savePageInfo();
+			focus_logic.setCookie("content_left",document.getElementById("part_0_content").style.left);
 			var _a=1;
 			if(!is_app_installed()){return;}
 
@@ -2399,7 +2406,7 @@
 		area51.moveDirectionEvent = area52.moveDirectionEvent=area53.moveDirectionEvent = area54.moveDirectionEvent =function(direction){
 			if(direction==3){
 				if((focus_logic.page.curAreaIndex==51 && area53.isShow==1)||(focus_logic.page.curAreaIndex==52 && (area53.isShow==1 || area54.isShow==1))) return;
-				change_screen(3);
+				change_screen(4);
 				checke_nav_focus();
 				focus_logic.page.setCurrentFocus(54,0);
 			}
@@ -2522,7 +2529,7 @@
 		}
 		area56.doms[0].moveDirectionEvent=area56.doms[3].moveDirectionEvent=area56.doms[6].moveDirectionEvent=area56.doms[9].moveDirectionEvent=function(direction){
 			if(direction==1){
-				change_screen(3);
+				change_screen(2);
 				checke_nav_focus();
 			}
 		}
@@ -2667,7 +2674,7 @@
 				}
 			}else if(direction==0){
 				if(area58.pageNumber==1){
-					area58.areaDirections[0] = [0,4];
+					area58.areaDirections[0] = [0,3];
 				}else{
 					area58.areaDirections[0] = -1;
 				}
@@ -2759,7 +2766,7 @@
 			screen_index = 2;
 		}
 		else if(55==_i){
-			screen_index = 3;
+			screen_index = 4;
 		}
 		else if(_i>=56&&_i<=58){
 			screen_index = 4;
@@ -2771,7 +2778,15 @@
 			screen_index = 0;
 		}
 		if(_i != 0){
-				$("area0_"+screen_index).className = "item item_selected";
+				var temp_screen_index=1;
+				if(screen_index==4){
+					temp_screen_index=3;
+				}else if(screen_index==5){
+					temp_screen_index=4;
+				}else {
+					temp_screen_index=screen_index;
+				}
+				$("area0_"+temp_screen_index).className = "item item_selected";
 		}
 		$("content").style.left = -screen_index*1280+"px";
 		//show_logo();
@@ -2827,7 +2842,7 @@
 		focus_logic.getDataByAjax("get_data/get_data.jsp?action=getHot&url="+get_ip+"shop/shopHomeList.do&page=1&userName=" + epg_userid,load_jinpin);
 		//focus_logic.getDataByAjax("get_data/get_data.jsp?action=getHot&url="+get_ip+"shop/shopHomeList.do&page=1",load_tuijianData);
 		focus_logic.getDataByAjax("get_data/get_data.jsp?action=getHot&url="+get_ip+"lobby/getLobbyAllProductList.do&page=1&userName=" + epg_userid,load_game);
-		focus_logic.getDataByAjax("get_data/get_data.jsp?action=getHot&url="+get_ip+"GameVideo/getAllVideoList.do&page=1&userName=" + epg_userid,load_video);
+		//focus_logic.getDataByAjax("get_data/get_data.jsp?action=getHot&url="+get_ip+"GameVideo/getAllVideoList.do&page=1&userName=" + epg_userid,load_video);
 		search_key = focus_logic.getCookie("search_key");
 		focus_logic.delCookie("search_key");
 		if(search_key==null || search_key=="" || search_key=="null"){
@@ -3271,8 +3286,14 @@
 			console.log(result);
 		}
 
-		function checke_nav_focus(){
-			area0.curDomIndex=screen_index;
+		function checke_nav_focus(){		
+			if(screen_index==4){
+			  area0.curDomIndex=3;
+			}else if(screen_index==5){
+			  area0.curDomIndex=4;
+			}else{
+				area0.curDomIndex=screen_index;
+			}
 			if(pre!=area0.curDomIndex){
 			area0.doms[pre].element.className = "item";
 			area0.doms[area0.curDomIndex].element.className = "item item_selected";

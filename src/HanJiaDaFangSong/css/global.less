@@ -62,21 +62,37 @@ body{
 		height: 515px;
 		position: absolute;
 		&:nth-of-type(1){
+			left: 76px;
+			top: -45px;
 			.baseFocusWrap(
 				url('../img/01.png'), 0px, 31px,
 				url('../img/01_selected.png'), 0px, 27px);
 		}
+		// &:nth-of-type(2){
+		// 	.baseFocusWrap(
+		// 		url('../img/02.png'), 288px, 0px,
+		// 		url('../img/02_selected.png'), 288px, 0px);
+		// }
+		// &:nth-of-type(3){
+		// 	.baseFocusWrap(
+		// 		url('../img/03.png'), 613px, 0px,
+		// 		url('../img/03_selected.png'), 613px, 0px);
+		// }
+		// &:nth-of-type(4){
+		// 	.baseFocusWrap(
+		// 		url('../img/04.png'), 885px, 31px,
+		// 		url('../img/04_selected.png'), 885px, 27px);
+		// }
 		&:nth-of-type(2){
+			left: 160px;
+			top: 0px;
 			.baseFocusWrap(
 				url('../img/02.png'), 288px, 0px,
 				url('../img/02_selected.png'), 288px, 0px);
 		}
 		&:nth-of-type(3){
-			.baseFocusWrap(
-				url('../img/03.png'), 613px, 0px,
-				url('../img/03_selected.png'), 613px, 0px);
-		}
-		&:nth-of-type(4){
+			left: -76px;
+			top: -45px;
 			.baseFocusWrap(
 				url('../img/04.png'), 885px, 31px,
 				url('../img/04_selected.png'), 885px, 27px);
@@ -100,4 +116,31 @@ body{
 }
 .toHallBtn.focusFlag{
 	background-image: url('../img/icon_selected.png');
+}
+
+.returnBtn{
+	width: 179px;
+	height: 172px;
+	background-image: url('../img/returnBtn.png');
+	background-size: contain;
+	position: absolute;
+	right: 20px;
+	top: 588px;
+}
+.returnBtn.focusFlag{
+	background-image: url('../img/returnBtn-h.png');
+}
+
+.timeOutWrap{
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	border-radius: 50%;
+	font-size: 26px;
+	background-color: rgba(0,0,0,.5);
+	color: #ddd;
+	position: absolute;
+	right: 20px;
+	top: 10px;
 }

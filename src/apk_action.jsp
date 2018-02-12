@@ -76,7 +76,7 @@
 </head>
 
 
-<body style="background-image: url(images/loading-bg-kp.jpg);background-repeat: no-repeat;background-size: 100%;">
+<body style="background-repeat: no-repeat;background-size: 100%;">
   <div id="installing" style="display:none;">app正在下载游戏,请稍后...</div>
 </body>
 </html>
