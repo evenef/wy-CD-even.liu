@@ -1,4 +1,4 @@
-var utilObj = {
+﻿var utilObj = {
 	getId: getId,//id获取元素
 	getClass: getClass,//class获取元素集合
 	getEl: getEl,//获取匹配的第一个元素
@@ -16,6 +16,7 @@ var utilObj = {
 	pageConsole: pageConsole,//页面打印消息（测试用）
 	playMediaEPG: playMediaEPG,//调用EPG媒体播放
 	destoryMP: destoryMP,//清除上一个EPG媒体播放
+	toPayFnc: toPayFnc,//订购鉴权接口
 }
 
 //id获取元素
@@ -212,7 +213,7 @@ function listItemChoose(toward, classNameFont, chooseNum, choosedClassStr){
 function toSendPage(type, pageName, contentName, callback){
 	var searchStr = searchObj(),
 	wayEUserName = searchStr.wayEUserName,
-	epgUserName = searchStr.UserID,
+	epgUserName = searchStr.UserID || UserID,
 	url = type === 'page' ? ('http://' + location.host + '/wbManager/pageBrowsing.do') : ('http://' + location.host + '/wbManager/onClickEvent.do'),
 	date = getNowTime(),
 	pageID = location.href.split('/index.html')[0].split('/').pop(),
@@ -244,7 +245,7 @@ function toSendPage(type, pageName, contentName, callback){
 	})
 }
 //跳转游戏详情
-function startActivity(gameId, UserID) {
+function startActivity(gameId) {
 	var appName = "com.utstar.appstoreapplication.activity",
 	className = "com.utstar.appstoreapplication.activity.StartAppActivity",
 	mac = "",
@@ -265,6 +266,7 @@ function startActivity(gameId, UserID) {
 		case /exchangeStore/.test(location.href): referPageName = '兑换中心';referPageID = 'duihuanzhongxin';break;
 		case /registerCards/.test(location.href): referPageName = '卡牌签到';referPageID = 'kapaiqiandao';break;
 		case /christmasActivity/.test(location.href): referPageName = '圣诞活动';referPageID = 'ShengDanHuoDong';break;
+		case /YuanDanActive/.test(location.href): referPageName = '元旦活动';referPageID = 'YuanDanHuoDong';break;
 	}
 	var params = {
 		"turnType": "1",
@@ -282,7 +284,7 @@ function startActivity(gameId, UserID) {
 		extra: [
 		{name: "epgDoman",value: epgDoman},
 		{name: "areaId",value: _stb_areaid},
-		{name: "epgUserId",value: UserID || searchObj().UserID},
+		{name: "epgUserId",value: searchObj().userID || searchObj().UserID},
 		{name: "epgToken",value: epgToken},
 		{name: "isDispath",value: true},
 		{name: "action",value: "0"},
@@ -374,21 +376,16 @@ try{
 	pageConsole('错误报告：', e)
 }
 
-
-
-
-// pageConsole('v3.7')
-
 //页面打印消息（测试用）
 //title打印标题
 //param打印消息
 function pageConsole(title, param){
-	if(!document.querySelector('#tempWrap')){
+	if(!getEl('#tempWrap')){
 		var div = document.createElement('div')
 		div.id = 'tempWrap'
 		document.body.appendChild(div)
 	}
-	var wrap = document.querySelector('#tempWrap')
+	var wrap = getEl('#tempWrap')
 
 	wrap.innerHTML += '<p style="color: rgba(255,255,255,1);line-height: 24px;word-break: break-all;">' + (title || '') + (param || '') + '</p>'
 	document.body.style.position = 'absolute'
@@ -401,7 +398,34 @@ function pageConsole(title, param){
 	wrap.style.backgroundColor = 'rgba(0,0,0,.5)'
 }
 
+//订购鉴权接口
+//回调callback传参true（已订购）false（未订购）
+//需要参数obj：spId、UserID、PRODUCTID、contentCode、callback
+function toPayFnc(obj){
+	ajax({
+		url: obj.toPayURL,
+		data: {
+			spId: obj.spId || '',
+			epgId: obj.UserID || '',
+			productId: obj.PRODUCTID || '',
+			contentId: obj.contentCode || '',
+		},
+		success: function(param){
+			param = JSON.parse(param)
+			if(!param.rltcode && param.object.list.error_code == 0){
+				obj.callback(true)
+			}else{
+				obj.callback(false)
+				document.location.href = 'http://' + location.host + '/Wanba/EPG/Order/order.jsp?userID=' + obj.UserID + '&productId=' + obj.PRODUCTID + '&contentCode=' + obj.contentCode + '&backUrl=' + escape(document.location.href)
+			}
+		}
+	})
+}
+
+
+
 // 'http://192.168.5.3:8080/Wanba/EPG/Order/index.html?userID=epg010010101&productId=16021215165349000001&contentCode=1605120914333798479570&backUrl=http%3A//192.168.5.3%3A8080/Wanba/active/ChangWanTing/index.html%3FPRODUCTID%3D16021215165349000001%26ReturnURL%3D123%26UserID%3Depg010010101%26wayEUserName%3DwayEUserName'
 
 //跳转点击观看
 // var _url = epgDoman.substring(0,epgDoman.indexOf("Category.jsp")) + "Category.jsp?spVodPlayUrl="+escape("vod_TVDetail.html?TYPE_ID=" + CAT_ID[selectIndex] + "&FILM_ID=" + FILM_IDS[selectIndex] + "&ReturnURL=" + escape(window.location.href));
+

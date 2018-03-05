@@ -7,15 +7,23 @@ CAT_ID = ''
 
 window.onload = function(){
 	toSendPage('page', '影游联动')
-
-	// pageConsole('window.location.href : ', window.location.href)
-
 	initPage(butNum)
 	controlVideo('onWatch')
 	document.onkeydown = keyFnc
 
+	// pageConsole('/// getEl("#get_play_url") /// ', getEl("#get_play_url"))
+
 	getEl("#get_play_url").onload = function(){
+
+		// pageConsole('/// frames /// ', window.frames)
+		// pageConsole('/// get_play_url /// ', window.frames["get_play_url"])
+		// pageConsole('/// get_play_url.body /// ', window.frames["get_play_url"].document.body)
+		// pageConsole('/// #get_play_url /// ', window.frames["#get_play_url"])
+
 		var textStr = window.frames["get_play_url"].document.body.innerText;
+
+		// pageConsole('/// textStr /// ', textStr)
+
 		var _mediaUrl = JSON.parse(textStr)
 		playUrl = _mediaUrl.playurl;
 		playMediaEPG(20, 146, 550, 265)
@@ -217,7 +225,7 @@ function keyFnc(e){
 		case 8:
 		var obj = searchObj()
 		if(obj.ReturnURL)
-			document.location.href = obj.ReturnURL
+			window.location.href = unescape(obj.ReturnURL)
 		else
 			console.log('%c没有找到ReturnURL', 'color: #f0f')
 		break
@@ -267,16 +275,17 @@ function controlVideo(name){
 
 			var _url = epgDoman.substring(0,epgDoman.indexOf("Category.jsp")) + "Category.jsp?spVodPlayUrl="+escape("valueadded/tongqu_progDetail.html?SITCOM=1&refer_page=movieGame&TYPE_ID=" + CAT_ID + "&FILM_ID=" + FILM_ID + "&ReturnURL=" + escape(window.location.href))
 
-			// pageConsole('to href : ', _url)
-
 			// setTimeout(function(){
 				document.location.href = _url
 			// }, 10000)
 		}else if(name === 'onWatch'){
 
-			var _url = epgDoman.split("/EPG")[0]+"/EPG/jsp/gdgaoqing/en/vaitf/getVodPlayUrl.jsp"+"?code=" + videoCode;
+			var _url = epgDoman.substring(0,epgDoman.indexOf("Category.jsp")) + "vaitf/getVodPlayUrl.jsp"+"?code=" + videoCode;
 
 			getEl('#get_play_url').src = _url
+
+			// pageConsole('/// epgDoman /// ', epgDoman)
+			// pageConsole('/// _url /// ', _url)
 
 		}
 	}catch(e){

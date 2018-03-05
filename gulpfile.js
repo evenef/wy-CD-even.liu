@@ -24,7 +24,7 @@ var fileArr = [
 // 'park',
 // 'starLand',
 // 'movieGame',
-// 'toKeepStayTips',影游联动增加PV、UV统计
+// 'toKeepStayTips',
 // 'Order_ChangWanTing',
 // 'YuanDanActive',
 // 'snowBallFight',
@@ -33,7 +33,8 @@ var fileArr = [
 // 'hallUpdateTipsWin',
 // 'loadingPage',
 // 'newSpringDaLianHuan',
-'HanJiaDaFangSong',
+// 'HanJiaDaFangSong',
+'rankingList',
 ]
 //服务器IP
 var serverIP = '127.0.0.1:3000'

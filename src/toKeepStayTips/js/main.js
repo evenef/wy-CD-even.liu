@@ -3,7 +3,7 @@ var toKeepStayTipsWinInitFnc = function(callback){
 	callback && (window.toKeepStayTipsWinCallback = callback);
 	ajax({
 		// url: 'http://172.18.104.91:8080/wbManager/detention/getDetentionRec.do',
-		url: 'http://' + window.location.host + ':8080/wbManager/detention/getDetentionRec.do',
+		url: window.location.origin + '/wbManager/detention/getDetentionRec.do',
 		success: function(param){
 			param = JSON.parse(param)
 			if(!param.rltcode){
@@ -84,7 +84,7 @@ function toKeepStayTipsWin(isVisible, keyCode){
 		/stay/.test(keepStayTipsFlag) && (contentID = 'stay');
 		/quit/.test(keepStayTipsFlag) && (contentID = 'quit');
 		toSendPage(contentID, '大厅挽留弹窗', /game/.test(contentID) ? '跳转推荐游戏_' + document.querySelector('.keepStayTipsFocus').gameMsg.hava_name : (contentID === 'stay' ? '大厅挽留弹窗_我再看看按钮' : '大厅挽留弹窗_休息一下按钮'));//PV、UV上报
-		/game/.test(contentID) && startActivity(document.querySelector('.keepStayTipsFocus').gameMsg.productid);//方法已改进，自动获取UserID
+		/game/.test(contentID) && startActivity(document.querySelector('.keepStayTipsFocus').gameMsg.productid);//方法已改进，index.jsp获取UserID || ''
 		/quit/.test(contentID) && window.toKeepStayTipsWinCallback && window.toKeepStayTipsWinCallback();
 		if(/stay/.test(keepStayTipsFlag)){
 			document.body.removeChild(document.querySelector('.keepStayTipsWin'))
@@ -259,10 +259,9 @@ function formatParams(param) {
 //contentName：点击按钮中文名
 //callback：回调
 function toSendPage(type, pageName, contentName, callback){
-	var searchStr = searchObj(),
-	wayEUserName = searchStr.wayEUserName,
-	epgUserName = searchStr.UserID,
-	url = type === 'page' ? ('http://' + location.host + '/wbManager/pageBrowsing.do') : ('http://' + location.host + '/wbManager/onClickEvent.do'),
+	var wayEUserName = '',
+	epgUserName = UserID || '',
+	url = type === 'page' ? ('http://' + window.location.host + '/wbManager/pageBrowsing.do') : ('http://' + window.location.host + '/wbManager/onClickEvent.do'),
 	date = getNowTime(),
 	pageID = 'ShouYe',
 	pageName = pageName || document.title,
@@ -356,19 +355,51 @@ function startActivity(gameId) {
 		extra: [
 		{name: "epgDoman",value: epgDoman},
 		{name: "areaId",value: _stb_areaid},
-		{name: "epgUserId",value: searchObj().UserID},
+		{name: "epgUserId",value: UserID || ''},
 		{name: "epgToken",value: epgToken},
 		{name: "isDispath",value: true},
 		{name: "action",value: "0"},
 		{name: "params",value: params},
 		{name: "referPageName",value: referPageName},
 		{name: "referPageID",value: referPageID},
-		{name: "serviceUrl",value: 'http://' + document.location.host + '/wbManager/'}
+		{name: "serviceUrl",value: 'http://' + window.location.host + '/wbManager/'}
 		]
 	})
+
 	try {
 		STBAppManager.startAppByIntent(intentMessage);
 	} catch (e) {
 		console.log(intentMessage)
 	}
+}
+
+//页面打印消息（测试用）
+//title打印标题
+//param打印消息
+function pageConsole(title, param){
+	if(!document.querySelector('#tempWrap')){
+		var div = document.createElement('div')
+		div.id = 'tempWrap'
+		document.body.appendChild(div)
+	}
+	var wrap = document.querySelector('#tempWrap')
+
+	wrap.innerHTML += '<p style="color: rgba(255,255,255,1);line-height: 24px;word-break: break-all;">' + (title || '') + (param || '') + '</p>'
+	document.body.style.position = 'absolute'
+	wrap.style.width = '1080px'
+	wrap.style.paddingLeft = '200px'
+	wrap.style.position = 'absolute'
+	wrap.style.bottom = '200px'
+	wrap.style.fontSize = '16px'
+	wrap.style.zIndex = '999999999999999999999999999999'
+	wrap.style.backgroundColor = 'rgba(0,0,0,.5)'
+}
+
+//获取location.search信息
+function searchObj() {
+	var obj = {}
+	window.location.search.substring(1).split("&").map(function(item) {
+		obj[item.split("=")[0]] = item.split("=")[1]
+	})
+	return obj
 }
