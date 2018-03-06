@@ -28,7 +28,7 @@ function loadFnc(){
 }
 function init(){
 	var arr = document.getElementsByClassName('group')
-	for(var e in arr){
+	for(var e = 0;e < arr.length;e++){
 		if(e === 'length')
 			break
 		for(var i = 0;i < arr[e].children.length;i++){
@@ -82,7 +82,10 @@ function init(){
 						name.className = 'name'
 						name.innerHTML = obj.gameMsg.gname
 						downnum.className = 'downnum'
-						downnum.innerHTML = obj.gameMsg.downnum
+						var num = 0
+						num = obj.gameMsg.downnum
+						num = num >= 1000 ? (parseInt(num / 1000) + '000+') : (num >= 10 ? (parseInt(num / 10) + '0+') : '10+')
+						downnum.innerHTML = num
 						star.className = 'star'
 						star.innerHTML = '<span>' + obj.gameMsg.praise + '</span>'
 						for(var i = 0;i < 5;i++){
