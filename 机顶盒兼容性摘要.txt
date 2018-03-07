@@ -23,3 +23,4 @@ CSS
 1.inline及inline-block布局方式中，元素均默认顶端对齐，pc端开发时增加vertical-align:top便于保持pc端开发环境与发布环境的一致性
 2.中兴盒子中position:absolute时，使用bottom属性可能会出现底部留空（白边）或底部下移情况，慎用
 3.不支持transform、opacity、flex、calc...
+4.距离单位rem偶发继承层级错乱，原因为内核版本非标准版本，回避使用，em使用正常
