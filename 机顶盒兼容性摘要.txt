@@ -1,0 +1,24 @@
+终端
+1.机顶盒采用内核版本如下（部分）：
+Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.0 (KHTML, like Gecko)
+Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36
+2.忘记上面的版本号，终端的内核已经被厂家删减加阉割，大多新特性都不支持，html5、es6、css3新特性均无法使用；但有些特性支持，如border-radius、box-shadow...
+3.盒子坑很多，遇到请归纳备用
+
+HTML
+1.页面尺寸固定为1280*720，不得使用1920*1080或其他尺寸，包括UI图也应做尺寸换算处理后使用，避免后期不必要的尺寸调整
+2.添加meta标签避免页面尺寸出现异常
+<meta name="page-view-size" content="1280*720">
+3.body添加overflow:hidden属性避免出现显示异常
+
+JavaScript
+1.支持数组map、对象for in方法
+2.使用js-img方式缓存图片无效，onload方法触发后实际并未将缓存到本地，回避使用
+3.使用setTimeout及setInterval时，时间间隔过短(<50ms)时，可能会出现计时器失效的情况，使用计时器改变元素坐标属性时尤为明显。可能是机顶盒浏览器性能问题，也可能是厂家在内核中增加限制，具体原因未证实。使用时注意机顶盒下表现
+4.不支持webpack打包索引
+5.不支持模板字符串、箭头函数、解构、属性同名值缩写...
+
+CSS
+1.inline及inline-block布局方式中，元素均默认顶端对齐，pc端开发时增加vertical-align:top便于保持pc端开发环境与发布环境的一致性
+2.中兴盒子中position:absolute时，使用bottom属性可能会出现底部留空（白边）或底部下移情况，慎用
+3.不支持transform、opacity、flex、calc...
