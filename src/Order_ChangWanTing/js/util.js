@@ -398,7 +398,7 @@ function pageConsole(title, param){
 	wrap.style.position = 'absolute'
 	wrap.style.bottom = '200px'
 	wrap.style.fontSize = '16px'
-	wrap.style.zIndex = '999'
+	wrap.style.zIndex = '99999999999999'
 	wrap.style.backgroundColor = 'rgba(0,0,0,.5)'
 }
 

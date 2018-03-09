@@ -52,13 +52,13 @@ function init(){
 			success: function(param){
 				param = JSON.parse(param)
 				data.list.map(function(item, index){
-					if(typeName === 'load' && index < 4){
+					if(typeName === 'praise' && index < 4){
 						item.gameMsg = param.object[index]
 						createItem(item)
 					}else if(typeName === 'new' && index > 4 && index < 9){
 						item.gameMsg = param.object[index - 5]
 						createItem(item)
-					}else if(typeName === 'praise' && index > 9 && index < 14){
+					}else if(typeName === 'load' && index > 9 && index < 14){
 						item.gameMsg = param.object[index - 10]
 						createItem(item)
 					}
@@ -191,7 +191,7 @@ function keyFnc(e){
 				url = '#'
 				break
 			}
-				window.location.href = url
+			window.location.href = url
 			toSendPage('goRankPage_' + title, '排行榜', '跳转排行榜：' + name,function(){
 
 				window.location.href = url

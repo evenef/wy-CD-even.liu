@@ -106,8 +106,12 @@ function initList(num){
 //订购
 function toOrder(_productId){
 	var url = data.orderURL,
-	_path = window.location.href.replace(/index\.html/, 'order.jsp'),
-	_bsReturnURL = escape(_path + "&orderCallback=true")
+	_path = window.location.href.replace(/index\.html/, 'order.jsp')
+	
+	_path = _path.replace(/&orderCallback=true.*/, '')
+
+	var _bsReturnURL = escape(_path + "&orderCallback=true")
+
 
 	var dataTemp = {
 		type: 0,
@@ -148,6 +152,18 @@ function orderCallbackFnc(){
 	// 	getEl('.orderTipsWin').children[2].innerHTML = '购买成功！快去体验吧'
 	// }
 
+	// pageConsole('href///' + window.location.href + '///')
+	// pageConsole('parms///' + searchObj().parms + '///')
+	// pageConsole('data///' + searchObj().data + '///')
+
+	if(!searchObj().data){
+		// pageConsole('data///' + searchObj().data + '///')
+		// getEl('.orderTipsWin').children[2].innerHTML = '取消购买！'
+		// getEl('.orderTipsWin').style.display = 'block'
+		// isBtn = false
+		return
+	}
+
 	ajax({
 		url: data.orderListURL,
 		type: 'POST',
@@ -185,7 +201,7 @@ function orderCallbackFnc(){
 			isBtn = false
 		},
 		fail: function(err, responseText, responseXML){
-			pageConsole('接口请求失败 : ', err + ' / ' + responseText)
+			// pageConsole('接口请求失败 : ', err + ' / ' + responseText)
 		}
 	})
 }

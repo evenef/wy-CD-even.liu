@@ -18,6 +18,8 @@ JavaScript
 4.不支持webpack打包索引
 5.不支持模板字符串、箭头函数、解构、属性同名值缩写...
 6.epg视频播放应将script标签放置到</html>之外，否则会出现视频层z-index置顶现象
+7.数组map方法内构建对象时，同一个属性只能被赋值一次，二次赋值无效
+如：a['key']=1;a['key']=2;return a.key // 1
 
 CSS
 1.inline及inline-block布局方式中，元素均默认顶端对齐，pc端开发时增加vertical-align:top便于保持pc端开发环境与发布环境的一致性
